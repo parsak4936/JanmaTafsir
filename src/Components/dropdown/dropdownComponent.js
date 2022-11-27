@@ -4,14 +4,18 @@ import "primereact/resources/primereact.css";
 import "primeflex/primeflex.css";
  import ReactDOM from "react-dom";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useCallback } from "react";
 import { Dropdown } from "primereact/dropdown";
  import "./dropdowncss.css";
+ 
+ 
+      
 
-function DropdownComponent  () {
+
+function DropdownComponent  ({parentCallback}) {
   const [selectedRole, setselectedRole] = useState(null);
-  
-  
+   
+
 
   const UserKinds = [
     { name: "کاربر حقوقی", code: "LU" },
@@ -19,15 +23,16 @@ function DropdownComponent  () {
    
   ];
 
-   
-
-//   useEffect(() => {
-//     setLazyItems(Array.from({ length: 100000 }));
-//     setLazyLoading(false);
-//   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  parentCallback(selectedRole)
+ 
+  // useEffect(() => {
+  //   setLazyItems(Array.from({ length: 100000 }));
+  //   setLazyLoading(false);
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onRoleChange = (e) => {
     setselectedRole(e.value);
+  
   };
 
   return (

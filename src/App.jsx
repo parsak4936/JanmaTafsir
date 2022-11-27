@@ -4,9 +4,9 @@ import { Counter } from './features/counter/Counter';
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import UserDashboard from "./Pages/UserDashboards/UserDashboard"
-import Login from "./Pages/Login"
+import Login from "./Pages/Login/Login"
 import Dashboard from "./Pages/DashboardPages/Dashboard"
-import Signup from "./Pages/signup";
+import Signup from "./Pages/Register/signup";
 import Notfoundpage from "./Pages/notfoundpage";
 function App() {
   const logado = localStorage.getItem('@user');

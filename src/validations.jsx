@@ -1,29 +1,24 @@
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as yup from "yup";
+const phoneRegExp = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/
+const nationCodeRegExp = /^[0-9]{10}$/
 
+const ValidationsRegister = yup.object().shape({
+  PhoneNumber: yup.string().matches(phoneRegExp, 'شماره تلفن درست نمیباشد')
+  .min(11, "شماره تلفن باید یازده رقم باشد")
+  .required("شماره همراه خود را وارد کنید")
+   ,
+   NationCode: yup.string().matches(nationCodeRegExp, ' کدملی درست نمی باشد ')
+ 
+    .required("کد ملی خود را وارد کنید"),
+  Password: yup
+    .string()
+    .min(8, "رمز عبور باید حداقل هشت کاراکتر داشته باشد")
+    .required("رمز عبور نباید خالی باشد"),
+    Password_confirmation: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "رمز عبور برابر با قبلی نیست")
+    .required("تکرار رمز عبور اجباری است"),
+});
 
-const validations=  yup.object().shape({
-    email: yup
-      .string("ادرس ایمیل نباید تنها عدد باشد")
-      .email("ایمیل درست نمیباشد")
-      .required("ایمیل مورد نیاز است"),
-    phone: yup
-      .number("تلفن همراه نباید حروف داشته باشد")
-      
-      .typeError("فرمت شماره همراه اشتباه است")
-      
-      .positive("شماره همراه نمیتواند منفی داشته باشد")
-      
-      .integer("شماره همراه صحیح نمیباشد")
-     
-      .min(12,"شماره باید دوازده رقم باشد")
-       
-      .required('شماره همراه مورد نیاز است')
-      ,
-    password: yup
-      .string()
-      .min(8, "اندازه رمز عبور حداقل باید 8 کاراکتر باشد")
-      .required("رمز عبور نباید خالی باشد"),
-  })
-
-
-export default validations;
+export default ValidationsRegister; 
