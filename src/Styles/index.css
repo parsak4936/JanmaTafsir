@@ -1,0 +1,7 @@
+@font-face {
+    font-family:irs;
+    src: url(fonts.css);
+  }
+  body{
+    overflow-x: hidden;
+  }

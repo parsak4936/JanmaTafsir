@@ -1,0 +1,27 @@
+.threeViewTxt ul li  {
+     
+    position: relative ;
+    color: black;
+    
+    visibility: visible;
+   
+   
+}
+
+ .threeViewTxt ul  {
+    list-style-image: url(http://upload.wikimedia.org/wikipedia/commons/1/19/Icons-mini-icon_attachment.gif);
+
+ }
+@media (max-width: 767px){
+    .featuresheader{
+        display: flex;
+        align-items: center;
+        align-content: center;
+text-align: center;
+    }
+    .col2{
+        padding-top: 30px !important;
+    }
+    
+}
+  
