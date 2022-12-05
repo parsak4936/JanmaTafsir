@@ -1,36 +1,72 @@
 import "../../Styles/signup.css";
+ 
 import Img from "../../Assets/result.svg";
 import Dropdown from "../../Components/dropdown/dropdownComponent";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import ValidationsRegister from "../../validations";
+// import {ValidationsRegister} from "../../validations";
+import axios from "axios";
 import * as yup from "yup";
 import { ErrorMessage, Formik, Form, Field } from "formik";
 import Axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import Header from "../../Components/header/header";
 
 function Signup({ login = false }) {
   const [showPassword, setshowPassword] = useState(true);
-  const [SelectedRole, setSelectedRole] = useState(null);
-  const phoneRegExp = /^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}]/;
+  const [waiting, setWaiting] = useState(false);
 
+  const SignupURL =
+    "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserRegister";
+  const [SelectedRole, setSelectedRole] = useState({ name: null, code: null});
+  const [nationalCode, setnationalCode] = useState({ value: "", error: "" });
+  const [phoneNumber, setphoneNumber] = useState({ value: "", error: "" });
+  const [password, setpassword] = useState({ value: "", error: "" });
+  const [confirmPassword, setconfirmPassword] = useState({ value: "", error: "" });
+  const navigate = useNavigate();
   const selectedRolCallBack = useCallback((SelectedRole) => {
     setSelectedRole(SelectedRole);
   }, []); //TODO : Make it redus it has some errors !
-
+  // const errors = ValidationsRegister(name, email, password);
   useEffect(() => {
     // Update the document title using the browser API
-    console.log(SelectedRole);
+ 
   });
 
-  const handleRegister = (values) => {
-    Axios.post("http://localhost:3001/register", {
-      email: values.email,
-      password: values.password,
+  const handleRegister = async(values) => {
+    setWaiting(true);
+    navigate('/validation',{state:{phoneNumber:phoneNumber.value}});
+    const user = {
+      "nationalCode": nationalCode.value,
+      "phoneNumber": phoneNumber.value,
+      "userType": SelectedRole.code,
+      "password": password.value,
+      "confirmPassword": confirmPassword.value
+    }
+    axios.post(SignupURL, {
+      nationalCode: user["nationalCode"],
+      userType: user["userType"],
+      phoneNumber: user["phoneNumber"],
+      password: user["password"],
+      confirmPassword: user["confirmPassword"]
     }).then((response) => {
-      alert(response.data.msg);
-      console.log(response);
-      window.location.reload();
+      
+      
+ 
+      // if (page === true) {
+      //   localStorage.setItem('@user', JSON.stringify(response.config.data));
+      //   window.location.reload();
+      // } else {
+      //   alert(response.data.msg);
+      //   setWaiting(false)
+      // }
+
+    }).catch((exception) => {
+      setWaiting(false);
+      if (exception.response.status == 404) {
+        console.log("404");
+      } else {
+        console.log(exception.response.status);
+      }
     });
   };
 
@@ -56,7 +92,7 @@ function Signup({ login = false }) {
           <Formik
             initialValues={{}}
             onSubmit={handleRegister}
-            validationSchema={ValidationsRegister}
+            // validationSchema={ValidationsRegister}
           >
             <Form className="login-form">
               {/* -------------------------  DropDown------------------------- */}
@@ -71,6 +107,10 @@ function Signup({ login = false }) {
                 <Field
                   name="PhoneNumber"
                   className="form-field"
+                  onChange={ (st) => {
+                    let value = st.target.value;
+                    setphoneNumber({ value: value, error: "" });
+                    }}
                   placeholder="شماره تلفن همراه"
                 />
 
@@ -86,6 +126,10 @@ function Signup({ login = false }) {
                 {/* <label form="email">رمز</label> */}
                 <Field
                   name="NationCode"
+                  onChange={ (st) => {
+                    let value = st.target.value;
+                    setnationalCode({ value: value, error: "" });
+                    }}
                   className="form-field"
                   placeholder="کدملی/کدشناسایی/کد اقتصاد"
                 />
@@ -104,6 +148,10 @@ function Signup({ login = false }) {
                   name="Password"
                   type={showPassword ? "text" : "password"}
                   className="form-field   "
+                  onChange={ (st) => {
+                    let value = st.target.value;
+                    setpassword({ value: value, error: "" });
+                    }}
                   placeholder="رمز ورود"
                 />
 
@@ -121,6 +169,10 @@ function Signup({ login = false }) {
                   name="Password_confirmation"
                   type={showPassword ? "text" : "password"}
                   className="form-field   "
+                  onChange={ (st) => {
+                    let value = st.target.value;
+                    setconfirmPassword({ value: value, error: "" });
+                    }}
                   placeholder=" تکرار رمز ورود"
                 />
 
@@ -132,10 +184,11 @@ function Signup({ login = false }) {
               </div>
 
               {/* -------------------------   ------------------------- */}
-
-              <button className="button" type="submit">
+                    <button className="button" type="submit">
                 تایید
-              </button>
+              </button>  
+
+             
             </Form>
           </Formik>
         </div>

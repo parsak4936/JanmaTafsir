@@ -2,109 +2,84 @@ import "../../Styles/login.css";
 import React, { useState } from "react";
 import Dropdown from "../../Components/dropdown/dropdownComponent";
 import * as yup from "yup";
-import { validations } from "../../validations.jsx";
-import { ErrorMessage, Formik, Form, Field } from "formik";
+import { ErrorMessage, Formik, Form, Field, useFormik, useField } from "formik";
 import axios from "axios";
 import Img from "../../Assets/backgroundimage.jpg";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "../../Components/header/header";
 import LoadingAnimation from "../../Components/loadingAnimation";
-import { useSelector, useDispatch } from "react-redux";
-
-import { BiBorderRadius } from "react-icons/bi";
-
+import { Button, Container } from "react-bootstrap";
+import * as Yup from "yup";
 function Login({ logado = false }) {
   const [waiting, setWaiting] = useState(false);
   const [invalidUser, setinvalidUser] = useState("");
-  const LoginREQURL =
+  const navigate = useNavigate();
+  const LoginURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserLogin";
   const [nationalCode, setnationalCode] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
-  const [token, setUserToken] = useState("");
- 
-  // const onLoginPressed = async (e) => {
-  //   e.preventDefault();
-  //     setWaiting(true)
-  //     const user = {
-  //       "nationalCode": mobile.value,
-  //       "password": password.value
-  //     }
-  //       axios.post(LoginREQURL, {
-  //       mobile: user["mobile"],
-  //       password: user["password"]
-  //     } )
+  const [token, setUserToken] = useState();
+  const [acceptTerms, setacceptTerms] = useState(false);
+  
+//password : string
+//code : 4311211945
+//number : 09195436287
+  
+  const formik = useFormik({
+    initialValues: {
+      NationCode: "",
+      Password: "",
+      acceptTerms: false,
+    },
 
-  //       .then(function (response,r) {
-
-  //           if(response.status === 200){
-
-  //           } else{
-
-  //             console.log("this is invalid user content")
-  //             console.log(response)
-
-  //           }
-  //       })
-  //       .catch(error=>{
-  //   setWaiting(false)
-
-  //       }
-  //   );
-  //     return
-
-  // }
-
-  const handleLogin = ({ values }) => {
-    setWaiting(true);
-    const user = {
-      "nationalCode": nationalCode.value,
-      "password": password.value
-    }
-    axios.post(LoginREQURL, {
-      nationalCode: user["nationalCode"],
-        password: user["password"]
-    }).then((response) => {
-
-      const page = response;
-      if (response.status==200){
-        setWaiting(false);
-      }else{
-        setWaiting(false);
-        console("sdsdsdsd")
-      }
+    onSubmit: (values) => {
+      // navigate('/validation',{state:{phoneNumber:phoneNumber.value}});
+      //navigate('/validation');
+      setnationalCode({ value: values.NationCode, error: "" });
+      setPassword({ value: values.Password, error: "" });
       
-      // if (page === true) {
-      //   localStorage.setItem('@user', JSON.stringify(response.config.data));
-      //   window.location.reload();
-      // } else {
-      //   alert(response.data.msg);
-      //   setWaiting(false)
-      // }
-
-    });
-  };
-
-  const validationsLogin = yup.object().shape({
-    nationalCode: yup
-      .string("ادرس ایمیل نباید تنها عدد باشد")
-      .email("ایمیل درست نمیباشد")
-      .required("ایمیل مورد نیاز است"),
-    phone: yup
-      .number("تلفن همراه نباید حروف داشته باشد")
-
-      .typeError("فرمت شماره همراه اشتباه است")
-
-      .positive("شماره همراه نمیتواند منفی داشته باشد")
-
-      .integer("شماره همراه صحیح نمیباشد")
-
-      .min(12, "شماره باید دوازده رقم باشد")
-
-      .required("شماره همراه مورد نیاز است"),
-    password: yup
-      .string()
-      .min(8, "اندازه رمز عبور حداقل باید 8 کاراکتر باشد")
-      .required("رمز عبور نباید خالی باشد"),
+      setWaiting(true);
+      const user = {
+        nationalCode: values.NationCode,
+        password: values.Password,
+      };
+      axios
+        .post(LoginURL, {
+          nationalCode: user["nationalCode"],
+          password: user["password"],
+        })
+        .then((response) => {
+          
+          if (response.data.statusCode == 200) {
+            setUserToken(response.data.data.token)
+            setWaiting(false);
+            
+             navigate('/MapView',{state:{loginToken:response.data.data.token}});
+            // console.log("Token:"+response.data.data.token)
+            
+          } else {
+            setWaiting(false);
+           
+          }
+          // if (page === true) {
+          //   localStorage.setItem('@user', JSON.stringify(response.config.data));
+          //   window.location.reload();
+          // } else {
+          //   alert(response.data.msg);
+          //   setWaiting(false)
+          // }
+        })
+        .catch((exception) => {
+          setWaiting(false);
+          console.log(exception)
+          // if (exception.response.statusCode == 400) {
+          //   console.log("404");
+          // } else {
+          //   console.log(exception.response.status);
+          // }
+        });
+      // alert(JSON.stringify(values, null, 2));
+    },
   });
 
   return (
@@ -132,59 +107,79 @@ function Login({ logado = false }) {
             </div>
           </div>
           <h1>ورود </h1>
-          <Formik
-            initialValues={{}}
-            onSubmit={handleLogin}
-            validationSchema={validationsLogin}
-          >
-            <Form className="login-form">
-{/* -------------------------  NationCode------------------------- */}
 
-              <div className="form-group">
-                {/*ایمیل یا کد ملی  */}
+          <Formik
+            initialValues={{ NationCode: "", Password: "",acceptTerms: false, }}
+            onSubmit={formik.handleSubmit}
+          >
+            {({ errors, touched }) => (
+              <Form className="login-form" onSubmit={formik.handleSubmit}>
+                {/* -------------------------  NationCode------------------------- */}
+
                 <div className="form-group">
                   <Field
-                    name="nationalCode"
-                    onChange={ (st) => {
-                      let value = st.target.value;
-                      setnationalCode({ value: value, error: "" });
-                      }}
+                    name="NationCode"
+                    id="NationCode"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.NationCode}
                     className="form-field"
                     placeholder="کدملی/کدشناسایی/کد اقتصاد"
                   />
+                  {errors.NationCode && touched.NationCode ? (
+                    <div>{errors.NationCode}</div>
+                  ) : null}
+                </div>
+                {/* -------------------------  Password ------------------------- */}
 
-                  <ErrorMessage
-                    component="span"
-                    name="nationalCode"
-                    className="form-error"
+                <div className="form-group">
+                  {/* <label form="email">Confirme sua senha</label> */}
+                  <Field
+                    name="Password"
+                    id="Password"
+                    type={"password"}
+                    onChange={formik.handleChange}
+                    value={formik.values.Password}
+                    className="form-field"
+                    placeholder="رمز ورود"
                   />
                 </div>
+
+                {/* -------------------------   ------------------------- */}
+                <label className="text-gray-500 font-bold">
+                  <Field
+                    type="checkbox"
+                    name="acceptTerms"
+                    // onChange={formik.handleChange}
+                    // value={formik.values.checked}
+                    className={"form-check-input "}
+                    
+                  />
+
+                  <span className="text-sm">Accept Terms</span>
+                </label>
+                 
+                <div className="form-group" style={{}}>
+                {waiting == false ? (
+                  <button
+                    className="button"
+                    
+                    type="submit"
+                  >
+                    تایید
+                  </button>
+                ) : (
+                  <div>
+                    {" "}
+                    <LoadingAnimation style={{}} />{" "}
+                  </div>
+                )}
               </div>
-{/* -------------------------  password------------------------- */}
-
-
-              <div className="form-group">
-
-                <Field
-                  name="password"
-                  type="password"
-                  className="form-field"
-                  onChange={ (st) => {
-                    let value = st.target.value;
-                    setPassword({ value: value, error: "" });
-                    }}
-                  
-                  placeholder="رمز عبور"
-                />
-
-                <ErrorMessage
-                  component="span"
-                  name="password"
-                  className="form-error"
-                />
-              </div>
-
-              <div className="form-group" style={{}}>
+                 
+              </Form>
+            )}
+          </Formik>
+          {/* <div className="form-group" style={{}}>
                 {waiting == false ? (
                   <button
                     className="button"
@@ -199,9 +194,7 @@ function Login({ logado = false }) {
                     <LoadingAnimation style={{}} />{" "}
                   </div>
                 )}
-              </div>
-            </Form>
-          </Formik>
+              </div> */}
         </div>
       </div>
     </div>

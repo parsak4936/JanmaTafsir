@@ -13,13 +13,13 @@ import { Dropdown } from "primereact/dropdown";
 
 
 function DropdownComponent  ({parentCallback}) {
-  const [selectedRole, setselectedRole] = useState(null);
+  const [selectedRole, setselectedRole] = useState( { name: null, code: null});
    
 
 
   const UserKinds = [
-    { name: "کاربر حقوقی", code: "LU" },
-    { name: "کاربر حقیقی", code: "RU" },
+    { name: "کاربر حقوقی", code: "0" },
+    { name: "کاربر حقیقی", code: "1" },
    
   ];
 

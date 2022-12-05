@@ -1,35 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import UserDashboard from "./Pages/UserDashboards/UserDashboard"
-import Login from "./Pages/Login/Login"
-import Dashboard from "./Pages/DashboardPages/Dashboard"
+import React from "react";
+
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+// import UserDashboard from "./Pages/UserDashboards/UserDashboard"
+import Login from "./Pages/Login/Login";
+import Dashboard from "./Pages/DashboardPages/Dashboard";
 import Signup from "./Pages/Register/signup";
 import Notfoundpage from "./Pages/notfoundpage";
+import SmsValidation from "./Pages/smsValidations/smsValidation";
+import MapView from "./Pages/MapView/MapView";
+import RequestRegister from "./Pages/RequestPages/RequestRegister";
+import Navbar from "./Components/Navbar";
 function App() {
-  const logado = localStorage.getItem('@user');
+  const logado = localStorage.getItem("@user");
 
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <Counter />
-    //   </header>
-    // </div>
     <BrowserRouter>
-            <Routes>
-              <Route path="/home" exact element={<Dashboard />}/>
-              <Route path="/" exact element={<Dashboard />}/>
+      <Routes>
+        <Route path="/home" exact element={<Dashboard />} />
+        <Route path="/" exact element={<Dashboard />} />
 
-              <Route path="*" element={<Notfoundpage />} />
-                {!logado && <Route path="/Login" element={<Login logado={logado} />} />}
-                {!logado && <Route path="/Signup" element={<Signup logado={logado} />} />}
-                {!logado && <Route path="/userDashboard" element={<UserDashboard logado={logado} />} />}
+        <Route path="*" element={<Notfoundpage />} />
+        {!logado && (
+          <Route path="/Signup" element={<Signup logado={logado} />} />
+        )}
+        {!logado && <Route path="/Login" element={<Login logado={logado} />} />}
+        {!logado && (
+          <Route
+            path="/validation"
+            element={<SmsValidation logado={logado} />}
+          />
+        )}
 
-            </Routes>
-        </BrowserRouter>
+        {!logado && (
+          <Route path="/MapView" element={<MapView logado={logado} />} />
+        )}
+        {!logado && (
+          <Route
+            path="/RequestRegister"
+            element={<RequestRegister logado={logado} />}
+          />
+        )}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
