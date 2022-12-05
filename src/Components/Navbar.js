@@ -6,6 +6,7 @@ import { SidebarData } from './SidebarData';
 import './Navbar.css';
 import { IconContext } from 'react-icons';
 import { useEffect } from 'react';
+import DateAndTime from './DateAndTime';
 // const DateURL = 'http://api.codebazan.ir/time-date/?td=all'
 
 // const getDate = () => {     
@@ -31,7 +32,11 @@ function Navbar() {
         <div className='navbar' style={{padding:'5px',height:'6vh'}}>
           <Link to='#' className='menu-bars'  style={{fontSize:'1rem'}} >
             <FaIcons.FaBars onClick={showSidebar} />
+            
           </Link>
+          <div style={{color:'white'}}>
+          <DateAndTime />
+          </div>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'} style={{direction:'rtl', position: 'fixed',
       zIndex: '999'}}>
@@ -50,9 +55,20 @@ function Navbar() {
  
                   </Link>
                 </li>
+                
+
+
+
+                
               );
             })}
+              
+               
+            
+           
           </ul>
+         
+         
         </nav>
       </IconContext.Provider>
     </>
