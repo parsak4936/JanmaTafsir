@@ -10,6 +10,9 @@ import { ErrorMessage, Formik, Form, Field } from "formik";
 import Axios from "axios";
 import { Link,useNavigate} from "react-router-dom";
 import Header from "../../Components/header/header";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function Signup({ login = false }) {
   const [showPassword, setshowPassword] = useState(true);
@@ -71,14 +74,16 @@ function Signup({ login = false }) {
   };
 
   return (
-    <div className="body">
+    <Container fluid="true">
+       <Row>
+        <Header />
+        </Row>
+  
       {/* <div className="top-signup">
            <Header />
             </div> */}
-      <div className="left-signup">
-        <img src={Img} alt="Pessoas olhando gráficos" className="chart" />
-      </div>
-      <div className="right-signup">
+      
+      <Row className="right-signup">
         <div className="card-signup">
           <div className="user-links">
             <div className="user-link-home">
@@ -192,8 +197,10 @@ function Signup({ login = false }) {
             </Form>
           </Formik>
         </div>
-      </div>
-    </div>
+      </Row>
+   
+    </Container>
+   
   );
 }
 

@@ -10,23 +10,26 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Header() {
   return (
-    <Navbar fixed='top' className='App-Header' 
-          style={{direction:"rtl"}} 
+    <Navbar   className='App-Header' 
+          style={{direction:"rtl",paddingLeft:'25px'}} 
           collapseOnSelect expand="lg"  bg="transparent"  variant="dark">
       
-        <Navbar.Brand className='text-primary  App-logo  ' style={{ height: '10vmin'}} href="/home">سامانه ی کارشناسی دادگستری</Navbar.Brand>
+        <Navbar.Brand className='text-primary  App-logo  ' style={{ height: '10vmin'}} href="/home">
+          <span>سامانه ی کارشناسی اراضی</span>
+          <span> جانماتفسیر </span>
+          </Navbar.Brand>
         {/* <Navbar.Toggle  aria-controls="responsive-navbar-nav">
          
          <i class="bi bi-list"></i>
         </Navbar.Toggle> */}
         <Navbar.Toggle style={{color:'blue',}} aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse style={{backgroundColor:'blue'}}  fluid="true" id="responsive-navbar-nav">
+        <Navbar.Collapse   fluid="true" id="responsive-navbar-nav">
           <Nav className="ml-auto  ">  </Nav>
 
-          <Nav >
-            <Nav.Link href="/Login"> <Button variant="outline-primary">   ورود  </Button> </Nav.Link>
+          <Nav  >
+            <Nav.Link href="/Login"> <Button   style={{color:'blue',width:'100px'}} variant="light">   ورود  </Button> </Nav.Link>
             <Nav.Link eventKey={2} href="/Signup">
-            <Button variant="outline-primary">ثبت نام</Button>{''}
+            <Button style={{color:'blue',width:'100px'}} variant="outline-primary">ثبت نام</Button>{''}
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

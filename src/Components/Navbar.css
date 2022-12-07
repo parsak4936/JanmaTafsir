@@ -5,11 +5,17 @@
   justify-content: start;
   align-items: center;
 }
-
+ .dateandtime{
+  color: white;
+  /* margin-right:80%;
+  margin-bottom: 28px; */
+  justify-content:flex-end;
+}
 .menu-bars {
   margin-left: 2rem;
   font-size: 2rem;
   background: none;
+  padding-right: 10px;
 }
 
 .nav-menu {
@@ -70,4 +76,18 @@
 
 span {
   margin-left: 16px;
+}
+/* @media (max-width: 950px){
+  .dateandtime{
+    font-size: 20px;
+    margin-right:50%;
+   
+  }
+} */
+ 
+@media (max-width: 400px){
+  .dateandtime{
+    font-size: 10px;
+    margin-right:25%;
+   }
 }

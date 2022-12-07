@@ -1,6 +1,6 @@
 .top-to-btm{
     position: fixed;
-    
+    z-index: 999;
     margin: 80px;
     padding: 29px;
     

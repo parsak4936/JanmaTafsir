@@ -12,6 +12,7 @@ function Footer() {
   
       <Row style={{
         position: 'fixed',
+        zIndex:'9999',
         backgroundColor: 'gray',
         bottom: '0',
         left: '0',
