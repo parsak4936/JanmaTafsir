@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -11,36 +11,40 @@ import SmsValidation from "./Pages/smsValidations/smsValidation";
 import MapView from "./Pages/MapView/MapView";
 import RequestRegister from "./Pages/RequestPages/RequestRegister";
 import Navbar from "./Components/Navbar";
+import { useSelector } from "react-redux";
+import { LoginReducers } from "./app/reducers/LoginReducers";
+import { useState } from "react";
 function App() {
-  const logado = localStorage.getItem("@user");
-
+   
+  const [SubscribedUser,setSubscribedUser] =  useState();
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('@userData'));
+    setSubscribedUser(items)
+    
+  }, []);
+ 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/home" exact element={<Dashboard />} />
         <Route path="/" exact element={<Dashboard />} />
 
-        <Route path="*" element={<Notfoundpage />} />
-        {!logado && (
-          <Route path="/Signup" element={<Signup logado={logado} />} />
-        )}
-        {!logado && <Route path="/Login" element={<Login logado={logado} />} />}
-        {!logado && (
-          <Route
-            path="/validation"
-            element={<SmsValidation logado={logado} />}
-          />
-        )}
+        {/* <Route path="*" element={<Notfoundpage />} /> */}
 
-        {!logado && (
-          <Route path="/MapView" element={<MapView logado={logado} />} />
-        )}
-        {!logado && (
-          <Route
-            path="/RequestRegister"
-            element={<RequestRegister logado={logado} />}
-          />
-        )}
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/MapView" element={<MapView />} />
+        {SubscribedUser==true && <Route path="/MapView" element={<MapView />} />}
+        
+         
+          <Route path="/Login" element={<Login />} />
+
+         
+  
+        <Route path="/validation" element={<SmsValidation />} />
+
+       
+
+        <Route path="/RequestRegister" element={<RequestRegister l />} />
       </Routes>
     </BrowserRouter>
   );

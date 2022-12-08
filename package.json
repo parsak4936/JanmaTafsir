@@ -32,9 +32,11 @@
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "react-select": "^5.4.0",
+    "react-simple-widgets": "^6.7.0",
     "react-spinkit": "^3.0.0",
     "react-transition-group": "^4.4.5",
     "react-validation": "^3.0.7",
+    "sass": "^1.56.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

@@ -1,23 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { useSelector } from "react-redux";
 import Navbar from "../../Components/Navbar";
 function MapView() {
-  const [waiting, setWaiting] = useState(false);
+     
+  // const [SubscribedUserBefore,setSubscribedUserBefore] =  useState();
+  // const SubscribedUser = useSelector(
+  //   (state) => state.rootReducer.LoginReducers.SubscribedUser
+  // );
+  // useEffect(() => {
 
+  // const beforeLoad =localStorage.setItem("@userData", JSON.stringify(SubscribedUser));
+    
+  // setSubscribedUserBefore(beforeLoad)
+    
+  // }, []);
+ 
+  
   const position = [51.505, -0.09];
   return (
-    <div  style={{direction:'rtl' ,}}>
-     <Navbar />
- 
+    <>
    
+  
+    <div style={{ direction: "rtl" }}>
+    <Navbar />
+
     <MapContainer
       center={position}
       zoom={13}
-      style={{ height: " 100vh"}}
-      // scrollWheelZoom={true}
+      style={{ height: " 100vh", zIndex: "0" }}
+      scrollWheelZoom={false}
     >
       <TileLayer
-        attribution=' '
+        attribution=" "
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={position}>
@@ -26,7 +41,9 @@ function MapView() {
         </Popup>
       </Marker>
     </MapContainer>
-    </div>
+  </div>
+
+    </>
   );
 }
 
