@@ -29,8 +29,8 @@ function Login({ logado = false }) {
   const handlechange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const SubscribedUserafter = useSelector(
-    (state) => state.rootReducer.LoginReducers.SubscribedUser
+  const SubscribedUser = useSelector(
+    (state) => state.LoginReducers.SubscribedUser
   );
   //password : string
   //code : 4311211945
@@ -51,11 +51,16 @@ function Login({ logado = false }) {
               setWaiting(false);
               dispatch(allActions.userActions.login(userData));
 
-              localStorage.setItem(
-                "@userData",
-                JSON.stringify(SubscribedUserafter)
-              );
-              navigate('/MapView')
+              // localStorage.setItem(
+              //   "@userData",
+              //   JSON.stringify(SubscribedUserafter)
+              // );
+
+              if (SubscribedUser == true) {
+                navigate("/MapView");
+              } else {
+                navigate("/");
+              }
             } else {
               setWaiting(false);
             }

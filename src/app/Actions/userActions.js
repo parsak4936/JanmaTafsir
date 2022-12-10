@@ -6,13 +6,25 @@ const login = (userObj) => {
        
     }
 }
- const seeData =(userObj)=>{
+const Register = (userObj) => {
+     
     return {
-        type: "GetUserData",
-        payload: userObj,
-      
-   }
- }
+         type: "Register",
+         payload: userObj,
+       
+    }
+}
+
+const UserTypeChange = (userObj) => {
+     //{name: 'کاربر حقیقی', code: '1'}
+     
+    return {
+         type: "UserTypeChange",
+         payload: userObj.code,
+       
+    }
+}
+
 // const logOut = () => {
 //     return {
 //         type: "LOG_OUT"
@@ -21,6 +33,7 @@ const login = (userObj) => {
 
 export default {
     login,
-    seeData
+    Register,
+    UserTypeChange
     // logOut
 }

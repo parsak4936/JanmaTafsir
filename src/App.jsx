@@ -15,34 +15,33 @@ import { useSelector } from "react-redux";
 import { LoginReducers } from "./app/reducers/LoginReducers";
 import { useState } from "react";
 function App() {
-   
-  const [SubscribedUser,setSubscribedUser] =  useState();
-  useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('@userData'));
-    setSubscribedUser(items)
-    
-  }, []);
- 
+  const SubscribedUser = useSelector(
+    (state) => state.LoginReducers.SubscribedUser
+  );
+  // console.log(SubscribedUser)
+  // const [SubscribedUser,setSubscribedUser] =  useState();
+  // useEffect(() => {
+  //   const items = JSON.parse(localStorage.getItem('@userData'));
+  //   setSubscribedUser(items)
+
+  // }, []);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/home" exact element={<Dashboard />} />
         <Route path="/" exact element={<Dashboard />} />
-
-        {/* <Route path="*" element={<Notfoundpage />} /> */}
-
+        <Route path="*" element={<Notfoundpage />} />
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/MapView" element={<MapView />} />
-        {SubscribedUser==true && <Route path="/MapView" element={<MapView />} />}
-        
-         
+        {SubscribedUser == true ? (
+          <Route path="/MapView" element={<MapView />} />
+        ) : (
           <Route path="/Login" element={<Login />} />
+        )}
 
-         
-  
+        <Route path="/Login" element={<Login />} />
+
         <Route path="/validation" element={<SmsValidation />} />
-
-       
 
         <Route path="/RequestRegister" element={<RequestRegister l />} />
       </Routes>

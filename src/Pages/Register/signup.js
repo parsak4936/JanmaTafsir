@@ -1,5 +1,5 @@
 import "../../Styles/signup.css";
- 
+
 import Img from "../../Assets/result.svg";
 import Dropdown from "../../Components/dropdown/dropdownComponent";
 import React, { useState, useEffect, useRef, useCallback } from "react";
@@ -8,81 +8,82 @@ import axios from "axios";
 import * as yup from "yup";
 import { ErrorMessage, Formik, Form, Field } from "formik";
 import Axios from "axios";
-import { Link,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Components/header/header";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useDispatch, useSelector } from "react-redux";
+import allActions from "../../app/Actions/AllActions";
 
 function Signup({ login = false }) {
   const [showPassword, setshowPassword] = useState(true);
   const [waiting, setWaiting] = useState(false);
+  const [userData, setUserData] = useState({
+    nationCode: "",
 
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const handlechange = (e) => {
+    setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  
+  const dispatch = useDispatch();
+  const userType = useSelector(
+    (state) => state.SignupReducer.normalusers.userType
+  );
+  const asd = useSelector(
+    (state) => state.SignupReducer.normalusers
+  );
+ console.log(asd)
   const SignupURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserRegister";
-  const [SelectedRole, setSelectedRole] = useState({ name: null, code: null});
-  const [nationalCode, setnationalCode] = useState({ value: "", error: "" });
-  const [phoneNumber, setphoneNumber] = useState({ value: "", error: "" });
-  const [password, setpassword] = useState({ value: "", error: "" });
-  const [confirmPassword, setconfirmPassword] = useState({ value: "", error: "" });
+
   const navigate = useNavigate();
-  const selectedRolCallBack = useCallback((SelectedRole) => {
-    setSelectedRole(SelectedRole);
-  }, []); //TODO : Make it redus it has some errors !
-  // const errors = ValidationsRegister(name, email, password);
-  useEffect(() => {
-    // Update the document title using the browser API
- 
-  });
-
-  const handleRegister = async(values) => {
+  const handleRegister = async (values) => {
     setWaiting(true);
-    navigate('/validation',{state:{phoneNumber:phoneNumber.value}});
     const user = {
-      "nationalCode": nationalCode.value,
-      "phoneNumber": phoneNumber.value,
-      "userType": SelectedRole.code,
-      "password": password.value,
-      "confirmPassword": confirmPassword.value
-    }
-    axios.post(SignupURL, {
-      nationalCode: user["nationalCode"],
-      userType: user["userType"],
-      phoneNumber: user["phoneNumber"],
-      password: user["password"],
-      confirmPassword: user["confirmPassword"]
-    }).then((response) => {
-      
-      
- 
-      // if (page === true) {
-      //   localStorage.setItem('@user', JSON.stringify(response.config.data));
-      //   window.location.reload();
-      // } else {
-      //   alert(response.data.msg);
-      //   setWaiting(false)
-      // }
-
-    }).catch((exception) => {
-      setWaiting(false);
-      if (exception.response.status == 404) {
-        console.log("404");
-      } else {
-        console.log(exception.response.status);
-      }
-    });
+      nationalCode: userData.nationCode,
+      phoneNumber: userData.phoneNumber,
+      userType: userType,
+      password: userData.password,
+      confirmPassword: userData.confirmPassword,
+    };
+    axios
+      .post(SignupURL, {
+        nationalCode: user["nationalCode"],
+        userType: user["userType"],
+        phoneNumber: user["phoneNumber"],
+        password: user["password"],
+        confirmPassword: user["confirmPassword"],
+      })
+      .then((response) => {
+        if (response.data.statusCode == 200) {
+          setWaiting(false);
+          dispatch(allActions.userActions.Register(userData));
+          navigate("/Validation");
+        }
+      })
+      .catch((exception) => {
+        setWaiting(false);
+       
+          console.log(exception.response.status);
+         
+      });
   };
 
   return (
     <Container fluid="true">
-       <Row>
+      <Row>
         <Header />
-        </Row>
-  
+      </Row>
+
       {/* <div className="top-signup">
            <Header />
             </div> */}
-      
+
       <Row className="right-signup">
         <div className="card-signup">
           <div className="user-links">
@@ -103,19 +104,15 @@ function Signup({ login = false }) {
               {/* -------------------------  DropDown------------------------- */}
 
               <div className="form-group">
-                <Dropdown parentCallback={selectedRolCallBack} />
+                <Dropdown />
               </div>
 
               {/* -------------------------  Phone number------------------------- */}
               <div className="form-group">
-                {/* <label form="email">رمز</label> */}
                 <Field
-                  name="PhoneNumber"
+                  name="phoneNumber"
                   className="form-field"
-                  onChange={ (st) => {
-                    let value = st.target.value;
-                    setphoneNumber({ value: value, error: "" });
-                    }}
+                  onChange={handlechange}
                   placeholder="شماره تلفن همراه"
                 />
 
@@ -128,13 +125,9 @@ function Signup({ login = false }) {
               {/* -------------------------  NationCode------------------------- */}
 
               <div className="form-group">
-                {/* <label form="email">رمز</label> */}
                 <Field
-                  name="NationCode"
-                  onChange={ (st) => {
-                    let value = st.target.value;
-                    setnationalCode({ value: value, error: "" });
-                    }}
+                  name="nationCode"
+                  onChange={handlechange}
                   className="form-field"
                   placeholder="کدملی/کدشناسایی/کد اقتصاد"
                 />
@@ -148,15 +141,11 @@ function Signup({ login = false }) {
               {/* -------------------------  Password ------------------------- */}
 
               <div className="form-group">
-                {/* <label form="email">Confirme sua senha</label> */}
                 <Field
-                  name="Password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   className="form-field   "
-                  onChange={ (st) => {
-                    let value = st.target.value;
-                    setpassword({ value: value, error: "" });
-                    }}
+                  onChange={handlechange}
                   placeholder="رمز ورود"
                 />
 
@@ -166,18 +155,15 @@ function Signup({ login = false }) {
                   className="form-error"
                 />
               </div>
+
               {/* ------------------------- Confirm  Password ------------------------- */}
 
               <div className="form-group">
-                {/* <label form="email">Confirme sua senha</label> */}
                 <Field
-                  name="Password_confirmation"
+                  name="confirmPassword"
                   type={showPassword ? "text" : "password"}
                   className="form-field   "
-                  onChange={ (st) => {
-                    let value = st.target.value;
-                    setconfirmPassword({ value: value, error: "" });
-                    }}
+                  onChange={handlechange}
                   placeholder=" تکرار رمز ورود"
                 />
 
@@ -189,18 +175,14 @@ function Signup({ login = false }) {
               </div>
 
               {/* -------------------------   ------------------------- */}
-                    <button className="button" type="submit">
+              <button className="button" type="submit">
                 تایید
-              </button>  
-
-             
+              </button>
             </Form>
           </Formik>
         </div>
       </Row>
-   
     </Container>
-   
   );
 }
 

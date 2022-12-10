@@ -2,29 +2,28 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
 import "primeflex/primeflex.css";
- import ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 
-import React, { useState, useEffect, useRef,useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Dropdown } from "primereact/dropdown";
- import "./dropdowncss.css";
- 
- 
-      
+import "./dropdowncss.css";
+import { useDispatch, useSelector } from "react-redux";
+import allActions from "../../app/Actions/AllActions";
 
+function DropdownComponent() {
+  const dispatch = useDispatch();
 
-function DropdownComponent  ({parentCallback}) {
-  const [selectedRole, setselectedRole] = useState( { name: null, code: null});
-   
+  const [selectedRole, setselectedRole] = useState({
+    name: "",
 
+    code: "",
+  });
 
   const UserKinds = [
     { name: "کاربر حقوقی", code: "0" },
     { name: "کاربر حقیقی", code: "1" },
-   
   ];
 
-  parentCallback(selectedRole)
- 
   // useEffect(() => {
   //   setLazyItems(Array.from({ length: 100000 }));
   //   setLazyLoading(false);
@@ -32,13 +31,12 @@ function DropdownComponent  ({parentCallback}) {
 
   const onRoleChange = (e) => {
     setselectedRole(e.value);
-  
+    dispatch(allActions.userActions.UserTypeChange(e.value));
   };
 
   return (
     <div className="dropdown-demo">
       <div className="card">
-        
         <Dropdown
           value={selectedRole}
           options={UserKinds}
@@ -49,7 +47,7 @@ function DropdownComponent  ({parentCallback}) {
       </div>
     </div>
   );
-};
+}
 export default DropdownComponent;
 // const rootElement = document.getElementById("root");
 // ReactDOM.render(<dropdownComponent />, rootElement);

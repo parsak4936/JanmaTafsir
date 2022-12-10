@@ -7,9 +7,13 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useSelector } from "react-redux";
 
 function Header() {
- 
+  const SubscribedUser = useSelector(
+    (state) => state.LoginReducers.SubscribedUser
+  );
+
   return (
     <Navbar
       className="App-Header"
@@ -39,7 +43,15 @@ function Header() {
         <Nav className="ml-auto  "> </Nav>
 
         <Nav>
-          
+          {SubscribedUser == true ? (
+            <Nav.Link href="/MapView">
+              {" "}
+              <Button style={{ color: "blue", width: "100px" }} variant="light">
+                {" "}
+                ورود{" "}
+              </Button>{" "}
+            </Nav.Link>
+          ) : (
             <Nav.Link href="/Login">
               {" "}
               <Button style={{ color: "blue", width: "100px" }} variant="light">
@@ -47,7 +59,8 @@ function Header() {
                 ورود{" "}
               </Button>{" "}
             </Nav.Link>
-         
+          )}
+
           <Nav.Link eventKey={2} href="/Signup">
             <Button
               style={{ color: "blue", width: "100px" }}

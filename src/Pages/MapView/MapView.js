@@ -3,18 +3,6 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useSelector } from "react-redux";
 import Navbar from "../../Components/Navbar";
 function MapView() {
-     
-  // const [SubscribedUserBefore,setSubscribedUserBefore] =  useState();
-  // const SubscribedUser = useSelector(
-  //   (state) => state.rootReducer.LoginReducers.SubscribedUser
-  // );
-  // useEffect(() => {
-
-  // const beforeLoad =localStorage.setItem("@userData", JSON.stringify(SubscribedUser));
-    
-  // setSubscribedUserBefore(beforeLoad)
-    
-  // }, []);
  
   
   const position = [51.505, -0.09];

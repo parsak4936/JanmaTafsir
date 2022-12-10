@@ -1,21 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import React, { useEffect } from "react";
-const initialState = {
-  normalusers: {
-    firstname: "",
-    lastname: "",
-    phoneNumber: "",
-    nationalCode: "",
-    password: "",
-    confirmPassword: "",
-    shabaNumber: 0,
-    userType: 0,
-    address: "",
-    cityId: 0,
-  },
-  LogInToken: "",
-  SubscribedUser: false,
-};
+import  initialState  from "./Initialstate";
 
 const LoginReducers = (state = initialState, action) => {
   
