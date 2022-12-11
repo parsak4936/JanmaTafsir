@@ -6,16 +6,17 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "../../Components/header/header";
 import LoadingAnimation from "../../Components/loadingAnimation";
-
+import Footer from "../../Components/Footer/Footer";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
 function Login({ logado = false }) {
   const [waiting, setWaiting] = useState(false);
   const navigate = useNavigate();
+  const nationCodeRegExp = /^[0-9]{10}$/;
   const LoginURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserLogin";
 
@@ -23,14 +24,22 @@ function Login({ logado = false }) {
     nationCode: "",
     password: "",
   });
+  var nationcodeValiation = false;
+  if (nationCodeRegExp.test(userData.nationCode)) {
+    nationcodeValiation = true;
+  }
+
+  var passwordValidation = false;
+  if (userData.password.length >= 6) {
+    passwordValidation = true;
+  }
 
   const dispatch = useDispatch();
-
   const handlechange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const SubscribedUser = useSelector(
-    (state) => state.LoginReducers.SubscribedUser
+    (state) => state.persistedReducer.LoginReducers.SubscribedUser
   );
   //password : string
   //code : 4311211945
@@ -59,15 +68,22 @@ function Login({ logado = false }) {
               if (SubscribedUser == true) {
                 navigate("/MapView");
               } else {
-                navigate("/");
+                navigate("/Login");
               }
-            } else {
-              setWaiting(false);
             }
+ 
           })
           .catch((exception) => {
             setWaiting(false);
-            console.log(exception);
+           
+            if(exception.response.status==400 ||exception.response.status==404 ){
+              alert("اطلاعات وارد شده درست نمیباشد")
+            }
+            else if(exception.response.status==500){
+              alert("دوباره امتحان کنید ")
+            }
+              
+           
           });
       },
 
@@ -115,9 +131,11 @@ function Login({ logado = false }) {
                         value={userData.nationCode}
                         placeholder="کدملی/کدشناسایی/کد اقتصاد"
                       />
-                      {errors.NationCode && touched.NationCode ? (
-                        <div>{errors.NationCode}</div>
-                      ) : null}
+                      {nationcodeValiation == true ? (
+                        <div></div>
+                      ) : (
+                        <div style={{ color: "red" }}>کد ملی اشتباه میباشد</div>
+                      )}
                     </div>
                     {/* -------------------------  Password ------------------------- */}
 
@@ -132,25 +150,46 @@ function Login({ logado = false }) {
                         className="form-field"
                         placeholder="رمز ورود"
                       />
+                      {passwordValidation == true ? (
+                        <div></div>
+                      ) : (
+                        <div style={{ color: "red" }}>
+                          {" "}
+                          رمز نباید کمتر از 8 کاراکتر باشد{" "}
+                        </div>
+                      )}
                     </div>
 
                     {/* -------------------------   ------------------------- */}
 
                     <div className="form-group" style={{}}>
-                      {waiting == false ? (
-                        <button className="button" type="submit">
+                      {nationcodeValiation == false ||
+                      passwordValidation==false  ? (
+                        <Button className="button" type="submit" disabled>
                           تایید
-                        </button>
+                        </Button>
                       ) : (
-                        <button className="button" type="submit">
-                          <Spinner
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                          />
-                        </button>
+                        <>
+                          {waiting == false ? (
+                            <button
+                              className="button"
+                              type="submit"
+                               
+                            >
+                              تایید
+                            </button>
+                          ) : (
+                            <Button className="button" type="submit">
+                              <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                              />
+                            </Button>
+                          )}
+                        </>
                       )}
                     </div>
                   </Form>
@@ -158,6 +197,8 @@ function Login({ logado = false }) {
               </Formik>
             </div>
           </Row>
+
+           
         </Col>
       </Container>
     </>

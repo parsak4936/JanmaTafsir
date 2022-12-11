@@ -14,6 +14,7 @@ import Navbar from "./Components/Navbar";
 import { useSelector } from "react-redux";
 import { LoginReducers } from "./app/reducers/LoginReducers";
 import { useState } from "react";
+import Footer from "./Components/Footer/Footer";
 function App() {
   const SubscribedUser = useSelector(
     (state) => state.persistedReducer.LoginReducers.SubscribedUser
@@ -46,6 +47,7 @@ function App() {
 
         <Route path="/RequestRegister" element={<RequestRegister l />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
   );
 }

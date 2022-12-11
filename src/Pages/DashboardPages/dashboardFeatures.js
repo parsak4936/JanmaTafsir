@@ -31,13 +31,13 @@ function Features() {
             <h1
               className="col-xs-12 col-md-5 featuresheader "
               style={{
-                width: "350px",
-                fontSize: "30px",
+                width: "550px",
+                fontSize: "20px",
                 textAlign: "center",
                 lineHeight: "1.5",
               }}
             >
-              جانما تفسیر چیست ؟
+              سامانه ایی برای حل مشکلات حقوقی اراضی{" "}
             </h1>
             <ul>
               <li
@@ -45,35 +45,36 @@ function Features() {
                 data-wow-duration=".9s"
                 className="wow fadeInRight"
               >
-                ویژگی اول
+                دیگر منتظر زمان دادگاه نباشید ، جانماتفسیر قبل نتیجه پرونده را
+                مشخص میکند و نیازی به دادگاه نخواهد بود
               </li>
               <li
                 data-wow-delay=".2s"
                 data-wow-duration=".9s"
                 className="wow fadeInRight"
               >
-                ویژگی دوم
+                سرعت بخشیدن به روند حقوقی پرونده ها{" "}
               </li>
               <li
                 data-wow-delay=".3s"
                 data-wow-duration=".9s"
                 className="wow fadeInRight"
               >
-                ویژگی سوم
+                بستری مطمئن برای حل مشکلات اراضی
               </li>
               <li
                 data-wow-delay=".4s"
                 data-wow-duration=".9s"
                 className="wow fadeInRight"
               >
-                ویژگی چهارم
+                سیستم قابل اطمنان برای امتیاز بندی کارشناسان رمس دادگستری
               </li>
               <li
                 data-wow-delay=".5s"
                 data-wow-duration=".9s"
                 className="wow fadeInRight"
               >
-                ویژگی پنجم
+                ارتباط مستقیم با کارشناسان حرفه ایی دادگستری
               </li>
             </ul>
           </div>

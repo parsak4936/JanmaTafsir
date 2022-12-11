@@ -18,10 +18,10 @@ function Header() {
   return (
     <Navbar
       className="App-Header"
-      style={{ direction: "rtl", paddingLeft: "25px" }}
+      style={{ direction: "rtl", paddingLeft: "25px",backgroundColor:'#113059' }}
       collapseOnSelect
       expand="lg"
-      bg="transparent"
+       
       variant="dark"
     >
       <Navbar.Brand

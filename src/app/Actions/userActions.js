@@ -41,7 +41,14 @@ const UserTypeChange = (userObj) => {
        
     }
 }
-
+const LogOut = () => {
+     
+    return {
+         type: "LogOut",
+         
+       
+    }
+}
 // const logOut = () => {
 //     return {
 //         type: "LOG_OUT"
@@ -54,5 +61,6 @@ export default {
     UserTypeChange,
     SelectCity,
     SelectState,
+    LogOut,
     // logOut
 }

@@ -5,6 +5,7 @@ import  initialState  from "./Initialstate";
 const LoginReducers = (state = initialState, action) => {
   
   switch (action.type) {
+    
     case "LOGIN":
       return {
         ...state,
@@ -15,7 +16,11 @@ const LoginReducers = (state = initialState, action) => {
         },
         SubscribedUser: true,
       };
-
+      case "LogOut":
+        return {
+          ...state,
+          SubscribedUser: false,
+        };
     default:
       return state;
   }

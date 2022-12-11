@@ -49,10 +49,7 @@ import GoTopScroll from "../../Components/GoTop/goTopScroll";
       </Row>
         {/* footer Row */}
        
-        <Row>
-       
-        <Col lg={true}><Footer/></Col>
-      </Row>
+         
  
         </Container> 
      

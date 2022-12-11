@@ -15,13 +15,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
+import Footer from "../../Components/Footer/Footer";
+import { Button, Spinner } from "react-bootstrap";
 
 function Signup({ login = false }) {
   const [showPassword, setshowPassword] = useState(true);
   const [waiting, setWaiting] = useState(false);
   const [userData, setUserData] = useState({
     nationCode: "",
-
     phoneNumber: "",
     password: "",
     confirmPassword: "",
@@ -29,20 +30,40 @@ function Signup({ login = false }) {
   const handlechange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  
+  //---------------------Validations------------------//
+  const nationCodeRegExp = /^[0-9]{10}$/;
+  const phoneRegExp = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/;
+
+  var nationcodeValiation = false;
+  if (nationCodeRegExp.test(userData.nationCode)) {
+    nationcodeValiation = true;
+  }
+  var phonenumberValidation = false;
+  if (phoneRegExp.test(userData.phoneNumber)) {
+    phonenumberValidation = true;
+  }
+
+  var passwordValidation = false;
+  if (userData.password.length >= 6) {
+    passwordValidation = true;
+  }
+  var confirmpasswordValidation = false;
+  if (userData.confirmPassword == userData.password) {
+    confirmpasswordValidation = true;
+  }
+  //---------------------------------------//
+
   const dispatch = useDispatch();
   const userType = useSelector(
-    (state) => state.SignupReducer.normalusers.userType
+    (state) => state.persistedReducer.SignupReducer.normalusers.userType
   );
-  const asd = useSelector(
-    (state) => state.SignupReducer.normalusers
-  );
- console.log(asd)
+  console.log(userType)
+  
   const SignupURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserRegister";
 
   const navigate = useNavigate();
-  const handleRegister = async (values) => {
+  const handleRegister = () => {
     setWaiting(true);
     const user = {
       nationalCode: userData.nationCode,
@@ -51,27 +72,39 @@ function Signup({ login = false }) {
       password: userData.password,
       confirmPassword: userData.confirmPassword,
     };
-    axios
-      .post(SignupURL, {
-        nationalCode: user["nationalCode"],
-        userType: user["userType"],
-        phoneNumber: user["phoneNumber"],
-        password: user["password"],
-        confirmPassword: user["confirmPassword"],
-      })
-      .then((response) => {
-        if (response.data.statusCode == 200) {
-          setWaiting(false);
-          dispatch(allActions.userActions.Register(userData));
-          navigate("/Validation");
-        }
-      })
-      .catch((exception) => {
-        setWaiting(false);
-       
-          console.log(exception.response.status);
-         
-      });
+    setTimeout(
+      () => {
+        axios
+          .post(SignupURL, {
+            nationalCode: user["nationalCode"],
+            userType: user["userType"],
+            phoneNumber: user["phoneNumber"],
+            password: user["password"],
+            confirmPassword: user["confirmPassword"],
+          })
+          .then((response) => {
+            if (response.data.statusCode == 200) {
+              setWaiting(false);
+              dispatch(allActions.userActions.Register(userData));
+              navigate("/Validation");
+            }
+          })
+          .catch((exception) => {
+            setWaiting(false);
+
+            if (
+              exception.response.status == 400 ||
+              exception.response.status == 404
+            ) {
+              alert("اطلاعات وارد شده درست نمیباشد");
+            } else if (exception.response.status == 500) {
+              alert("دوباره امتحان کنید ");
+            }
+          });
+      },
+
+      2000
+    );
   };
 
   return (
@@ -116,11 +149,14 @@ function Signup({ login = false }) {
                   placeholder="شماره تلفن همراه"
                 />
 
-                <ErrorMessage
-                  component="span"
-                  name="PhoneNumber"
-                  className="form-error"
-                />
+{phonenumberValidation == true ? (
+                        <div></div>
+                      ) : (
+                        <div style={{ color: "red" }}>
+                          {" "}
+                           شماره تلفن درست نمیباشد{" "}
+                        </div>
+                      )}
               </div>
               {/* -------------------------  NationCode------------------------- */}
 
@@ -131,12 +167,14 @@ function Signup({ login = false }) {
                   className="form-field"
                   placeholder="کدملی/کدشناسایی/کد اقتصاد"
                 />
-
-                <ErrorMessage
-                  component="span"
-                  name="NationCode"
-                  className="form-error"
-                />
+                 {nationcodeValiation == true ? (
+                        <div></div>
+                      ) : (
+                        <div style={{ color: "red" }}>
+                          {" "}
+                           کد ملی درست نمیباشد{" "}
+                        </div>
+                      )}
               </div>
               {/* -------------------------  Password ------------------------- */}
 
@@ -148,12 +186,14 @@ function Signup({ login = false }) {
                   onChange={handlechange}
                   placeholder="رمز ورود"
                 />
-
-                <ErrorMessage
-                  component="span"
-                  name="Password"
-                  className="form-error"
-                />
+                {passwordValidation == true ? (
+                        <div></div>
+                      ) : (
+                        <div style={{ color: "red" }}>
+                          {" "}
+                          رمز نباید کمتر از 8 کاراکتر باشد{" "}
+                        </div>
+                      )}
               </div>
 
               {/* ------------------------- Confirm  Password ------------------------- */}
@@ -166,22 +206,48 @@ function Signup({ login = false }) {
                   onChange={handlechange}
                   placeholder=" تکرار رمز ورود"
                 />
-
-                <ErrorMessage
-                  component="span"
-                  name="Password_confirmation"
-                  className="form-error"
-                />
+                {confirmpasswordValidation == true ? (
+                  <div></div>
+                ) : (
+                  <div style={{ color: "red" }}>
+                    {" "}
+                  رمز باید با قبلی برابر باشد{" "}
+                  </div>
+                )}
               </div>
 
               {/* -------------------------   ------------------------- */}
-              <button className="button" type="submit">
-                تایید
-              </button>
+
+              <div className="form-group" style={{}}>
+                {nationcodeValiation == false || passwordValidation == false || phonenumberValidation == false || nationcodeValiation==false ? (
+                  <Button className="button" type="submit" disabled>
+                    تایید
+                  </Button>
+                ) : (
+                  <>
+                    {waiting == false ? (
+                      <button className="button" type="submit">
+                        تایید
+                      </button>
+                    ) : (
+                      <Button className="button" type="submit">
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                      </Button>
+                    )}
+                  </>
+                )}
+              </div>
             </Form>
           </Formik>
         </div>
       </Row>
+      
     </Container>
   );
 }

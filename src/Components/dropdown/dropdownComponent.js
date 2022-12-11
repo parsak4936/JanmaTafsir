@@ -14,9 +14,8 @@ function DropdownComponent() {
   const dispatch = useDispatch();
 
   const [selectedRole, setselectedRole] = useState({
-    name: "",
-
-    code: "",
+    name: "کاربر حقیقی",
+    code: "1",
   });
 
   const UserKinds = [
