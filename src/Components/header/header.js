@@ -11,7 +11,8 @@ import { useSelector } from "react-redux";
 
 function Header() {
   const SubscribedUser = useSelector(
-    (state) => state.LoginReducers.SubscribedUser
+    (state) => state.persistedReducer.LoginReducers.SubscribedUser
+   
   );
 
   return (

@@ -15,6 +15,23 @@ const Register = (userObj) => {
     }
 }
 
+const SelectState = (userObj) => {
+     console.log(userObj)
+    return {
+         type: "SelectState",
+         payload: userObj,
+       
+    }
+}
+const SelectCity = (userObj) => {
+     
+    return {
+         type: "SelectCity",
+         payload: userObj,
+       
+    }
+}
+
 const UserTypeChange = (userObj) => {
      //{name: 'کاربر حقیقی', code: '1'}
      
@@ -34,6 +51,8 @@ const UserTypeChange = (userObj) => {
 export default {
     login,
     Register,
-    UserTypeChange
+    UserTypeChange,
+    SelectCity,
+    SelectState,
     // logOut
 }

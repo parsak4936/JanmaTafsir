@@ -13,5 +13,6 @@
     },
     LogInToken: "",
     SubscribedUser: false,
+   
   };
   export default InitialState

@@ -20,7 +20,7 @@ import { Dropdown, DropdownButton, Image } from "react-bootstrap";
 //   );
 // }
 function Navbar() {
-  const [sidebar, setSidebar] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   // const [Date, setDate] = React.useState();
   //   useEffect(() => {

@@ -9,34 +9,45 @@ import { useEffect } from "react";
 import Modal from "../Modals/Modal";
 import { ModalContext } from "../Modals/context";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import allActions from "../../app/Actions/AllActions";
+import UserLocationPicker from "../Map/LocationPicker";
+import ExpertModal from "../Modals/Modal";
 
-const getStateURL =
-  "https://elated-swanson-mrhungrj5.iran.liara.run/api/General/GetStates";
-
-const getCityURL =
-  "https://elated-swanson-mrhungrj5.iran.liara.run/api/General/GetCities";
 function NewReqForm() {
-  //   const [showModal, updateShowModal] = useState(false);
-  // console.log(showModal)
-  //   const toggleModal = () => updateShowModal(state => !state);
+  const maptoggleBoolean = useSelector(
+    (state) => state.ToggleReducer.MapToggle
+  );
+  const ModalToggleBoolean = useSelector(
+    (state) => state.ToggleReducer.ModalToggle
+  );
+  const selectedStateID = useSelector(
+    (state) => state.SelectCSReducer.selectedState.id
+  );
+  const [maptoggle, setmapToggle] = useState(false);
+  const [modaltoggle, setmodaltoggle] = useState(false);
+  const [uploadFile, setuploadFile] = useState();
+  const [selectedState, setSelectedState] = useState({ id: "", name: "" });
+ 
+
+  const [selectedCity, setSelectedCity] = useState({ id: "", name: "" });
   const [stateData, setstateData] = useState([]);
-  const [cityData, setCityData] = useState([
+  const [cityData, setCityData] = useState([]);
+console.log(cityData)
+  const dispatch = useDispatch();
  
-    {id: 1, name: 'اصفهان'},
-    {id: 12, name: 'قزوین'},
-    {id: 3, name: 'تهران'},
-    {id: 4, name: 'زنجان'},
- 
-    ]);
-  
-    
+  const getStateURL =
+    "https://elated-swanson-mrhungrj5.iran.liara.run/api/General/GetStates";
+
+  const getCityURL =
+    "https://elated-swanson-mrhungrj5.iran.liara.run/api/General/GetCities";
+
   const getState = () => {
     axios
       .get(getStateURL)
       .then((response) => {
         if (response.data.statusCode == 200) {
           setstateData(response.data.data);
-          
         } else {
         }
       })
@@ -45,32 +56,32 @@ function NewReqForm() {
       });
   };
   const getcity = () => {
+   if (selectedStateID==selectedState.id){
     axios
-      .get(getCityURL)
-      .then((response) => {
-        if (response.data.statusCode == 200) {
-          // setCityData(response.data.data);
-        } else {
-        }
-      })
-      .catch((exception) => {
-        console.log(exception);
-      });
+    .get(getCityURL, { params: { statId: selectedStateID } })
+    .then((response) => {
+      if (response.data.statusCode == 200) {
+        setCityData(response.data.data);
+       
+      } else {
+      }
+    })
+    .catch((exception) => {
+      console.log(exception);
+    });
+   }else{
+    console.log("GG")
+   }
+    
+   
   };
-  const [uploadFile, setuploadFile] = React.useState();
-  const [selectedState, setSelectedState] = React.useState("");
-  const [selectedCity, setSelectedCity] = React.useState("");
-  // console.log(selectedState)
-   // const availableCities = cityData.filter((obj) => {
-  //   return obj.data.name === selectedState;
-  // });
-  const availableCities = stateData?.find(
-     (s) => s.name === selectedState
-  );
-  console.log(availableCities)
+  
+  console.log(cityData)
+  const checkcity=()=>{
+
+  }
   useEffect(() => {
     getState();
-    getcity();
   }, []);
 
   return (
@@ -84,52 +95,96 @@ function NewReqForm() {
             ) : (
               <select
                 placeholder="State"
-                value={selectedState}
-                onChange={(e) => setSelectedState(e.target.value)}
+                value={selectedState.name}
+                onChange={(e) => {
+                 
+                  dispatch(
+                    allActions.userActions.SelectState({
+                      id: e.target.options.selectedIndex + 1,
+                      name: e.target.value,
+                    })
+                  );
+                  setSelectedState({
+                    id: e.target.options.selectedIndex + 1,
+                    name: e.target.value,
+                  });
+                  
+                   getcity(selectedStateID);
+
+                }}
               >
-                {stateData.map((e, key) => {
+                {stateData.map((e) => {
                   return (
-                    <option value={e.center} key={key}>
+                    <option value={e.center} key={e.id}>
                       {e.name}
                     </option>
                   );
                 })}
               </select>
+              
+
+
+
             )}
 
-            {/* {cityData == undefined && availableCities==undefined ? (
+{/* 
+{selectedStateID == '' ? (
               <div></div>
             ) : (
               <select
-                placeholder="City"
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
+                placeholder="State"
+                value={selectedCity.name}
+                onChange={(e) => {
+                  setSelectedCity({
+                    id: e.target.options.selectedIndex + 1,
+                    name: e.target.value,
+                  });
+                  // dispatch(
+                  //   allActions.userActions.SelectState({
+                  //     id: e.target.options.selectedIndex + 1,
+                  //     name: e.target.value,
+                  //   })
+                  // );
+
+                  //  getcity(selectedStateID);
+                }}
               >
-                {availableCities?.name.map((e, key) => {
+                {cityData.map((e) => {
                   return (
-                    <option value={e.center} key={key}>
+                    <option value={e.center} key={e.id}>
                       {e.name}
                     </option>
                   );
                 })}
               </select>
-            )}   */}
+              
+
+
+
+            )}
+  */}
           </Col>
         </Row>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formGridAddress1">
-        <Form.Label>Address</Form.Label>
-        <Dropdown className="d-inline mx-2">
-          <Dropdown.Toggle id="dropdown-autoclose-true">
-            Default Dropdown
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-            <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-            <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <Form.Label>Location</Form.Label>
+        <button
+          type="button"
+          onClick={() => {
+            setmapToggle(!maptoggle);
+            dispatch(allActions.ToggleActions.MapToggle(maptoggle));
+          }}
+          class="btn btn-primary mb-5"
+        >
+          مشخص کردن از روی نقشه
+        </button>
+        {maptoggleBoolean && (
+          <ul class="list-group">
+            <li class="list-group-item">
+              <UserLocationPicker />
+            </li>
+          </ul>
+        )}
       </Form.Group>
 
       <Form.Group controlId="formFile" className="mb-3">
@@ -174,8 +229,16 @@ function NewReqForm() {
         <Form.Label>Example textarea</Form.Label>
         <Form.Control as="textarea" rows={3} />
       </Form.Group>
-
-      <Button variant="primary" type="submit">
+      {ModalToggleBoolean == true && <ExpertModal />}
+      <ExpertModal />
+      <Button
+        variant="primary"
+        type="button"
+        onClick={() => {
+          setmodaltoggle(true);
+          dispatch(allActions.ToggleActions.ModalToggle(true));
+        }}
+      >
         Submit
       </Button>
     </Form>

@@ -10,16 +10,21 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import  ToggleReducer from './reducers/ToggleReducer'
+import SelectCSReducer from "./reducers/SelectCSReducer";
 import persistStore from "redux-persist/es/persistStore";
 const persistConfig = {
   key: "main-root",
   storage,
 };
-
  const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer:{
+    persistedReducer,
+    ToggleReducer,
+    SelectCSReducer,
+  } ,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

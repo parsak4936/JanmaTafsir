@@ -18,7 +18,7 @@ function Profile() {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   const SubscribedUserafter = useSelector(
-    (state) => state.LoginReducers.normalusers.nationalCode);
+    (state) => state.persistedReducer.LoginReducers.normalusers.nationalCode);
  
   return (
     <>

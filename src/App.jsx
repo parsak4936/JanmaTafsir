@@ -16,8 +16,9 @@ import { LoginReducers } from "./app/reducers/LoginReducers";
 import { useState } from "react";
 function App() {
   const SubscribedUser = useSelector(
-    (state) => state.LoginReducers.SubscribedUser
+    (state) => state.persistedReducer.LoginReducers.SubscribedUser
   );
+  console.log(SubscribedUser)
   // console.log(SubscribedUser)
   // const [SubscribedUser,setSubscribedUser] =  useState();
   // useEffect(() => {
@@ -25,7 +26,7 @@ function App() {
   //   setSubscribedUser(items)
 
   // }, []);
-
+ 
   return (
     <BrowserRouter>
       <Routes>
