@@ -1,23 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
-import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
-// import "./profile.scss";
-import { IconContext } from "react-icons";
-import { PopupMenu } from "react-simple-widgets";
+import React, { useState, useRef } from "react";
 
-import user from "../../Assets/Icons/user.png";
-import edit from "../../Assets/Icons/edit.png";
-import inbox from "../../Assets/Icons/envelope.png";
-import settings from "../../Assets/Icons/settings.png";
-import help from "../../Assets/Icons/question.png";
-import logout from "../../Assets/Icons/log-out.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
+import { Avatar } from "primereact/avatar";
+import { SlideMenu } from "primereact/slidemenu";
+ 
+import { Button } from "primereact/button";
 function Profile() {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   const navigate = useNavigate();
+  const menu = useRef(null);
 
   const SubscribedUserafter = useSelector(
     (state) => state.persistedReducer.LoginReducers.normalusers.nationalCode
@@ -25,20 +19,15 @@ function Profile() {
   const SubscribedUser = useSelector(
     (state) => state.persistedReducer.LoginReducers.SubscribedUser
   );
- 
+
   const dispatch = useDispatch();
-
-  return (
-    <>
-      <PopupMenu>
-        <button className="btn btn-primary">
-          <small>Menu</small>
-        </button>
-
-        <div className="card text-start" style={{}}>
+  const items = [
+    {
+      template: (item, options) => {
+        return (
           <div className="card-body px-4 py-4" style={{}}>
             <div id="circle-avatar" className="text-center mx-auto mb-4">
-              <span>K</span>
+              <Avatar size="large" shape="circle" />{" "}
             </div>
 
             <h5 className="text-center mb-0">{SubscribedUserafter}</h5>
@@ -78,22 +67,46 @@ function Profile() {
             <hr style={{ margin: "0 -24px 24px" }} />
 
             <div className="d-grid">
-              <button
-                className="btn btn-secondary" type="button"
+              <Button
+                className="btn btn-secondary"
+                type="button"
                 onClick={() => {
                   dispatch(allActions.userActions.LogOut());
-                  
-                    navigate("/");
-                  
-                  
+
+                  navigate("/");
                 }}
               >
                 <small>Logout</small>
-              </button>
+              </Button>
             </div>
           </div>
-        </div>
-      </PopupMenu>
+        );
+      },
+    },
+  ];
+  return (
+    <>
+      {/* <div className="card text-start" style={{}}>
+
+
+       </div>
+          <div className="card-body px-4 py-4" style={{}}>
+
+            
+          </div> */}
+      <SlideMenu
+        ref={menu}
+        easing
+        model={items}
+        popup
+        viewportHeight={320}
+        menuWidth={175}
+      ></SlideMenu>
+      <Avatar
+        size="large"
+        shape="circle"
+        onClick={(event) => menu.current.toggle(event)}
+      />
     </>
   );
 }

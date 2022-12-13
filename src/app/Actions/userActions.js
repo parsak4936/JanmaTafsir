@@ -41,6 +41,7 @@ const UserTypeChange = (userObj) => {
        
     }
 }
+
 const LogOut = () => {
      
     return {

@@ -13,6 +13,8 @@ import {
 import  ToggleReducer from './reducers/ToggleReducer'
 import SelectCSReducer from "./reducers/SelectCSReducer";
 import persistStore from "redux-persist/es/persistStore";
+import NewReqReducer from './reducers/NewReqReducer'
+
 const persistConfig = {
   key: "main-root",
   storage,
@@ -24,6 +26,7 @@ const store = configureStore({
     persistedReducer,
     ToggleReducer,
     SelectCSReducer,
+    NewReqReducer
   } ,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

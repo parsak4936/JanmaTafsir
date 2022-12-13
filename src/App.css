@@ -19,7 +19,9 @@ a {
     animation: App-logo-float infinite 3s ease-in-out;
   }
 }
-
+body{
+  
+}
 .App-header {
   min-height: 100vh;
   display: flex;

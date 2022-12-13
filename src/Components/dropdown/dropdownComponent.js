@@ -2,12 +2,10 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
 import "primeflex/primeflex.css";
-import ReactDOM from "react-dom";
-
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import "./dropdowncss.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
 
 function DropdownComponent() {

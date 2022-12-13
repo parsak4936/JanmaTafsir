@@ -1,5 +1,6 @@
 import React from "react";
 import '../../Styles/dashboard.css';
+import 'primeflex/primeflex.scss';
 import Header from "../../Components/header/header"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
@@ -11,47 +12,52 @@ import UserShowUp from "./UserShowUp";
 import Footer from "../../Components/Footer/Footer";
 import MapShowUp from "./MapShowUp";
 import GoTopScroll from "../../Components/GoTop/goTopScroll";
+import Appdescription from "./Appdescription";
+import ContactusCard from "../../Components/Cards/ContactusCard";
+import Aboutus from "./Aboutus";
  
  function Dashboard() {
   
     return(
  
-  <Container  fluid="true">
+  <div  className="grid" >
  <GoTopScroll />
   {/* navbar Row */}
-      <Row   style={{height:'10vh'}}>
-       
-        <Col><Header/></Col>
- 
-      </Row>
-  {/* features Row */}
-      <Row  >
-       
-        <Col lg={true}><Features /></Col>
-       
-      </Row>
 
-       {/* users Row */}
-      <Row style={{height:'70vh'}} >
+  <div className="grid col-12 h-full"   >
        
-        <Col lg={true}>  <UserShowUp /></Col>
-      </Row>
+       <Col><Header/></Col>
+
+     </div>
+ {/* features Row */}
+    
+     <div className="grid col-12 h-full"  style={{height:'100vh'}}>
+      
+      <Col lg={true}> <Appdescription/></Col>
+    </div>
+      {/* users Row */}
+     <div className="grid col-12 h-full"  style={{height:'100vh'}} >
+       <Col lg={true}>  <UserShowUp /></Col>
+     </div>
      
-       {/* detailed / iconicfeatures Row */}
-      <Row>
-       
-        <Col lg={true}> <DetailedFatures/></Col>
-      </Row>
-       {/* mapdetails Row */}
-      <Row>
+<div className="grid col-12 h-full">
+  <Aboutus/>
+</div>
+     <div className="grid col-12 h-full"  style={{height:'100vh'}} > 
+     
+   فرم ارتباط با ما
+     
+      
+     </div>
+     <div className="grid col-12 "    > 
+     <Footer/>
+     </div>
 
-        <Col lg={true}><MapShowUp /></Col>
-      </Row>
-        {/* footer Row */}
+     
        
          
  
-        </Container> 
+        </div> 
      
     );
 }

@@ -10,7 +10,7 @@ import Notfoundpage from "./Pages/notfoundpage";
 import SmsValidation from "./Pages/smsValidations/smsValidation";
 import MapView from "./Pages/MapView/MapView";
 import RequestRegister from "./Pages/RequestPages/RequestRegister";
-import Navbar from "./Components/Navbar";
+import Navbar from "./Components/navbars/Navbar";
 import { useSelector } from "react-redux";
 import { LoginReducers } from "./app/reducers/LoginReducers";
 import { useState } from "react";
@@ -19,6 +19,7 @@ function App() {
   const SubscribedUser = useSelector(
     (state) => state.persistedReducer.LoginReducers.SubscribedUser
   );
+  
   console.log(SubscribedUser)
   // console.log(SubscribedUser)
   // const [SubscribedUser,setSubscribedUser] =  useState();
@@ -47,7 +48,7 @@ function App() {
 
         <Route path="/RequestRegister" element={<RequestRegister l />} />
       </Routes>
-      <Footer/>
+    
     </BrowserRouter>
   );
 }

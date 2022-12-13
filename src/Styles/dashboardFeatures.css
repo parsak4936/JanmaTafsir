@@ -12,6 +12,7 @@
     list-style-image: url(http://upload.wikimedia.org/wikipedia/commons/1/19/Icons-mini-icon_attachment.gif);
 
  }
+ 
 @media (max-width: 767px){
     .featuresheader{
         display: flex;

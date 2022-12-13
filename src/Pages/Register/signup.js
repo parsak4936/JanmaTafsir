@@ -1,25 +1,18 @@
 import "../../Styles/signup.css";
-
-import Img from "../../Assets/result.svg";
 import Dropdown from "../../Components/dropdown/dropdownComponent";
-import React, { useState, useEffect, useRef, useCallback } from "react";
-// import {ValidationsRegister} from "../../validations";
+import React, { useState } from "react";
 import axios from "axios";
-import * as yup from "yup";
-import { ErrorMessage, Formik, Form, Field } from "formik";
-import Axios from "axios";
+import { Button } from "primereact/button";
+
+import { Formik, Form, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../../Components/header/header";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
-import Footer from "../../Components/Footer/Footer";
-import { Button, Spinner } from "react-bootstrap";
+import { Password } from "primereact/password";
+import { Divider } from "primereact/divider";
+import Spiner from "../../Components/spiner/spiner";
 
 function Signup({ login = false }) {
-  const [showPassword, setshowPassword] = useState(true);
   const [waiting, setWaiting] = useState(false);
   const [userData, setUserData] = useState({
     nationCode: "",
@@ -27,6 +20,19 @@ function Signup({ login = false }) {
     password: "",
     confirmPassword: "",
   });
+  const header = <h6>Pick a password</h6>;
+  const footer = (
+    <React.Fragment>
+      <Divider />
+      <p className="mt-2">Suggestions</p>
+      <ul className="pl-2 ml-2 mt-0" style={{ lineHeight: "1.5" }}>
+        <li>At least one lowercase</li>
+        <li>At least one uppercase</li>
+        <li>At least one numeric</li>
+        <li>Minimum 8 characters</li>
+      </ul>
+    </React.Fragment>
+  );
   const handlechange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -57,8 +63,7 @@ function Signup({ login = false }) {
   const userType = useSelector(
     (state) => state.persistedReducer.SignupReducer.normalusers.userType
   );
-  console.log(userType)
-  
+
   const SignupURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserRegister";
 
@@ -108,16 +113,8 @@ function Signup({ login = false }) {
   };
 
   return (
-    <Container fluid="true">
-      <Row>
-        <Header />
-      </Row>
-
-      {/* <div className="top-signup">
-           <Header />
-            </div> */}
-
-      <Row className="right-signup">
+    <div className="grid c-12">
+      <div className="right-signup grid c-12">
         <div className="card-signup">
           <div className="user-links">
             <div className="user-link-home">
@@ -137,11 +134,15 @@ function Signup({ login = false }) {
               {/* -------------------------  DropDown------------------------- */}
 
               <div className="form-group">
+                <h5 style={{ color: "white" }}> نوع کاربری </h5>
+
                 <Dropdown />
               </div>
 
               {/* -------------------------  Phone number------------------------- */}
               <div className="form-group">
+                <h5 style={{ color: "white" }}> شماره تماس </h5>
+
                 <Field
                   name="phoneNumber"
                   className="form-field"
@@ -149,59 +150,62 @@ function Signup({ login = false }) {
                   placeholder="شماره تلفن همراه"
                 />
 
-{phonenumberValidation == true ? (
-                        <div></div>
-                      ) : (
-                        <div style={{ color: "red" }}>
-                          {" "}
-                           شماره تلفن درست نمیباشد{" "}
-                        </div>
-                      )}
+                {phonenumberValidation == true ? (
+                  <div></div>
+                ) : (
+                  <div style={{ color: "red" }}> شماره تلفن درست نمیباشد </div>
+                )}
               </div>
               {/* -------------------------  NationCode------------------------- */}
 
               <div className="form-group">
+                <h5 style={{ color: "white" }}> کد ملی </h5>
+
                 <Field
                   name="nationCode"
                   onChange={handlechange}
                   className="form-field"
                   placeholder="کدملی/کدشناسایی/کد اقتصاد"
                 />
-                 {nationcodeValiation == true ? (
-                        <div></div>
-                      ) : (
-                        <div style={{ color: "red" }}>
-                          {" "}
-                           کد ملی درست نمیباشد{" "}
-                        </div>
-                      )}
+                {nationcodeValiation == true ? (
+                  <div></div>
+                ) : (
+                  <div style={{ color: "red" }}> کد ملی درست نمیباشد </div>
+                )}
               </div>
               {/* -------------------------  Password ------------------------- */}
 
               <div className="form-group">
-                <Field
+                <h5 style={{ color: "white" }}> رمز عبور </h5>
+
+                <Password
                   name="password"
-                  type={showPassword ? "text" : "password"}
+                  toggleMask
+                  header={header}
+                  footer={footer}
                   className="form-field   "
                   onChange={handlechange}
                   placeholder="رمز ورود"
                 />
                 {passwordValidation == true ? (
-                        <div></div>
-                      ) : (
-                        <div style={{ color: "red" }}>
-                          {" "}
-                          رمز نباید کمتر از 8 کاراکتر باشد{" "}
-                        </div>
-                      )}
+                  <div></div>
+                ) : (
+                  <div style={{ color: "red" }}>
+                    {" "}
+                    رمز نباید کمتر از 8 کاراکتر باشد{" "}
+                  </div>
+                )}
               </div>
 
               {/* ------------------------- Confirm  Password ------------------------- */}
 
               <div className="form-group">
-                <Field
+                <h5 style={{ color: "white" }}>تکرار رمز عبور </h5>
+                <Password
                   name="confirmPassword"
-                  type={showPassword ? "text" : "password"}
+                  toggleMask
+                  header={header}
+                  footer={footer}
                   className="form-field   "
                   onChange={handlechange}
                   placeholder=" تکرار رمز ورود"
@@ -211,7 +215,7 @@ function Signup({ login = false }) {
                 ) : (
                   <div style={{ color: "red" }}>
                     {" "}
-                  رمز باید با قبلی برابر باشد{" "}
+                    رمز باید با قبلی برابر باشد{" "}
                   </div>
                 )}
               </div>
@@ -219,25 +223,25 @@ function Signup({ login = false }) {
               {/* -------------------------   ------------------------- */}
 
               <div className="form-group" style={{}}>
-                {nationcodeValiation == false || passwordValidation == false || phonenumberValidation == false || nationcodeValiation==false ? (
-                  <Button className="button" type="submit" disabled>
+                {nationcodeValiation == false ||
+                passwordValidation == false ||
+                phonenumberValidation == false ||
+                nationcodeValiation == false ? (
+                  <Button
+                    className="button button align-items-center justify-content-center"
+                    disabled
+                  >
                     تایید
                   </Button>
                 ) : (
                   <>
                     {waiting == false ? (
-                      <button className="button" type="submit">
+                      <button className="button button align-items-center justify-content-center">
                         تایید
                       </button>
                     ) : (
-                      <Button className="button" type="submit">
-                        <Spinner
-                          as="span"
-                          animation="border"
-                          size="sm"
-                          role="status"
-                          aria-hidden="true"
-                        />
+                      <Button className="button button align-items-center justify-content-center">
+                        <Spiner />
                       </Button>
                     )}
                   </>
@@ -246,9 +250,8 @@ function Signup({ login = false }) {
             </Form>
           </Formik>
         </div>
-      </Row>
-      
-    </Container>
+      </div>
+    </div>
   );
 }
 

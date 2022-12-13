@@ -1,18 +1,14 @@
 import "../../Styles/login.css";
-import React, { useEffect, useState } from "react";
-import * as yup from "yup";
-import { ErrorMessage, Formik, Form, Field, useFormik, useField } from "formik";
+import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import Header from "../../Components/header/header";
-import LoadingAnimation from "../../Components/loadingAnimation";
-import Footer from "../../Components/Footer/Footer";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Button, Spinner } from "react-bootstrap";
+import Spiner from "../../Components/spiner/spiner";
+import { Password } from "primereact/password";
+import { Button } from "primereact/button";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
+import { Message } from 'primereact/message';
 function Login({ logado = false }) {
   const [waiting, setWaiting] = useState(false);
   const navigate = useNavigate();
@@ -56,34 +52,26 @@ function Login({ logado = false }) {
           })
           .then((response) => {
             if (response.data.statusCode == 200) {
-              // console.log(response.data.data.token)
               setWaiting(false);
               dispatch(allActions.userActions.login(userData));
-
-              // localStorage.setItem(
-              //   "@userData",
-              //   JSON.stringify(SubscribedUserafter)
-              // );
-
               if (SubscribedUser == true) {
                 navigate("/MapView");
               } else {
                 navigate("/Login");
               }
             }
- 
           })
           .catch((exception) => {
             setWaiting(false);
-           
-            if(exception.response.status==400 ||exception.response.status==404 ){
-              alert("اطلاعات وارد شده درست نمیباشد")
+
+            if (
+              exception.response.status == 400 ||
+              exception.response.status == 404
+            ) {
+              alert("اطلاعات وارد شده درست نمیباشد");
+            } else if (exception.response.status == 500) {
+              alert("دوباره امتحان کنید ");
             }
-            else if(exception.response.status==500){
-              alert("دوباره امتحان کنید ")
-            }
-              
-           
           });
       },
 
@@ -93,16 +81,9 @@ function Login({ logado = false }) {
 
   return (
     <>
-      <Container fluid="true">
-        <Col
-          style={{
-            height: "100vh",
-          }}
-        >
-          <Row>
-            <Header />
-          </Row>
-          <Row className="right-login">
+      <div className="grid"  >
+        
+          <div className=" grid col-6 right-login">
             <div className="card-login">
               <div className="user-links">
                 <div className="user-link-home">
@@ -141,14 +122,14 @@ function Login({ logado = false }) {
 
                     <div className="form-group">
                       {/* <label form="email">Confirme sua senha</label> */}
-                      <Field
+                      <Password
+                        toggleMask
                         name="password"
                         id="Password"
                         type={"password"}
                         onChange={handlechange}
                         value={userData.password}
                         className="form-field"
-                        placeholder="رمز ورود"
                       />
                       {passwordValidation == true ? (
                         <div></div>
@@ -164,29 +145,19 @@ function Login({ logado = false }) {
 
                     <div className="form-group" style={{}}>
                       {nationcodeValiation == false ||
-                      passwordValidation==false  ? (
-                        <Button className="button" type="submit" disabled>
+                      passwordValidation == false ? (
+                        <Button className="button align-items-center justify-content-center"  disabled>
                           تایید
                         </Button>
                       ) : (
                         <>
                           {waiting == false ? (
-                            <button
-                              className="button"
-                              type="submit"
-                               
-                            >
+                            <button className="button align-items-center justify-content-center" >
                               تایید
                             </button>
                           ) : (
-                            <Button className="button" type="submit">
-                              <Spinner
-                                as="span"
-                                animation="border"
-                                size="sm"
-                                role="status"
-                                aria-hidden="true"
-                              />
+                            <Button className="button align-items-center justify-content-center" >
+                              <Spiner />
                             </Button>
                           )}
                         </>
@@ -196,11 +167,9 @@ function Login({ logado = false }) {
                 )}
               </Formik>
             </div>
-          </Row>
-
-           
-        </Col>
-      </Container>
+          </div>
+         
+      </div>
     </>
   );
 }

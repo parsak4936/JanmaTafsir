@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useSelector } from "react-redux";
-import Navbar from "../../Components/Navbar";
+import Navbar from "../../Components/navbars/Navbar";
 function MapView() {
   const SubscribedUser = useSelector(
     (state) => state.persistedReducer.LoginReducers.SubscribedUser

@@ -67,30 +67,7 @@ function DetailedFatures() {
           <Col lg={true}> کاربر حقوقی</Col>
         </Row>
       </Container>
-      <Container
-        style={{
-          backgroundImage: `url(${LeftSign})`,
-          paddingTop: "150px",
-          paddingBottom: "200px",
-          backgroundSize: "contain",
-
-          backgroundRepeat: "no-repeat",
-          marginTop: "-260px",
-        }}
-        fluid="true"
-      >
-        <Row style={{}}>
-          <Col lg={true}> فاصله</Col>
-        </Row>
-
-        <Row>
-          <Col lg={true}>کاربر حقیقی </Col>
-        </Row>
-
-        <Row>
-          <Col lg={true}> کاربر حقوقی</Col>
-        </Row>
-      </Container>
+ 
     </Container>
   );
 }

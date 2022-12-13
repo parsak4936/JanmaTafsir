@@ -1,25 +1,21 @@
+ 
+  li{
+    padding-top: 10px;
+  } 
 .App-Header{
-       
-        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-        
-    }
-   
+      background-image: url("../../Assets/DashboardAsset/bg2.jpg");
+      background-color: #cccccc;
+     
+     
+      background-position: center; 
+    background-repeat: no-repeat !important; 
+    background-size: cover; 
+   }
+.col{
+  padding: 0 !important;
+}
  
- 
-@keyframes App-logo-float {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(10px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-float infinite 3s ease-in-out;
-    }
-  }
+
+  /* Color of the links BEFORE scroll */
+/* Color of the links BEFORE scroll */
  

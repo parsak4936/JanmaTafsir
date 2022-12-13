@@ -1,45 +1,33 @@
 import React from "react";
-import "../../Styles/dashboardFeatures.css";
+  import "../../Styles/dashboardFeatures.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FeaturesCarousel from "../../Components/Carousel/FeaturesCarousel";
+import { Button } from "react-bootstrap";
 function Features() {
   return (
-    <Container
-      className="col-xs-12 noPadding threeViewMain"
-      style={{ height: "60vh", marginBottom: "20px" }}
-      fluid="true"
+    <div 
+      className=" flex flex-wrap noPadding grid threeViewMain"
+      style={{  paddingRight:'20px' ,paddingLeft:'20px'}}
+      
     >
-      <Row>
-        <Col style={{}} lg={true}>
-          {" "}
-          <FeaturesCarousel />{" "}
-        </Col>
-        <Col
-          className="col2"
-          style={{
-            height: "40vh",
-            direction: "rtl",
-            paddingTop: "90px",
-            marginBottom: "20px",
-          }}
-          lg={true}
-        >
-          <div className="col-xs-12 col-md-5 threeViewTxt ">
+
+      <div className="section1 col-12 fadein animation-duration-1000 md:col-6 lg:col-6">
+          <div className="   threeViewTxt ">
             <h1
-              className="col-xs-12 col-md-5 featuresheader "
+              className="  featuresheader "
               style={{
-                width: "550px",
-                fontSize: "20px",
+                 
+                  fontSize: "25px",
                 textAlign: "center",
-                lineHeight: "1.5",
+                  lineHeight: "1.5",
               }}
             >
               سامانه ایی برای حل مشکلات حقوقی اراضی{" "}
             </h1>
-            <ul>
+            <ul style={{  fontSize: "18px",textAlign:'justify',unicodeBidi:'bidi-override'}}>
               <li
                 data-wow-delay=".1s"
                 data-wow-duration=".9s"
@@ -67,20 +55,27 @@ function Features() {
                 data-wow-duration=".9s"
                 className="wow fadeInRight"
               >
-                سیستم قابل اطمنان برای امتیاز بندی کارشناسان رمس دادگستری
-              </li>
-              <li
-                data-wow-delay=".5s"
-                data-wow-duration=".9s"
-                className="wow fadeInRight"
-              >
-                ارتباط مستقیم با کارشناسان حرفه ایی دادگستری
-              </li>
+                                ارتباط مستقیم با کارشناسان حرفه ایی دادگستری
+
+               </li>
+              <div style={{marginTop:'30px',textAlign:'center'}}>
+              <Button >همین الان شروع کن!</Button>
+              </div>
+              
+               
             </ul>
           </div>
-        </Col>
-      </Row>
-    </Container>
+        
+
+        
+      </div>
+
+      <div  className="col-12 scalein animation-duration-1000 md:col-6 lg:col-6"   lg={true}>
+          {" "}
+          <FeaturesCarousel />{" "}
+        </div>
+
+    </div>
   );
 }
 

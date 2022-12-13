@@ -36,7 +36,7 @@ function DateAndTime() {
   useEffect(() => {}, []);
 
   return (
-    <div style={{ direction: "ltr" }}>
+    <div   style={{ direction: "ltr"  }}>
       {dateNumber} - {dateMonth} - {dateDay(dateDayCounter)}
     </div>
   );

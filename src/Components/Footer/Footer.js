@@ -1,35 +1,19 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
- 
-function Footer() { 
-    const year = new Date().getFullYear();
-    return(
-  <Container    fluid="true">
+import "primeflex/primeflex.scss";
+import "./footer.css";
 
-  
-      <Row style={{
-        position: 'fixed',
-        zIndex:'9999',
-        backgroundColor: 'gray',
-        bottom: '0',
-        left: '0',
-        right: '0',
-        padding: '11px',
-        textAlignalign: 'center',
-  }} >
-       
-      <Col lg={true}> <footer style={{textAlign:'center'}}>{`Copyright © Upbeat Code ${year}`}</footer> </Col>
-      
- 
-      </Row>
- 
- 
-        </Container> 
-     
-    );
+function Footer() {
+  const year = new Date().getFullYear();
+  return (
+    <div class="grid bottom-0">
+      <div class="col-12 md:col-6 lg:col-3 w-screen   p-6 footer">
+        {" "}
+        <footer
+          className=" flex flex-wrap align-items-center justify-content-center"
+        >{`Copyright © Upbeat Code ${year}`}</footer>{" "}
+      </div>
+    </div>
+  );
 }
 
 export default Footer;
