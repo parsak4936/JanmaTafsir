@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import "primeflex/primeflex.scss";
 import { useLocation } from "react-router-dom";
@@ -11,14 +11,18 @@ import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordio
 import { Button } from "primereact/button";
 import StatesDropDown from "../../Components/dropdown/StatesDropDown";
 import CityDropDown from "../../Components/dropdown/CityDropDown";
+import { Toast } from "primereact/toast";
 function NewReqForm() {
+    
+  const toastTL = useRef(null);
+  
   const selectedStateID = useSelector(
-    (state) => state.SelectCSReducer.selectedState.id
+    (state) => state.NewReqReducer.stateID
   );
   const selectedCityID = useSelector(
-    (state) => state.SelectCSReducer.selectedCity.id
+    (state) => state.NewReqReducer.cityID
   );
-   
+ 
   
   const [newReqData, setnewReqData] = useState({
     // ctiveIndex: 0,
@@ -29,26 +33,30 @@ function NewReqForm() {
     // uploadedFile: null,
     // Address: "",
   });
-  
+  const showTopLeft = () => {
+    toastTL.current.show({severity:'error', summary: ' خطا در اطلاعات', detail:' باید شهر و استان خود را انتخاب کنید', life: 3000});
+    
+}
   // const [modaltoggle, setmodaltoggle] = useState(false);
   const [uploadFile, setuploadFile] = useState();
 
   //TODO: after dispatch use a code immediately
   const dispatch = useDispatch();
-  
-  
 
   return (
     <Form style={{ margin: "40px" }}>
+      <Toast ref={toastTL} position="bottom-center" />
       <Form.Group>
         <StatesDropDown />
       </Form.Group>
-      {selectedStateID===''?<></>:
-      <Form.Group>
-      <CityDropDown />
-    </Form.Group>
-      }
-      
+      {selectedStateID === "" ? (
+        <></>
+      ) : (
+        <Form.Group>
+          <CityDropDown />
+        </Form.Group>
+      )}
+
       <Form.Group className="mb-3" controlId="formGridAddress1">
         <SelectLocationAcc />
       </Form.Group>
@@ -68,31 +76,30 @@ function NewReqForm() {
         <Form.Label>Example textarea</Form.Label>
         <Form.Control as="textarea" rows={3} />
       </Form.Group>
-{selectedStateID =='' || selectedCityID=='' ?  <Button
-disabled
-        variant="primary"
-        type="button"
-        onClick={() => {
-          dispatch(allActions.NewReqActions.FirstForm(newReqData));
-          // setmodaltoggle(true);
-          // dispatch(allActions.ToggleActions.ModalToggle(true));
-         
-        }}
-      >
-        Submit
-      </Button> : <Button
-        variant="primary"
-        type="button"
-         onClick={() => {
-          dispatch(allActions.NewReqActions.FirstForm(newReqData));
-          // setmodaltoggle(true);
-          // dispatch(allActions.ToggleActions.ModalToggle(true));
-         
-        }}
-      >
-        Submit
-      </Button>}
-     
+      {selectedStateID == "" || selectedCityID == ""  ? (
+        <Button
+          variant="primary"
+          className="p-button-danger"
+          type="button"
+          onClick={
+            showTopLeft
+          }
+        >
+          تایید
+        </Button>
+      ) : (
+        <Button
+          variant="primary"
+          type="button"
+          onClick={() => {
+            dispatch(allActions.NewReqActions.FirstFormSubmit(newReqData));
+            // setmodaltoggle(true);
+            // dispatch(allActions.ToggleActions.ModalToggle(true));
+          }}
+        >
+          Submit
+        </Button>
+      )}
     </Form>
   );
 }

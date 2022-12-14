@@ -11,10 +11,16 @@ import allActions from "../../app/Actions/AllActions";
 import { Button } from "primereact/button";
 function FinalStepNewReq() {
     const dispatch = useDispatch();
-
+    const selectedStateID = useSelector(
+      (state) => state.NewReqReducer.stateID
+    );
+    const selectedCityID = useSelector(
+      (state) => state.NewReqReducer.cityID
+    );
+   
   return (
     <>
-<Button onClick={()=>{
+ <Button onClick={()=>{
  dispatch(allActions.NewReqActions.FourthFormSubmit());
 
 }}>

@@ -1,1 +1,28 @@
+.p-slidemenu{
+width: 14.5rem !important;
+ }
+ .p-slidemenu-content{
+     
+    width: 100%;
+   
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+ }
  
+ .p-menuitem{
+    
+    width: 16.5rem;
+     
+
+    
+ }
+ 
+ .slidemenu-wrapper{
+    background-color: purple;
+ }
+ .as{
+    background-color: white;
+    
+ }

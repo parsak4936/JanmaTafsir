@@ -1,5 +1,5 @@
-const FirstForm = (userObj) => {
-  console.log(userObj)
+const FirstFormSubmit = (userObj) => {
+   
   return {
     type: "FirstFormSubmit",
     payload: userObj,
@@ -8,6 +8,19 @@ const FirstForm = (userObj) => {
 const SecondFormSubmit = (userObj) => {
   return {
     type: "SecondFormSubmit",
+    payload: userObj,
+  };
+};
+const FirstFormstate = (userObj) => {
+ 
+  return {
+    type: "FirstFormstate",
+    payload: userObj,
+  };
+};
+const FirstFormcity = (userObj) => {
+   return {
+    type: "FirstFormcity",
     payload: userObj,
   };
 };
@@ -42,7 +55,9 @@ const FourthFormBack = (userObj) => {
   };
 };
 export default {
-  FirstForm,
+  FirstFormSubmit,
+  FirstFormcity,
+  FirstFormstate,
   SecondFormBack,
   SecondFormSubmit,
   ThirdFormBack,

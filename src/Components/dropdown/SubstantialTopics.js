@@ -13,67 +13,71 @@ import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordio
 import { Button } from "primereact/button";
 // import './DropdownDemo.css';
 
-const StatesDropDown = () => {
+const SubstantialTopics = () => {
   const toastBC = useRef(null);
 
-  const [selectedState, setSelectedCountry] = useState("");
+  const [selectecSub, setselectecSub] = useState("");
 
   const dispatch = useDispatch();
+//   const SubscribedUser = useSelector(
+//     (state) => state.NewReqReducer.selectReason
+//   );
+//   const ass = useSelector(
+//     (state) => state.NewReqReducer
+//   );
+//   console.log(ass)
+  const [SubstantialTopicsData, setSubstantialTopicsData] = useState([]);
+  
+  const GetSubstantialTopicsURL =
+    "https://elated-swanson-mrhungrj5.iran.liara.run/api/ExpertRequests/GetSubstantialTopicsServices";
 
-  const [stateData, setstateData] = useState([]);
-  const getStateURL =
-    "https://elated-swanson-mrhungrj5.iran.liara.run/api/General/GetStates";
-
-  const getState = () => {
+  const getReasons = () => {
     axios
-      .get(getStateURL)
+      .get(GetSubstantialTopicsURL)
       .then((response) => {
         if (response.data.statusCode == 200) {
-          setstateData(response.data.data);
+            setSubstantialTopicsData(response.data.data);
         } else {
         }
       })
       .catch((exception) => {
         console.log(exception);
-        showError();
+        
       });
   };
 
   const onStateChange = (e) => {
-    setSelectedCountry(e.target.value.name);
-    dispatch(
-      allActions.NewReqActions.FirstFormstate({
-        id: e.target.value.id,
-        name: e.target.value.name,
-      })
-    );
+    setselectecSub(e.target.value.caption);
+    // "id": 14,
+    // "caption": " ارائه گزارش به دوائر حقوقی و قضایی"
 
-    //TODO:هم زمان با دیسپچ باید درخواست هم بکنه.یه راه حل برای این پیدا کن
+     dispatch(
+       allActions.userActions.SelectSubstantialTopics({
+         id: e.target.value.id,
+         caption: e.target.value.caption,
+      })
+     );
+
+    
   };
-  const showError = () => {
-    toastBC.current.show({
-      severity: "error",
-      summary: " خطایی پیش آمده",
-      detail:"از وصل بودن شبکه خود مطمئن شوید و صفحه را رفرش کنید",
-       life: 3000,
-    });
-  };
+  
   useEffect(() => {
-    getState();
+    getReasons();
   }, []);
 
   const selectedCountryTemplate = (option, props) => {
+    
     if (option) {
       return (
         <div className="country-item country-item-value">
-          <div>{option.name}</div>
+          <div>{option.value}</div>
         </div>
       );
     }
 
     return (
       <span>
-        {selectedState == "" ? <>یک استان انتخاب کنید</> : <> {props.value}</>}
+        {selectecSub == "" ? <>یک زیر مجموعه را انتخاب کنید</> : <> {props.value}</>}
       </span>
     );
   };
@@ -81,18 +85,18 @@ const StatesDropDown = () => {
   const countryOptionTemplate = (option) => {
     return (
       <div className="country-item">
-        <div>{option.name}</div>
+        <div>{option.caption}</div>
       </div>
     );
   };
 
   return (
     <div className="dropdown-demo">
-      <Toast ref={toastBC} position="bottom-center" />
+     
       <div className="card">
         <Dropdown
-          value={selectedState}
-          options={stateData}
+          value={selectecSub}
+          options={SubstantialTopicsData}
           onChange={onStateChange}
           optionLabel="name"
           filter
@@ -106,4 +110,4 @@ const StatesDropDown = () => {
   );
 };
 
-export default StatesDropDown;
+export default SubstantialTopics;

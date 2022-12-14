@@ -1,6 +1,6 @@
 import "../../Styles/signup.css";
 import Dropdown from "../../Components/dropdown/dropdownComponent";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
 
@@ -11,8 +11,11 @@ import allActions from "../../app/Actions/AllActions";
 import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
 import Spiner from "../../Components/spiner/spiner";
+import { Toast } from "primereact/toast";
 
 function Signup({ login = false }) {
+  const toastBC = useRef(null);
+
   const [waiting, setWaiting] = useState(false);
   const [userData, setUserData] = useState({
     nationCode: "",
@@ -33,6 +36,24 @@ function Signup({ login = false }) {
       </ul>
     </React.Fragment>
   );
+  const Show400Errors = () => {
+    toastBC.current.show({
+      severity: "error",
+      summary: " خطایی پیش آمده",
+      detail: "خطایی در اطلاعات است.دوباره امتحان کنید",
+      life: 3000,
+    });
+  };
+  const Show500Errors = () => {
+    toastBC.current.show({
+      severity: "error",
+      summary: " خطایی پیش آمده",
+      detail: "لطفا دوباره امتحان کنید",
+      life: 3000,
+    });
+  };
+  
+
   const handlechange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -98,12 +119,12 @@ function Signup({ login = false }) {
             setWaiting(false);
 
             if (
-              exception.response.status == 400 ||
-              exception.response.status == 404
+              exception.response.status == 400 
+            
             ) {
-              alert("اطلاعات وارد شده درست نمیباشد");
+              Show400Errors();
             } else if (exception.response.status == 500) {
-              alert("دوباره امتحان کنید ");
+             Show500Errors()
             }
           });
       },
@@ -114,6 +135,8 @@ function Signup({ login = false }) {
 
   return (
     <div className="grid c-12">
+              <Toast ref={toastBC} position="bottom-center" />
+
       <div className="right-signup grid c-12">
         <div className="card-signup">
           <div className="user-links">

@@ -14,8 +14,10 @@ const UserDashboardSidebar = () => {
       className="bg-blue-400 w-3"
         visible={visibleRight}
         position="right"
+         
         onHide={() => setVisibleRight(false)}
       >
+        <h3>محیط کار</h3>
         <div className=" col-12 text-center w-full">
        {SidebarData.map((item, index) => {
               return (
@@ -35,7 +37,7 @@ const UserDashboardSidebar = () => {
       </Sidebar>
 
       <Button
-        icon="pi pi-arrow-left"
+        icon="pi pi-align-justify"
         onClick={() => setVisibleRight(true)}
         className="mr-2"
       />

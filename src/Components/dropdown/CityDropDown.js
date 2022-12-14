@@ -10,20 +10,29 @@ import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
 import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordion";
 import { Button } from "primereact/button";
+import { Toast } from 'primereact/toast';
  // import './DropdownDemo.css';
 
 const CityDropDown = () => {
-    const selectedStateID = useSelector(
-        (state) => state.SelectCSReducer.selectedState.id
-      );
+  const selectedStateID = useSelector(
+    (state) => state.NewReqReducer.stateID
+  );
     const [selectedCity, setSelectedCity] = useState('');
     const [cityData, setCityData] = useState([]);
+    const toastBC = useRef(null);
 
     const dispatch = useDispatch();
     const getCityURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/General/GetCities";
 
-  
+    const showError = () => {
+      toastBC.current.show({
+        severity: "error",
+        summary: " خطایی پیش آمده",
+        detail:"از وصل بودن شبکه خود مطمئن شوید و صفحه را رفرش کنید",
+         life: 3000,
+      });
+    };
       const getcity = () => {
         if (selectedStateID !=='') {
           axios
@@ -37,14 +46,14 @@ const CityDropDown = () => {
             })
             .catch((exception) => {
               console.log(exception);
+              showError();
             });
         } else {
           console.log("GG");
         }
       };
       useEffect(() => {
-        //TODO: متغییر اپدیت نمیشود بعد رندر.باید جایی بگذاریم که مدام اپدیت بشه
-        getcity();
+         getcity();
       }, [selectedStateID]);
     const selectedCountryTemplate = (option, props) => {
         if (option) {
@@ -66,7 +75,7 @@ const CityDropDown = () => {
         
           
         dispatch(
-         allActions.userActions.SelectCity({
+         allActions.NewReqActions.FirstFormcity({
            id: e.target.value.id,
            name: e.target.value.name,
          })
@@ -86,7 +95,7 @@ const CityDropDown = () => {
     return (
         <div className="dropdown-demo">
             <div className="card">
-  
+            <Toast ref={toastBC} position="bottom-center" />
                 <Dropdown value={selectedCity} options={cityData} onChange={oncityChange} optionLabel="name" filter  filterBy="name" placeholder="Select a Country"
                     valueTemplate={selectedCountryTemplate} itemTemplate={countryOptionTemplate} />
  

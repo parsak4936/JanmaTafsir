@@ -9,11 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
  import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordion";
 import { Button } from "primereact/button";
+import ReasonRequest from "../../Components/dropdown/ReasonRequests";
+import SubstantialTopics from "../../Components/dropdown/SubstantialTopics";
 function DetailedReq() {
     const dispatch = useDispatch();
 
   return (
     <>
+    <ReasonRequest/>
+    <SubstantialTopics/>
 <Button onClick={()=>{
  dispatch(allActions.NewReqActions.ThirdFormSubmit());
 

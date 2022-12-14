@@ -16,9 +16,25 @@ const Register = (userObj) => {
 }
 
 const SelectState = (userObj) => {
-     console.log(userObj)
+    
     return {
          type: "SelectState",
+         payload: userObj,
+       
+    }
+}
+const SelectReason = (userObj) => {
+    
+    return {
+         type: "SelectReason",
+         payload: userObj,
+       
+    }
+}
+const SelectSubstantialTopics = (userObj) => {
+    
+    return {
+         type: "SelectSubstantialTopics",
          payload: userObj,
        
     }
@@ -63,5 +79,7 @@ export default {
     SelectCity,
     SelectState,
     LogOut,
+    SelectReason,
+    SelectSubstantialTopics,
     // logOut
 }
