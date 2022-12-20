@@ -8,7 +8,14 @@ import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
+import LoginBackGroundImg from '../../Assets/DashboardAsset/bg3.jpg'
 import { Message } from "primereact/message";
+import {
+  Show400Errors,
+  Show500Errors,
+  Show404Errors,
+} from "../../Components/ShowErrors/ShowErrors";
+
 import { Toast } from "primereact/toast";
 function Login({ logado = false }) {
   const [waiting, setWaiting] = useState(false);
@@ -20,6 +27,7 @@ function Login({ logado = false }) {
   const [userData, setUserData] = useState({
     nationCode: "",
     password: "",
+    token: "",
   });
   var nationcodeValiation = false;
   if (nationCodeRegExp.test(userData.nationCode)) {
@@ -40,31 +48,7 @@ function Login({ logado = false }) {
   const SubscribedUser = useSelector(
     (state) => state.persistedReducer.LoginReducers.SubscribedUser
   );
-  const Show400Errors = () => {
-    toastBC.current.show({
-      severity: "error",
-      summary: " خطایی پیش آمده",
-      detail: "خطایی در اطلاعات است.دوباره امتحان کنید",
-      life: 3000,
-    });
-  };
-  const Show500Errors = () => {
-    toastBC.current.show({
-      severity: "error",
-      summary: " خطایی پیش آمده",
-      detail: "لطفا دوباره امتحان کنید",
-      life: 3000,
-    });
-  };
-  const Show404Errors = () => {
-    toastBC.current.show({
-      severity: "error",
-      summary: " خطایی پیش آمده",
-      detail: "کاربر با این مشخصات وجود ندارد   ",
-      life: 3000,
-    });
-  };
- 
+
   //password : string
   //code : 4311211945
   //number : 09195436287
@@ -80,26 +64,28 @@ function Login({ logado = false }) {
           })
           .then((response) => {
             if (response.data.statusCode == 200) {
-               
+              console.log();
               setWaiting(false);
-            
-              dispatch(allActions.userActions.login(userData));
-              if (SubscribedUser == true) {
-                navigate("/MapView");
-              } else {
-                navigate("/Login");
-              }
+              const dispatchData = [
+                {
+                  token: response.data.data.token,
+                  userType: response.data.data.userType,
+                },
+              ];
+              dispatch(allActions.userActions.login(dispatchData));
+
+              navigate("/MapView");
             }
           })
           .catch((exception) => {
             setWaiting(false);
 
             if (exception.response.status == 400) {
-              Show400Errors();
+              Show400Errors(toastBC);
             } else if (exception.response.status == 404) {
-              Show404Errors();
+              Show404Errors(toastBC);
             } else if (exception.response.status == 500) {
-              Show500Errors();
+              Show500Errors(toastBC);
             }
           });
       },
@@ -110,10 +96,13 @@ function Login({ logado = false }) {
 
   return (
     <>
-      <div className="grid">
+      <div
+        className="grid a"
+         
+      >
         <Toast ref={toastBC} position="bottom-center" />
 
-        <div className=" grid col-6 right-login">
+        <div className=" grid col-6 right-login " >
           <div className="card-login">
             <div className="user-links">
               <div className="user-link-home">
@@ -133,6 +122,7 @@ function Login({ logado = false }) {
 
                   <div className="form-group">
                     <Field
+                      style={{ color: "black" }}
                       name="nationCode"
                       id="NationCode"
                       type="text"
@@ -158,6 +148,7 @@ function Login({ logado = false }) {
                       id="Password"
                       type={"password"}
                       onChange={handlechange}
+                      style={{ color: "black" }}
                       value={userData.password}
                       className="form-field"
                     />

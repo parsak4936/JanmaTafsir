@@ -34,10 +34,10 @@ function DateAndTime() {
    
 
   useEffect(() => {}, []);
-
+//-fot showing the Date :  {dateDay(dateDayCounter)}
   return (
     <div   style={{ direction: "ltr"  }}>
-      {dateNumber} - {dateMonth} - {dateDay(dateDayCounter)}
+      {dateNumber} - {dateMonth} 
     </div>
   );
 }

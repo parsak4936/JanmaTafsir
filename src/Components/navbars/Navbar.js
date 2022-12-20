@@ -8,7 +8,11 @@ import Profile from "../profile/profile";
 import { Menubar } from 'primereact/menubar';
  
  
-import UserDashboardSidebar from '../../Components/sidebards/UserDashboardSidebar'
+import UserSidebar from '../../Components/sidebards/UserSidebar'
+ 
+import ExpertSidebar from '../../Components/sidebards/ExpertSidebar'
+import AvaTarImage from '../../Assets/DashboardAsset/detailExpert.jpg'
+import { useSelector } from "react-redux";
 
 
 
@@ -26,7 +30,16 @@ function Navbar() {
      
     
 ];
-const start =   <UserDashboardSidebar/>;
+const UserType = useSelector(
+  (state) => state.persistedReducer.LoginReducers.normalusers.userType
+);
+ 
+const start =()=>{ if (UserType==0){
+  return <UserSidebar/> ;
+} else if (UserType==1){
+  return <ExpertSidebar/> ;
+}}
+
     const end = <div className="  col-0  md:col-12 lg:col-12  "> <DateAndTime/></div>;
   
   return (

@@ -34,6 +34,7 @@ const StatesDropDown = () => {
         }
       })
       .catch((exception) => {
+        //TODO: if error is 500 show errors
         console.log(exception);
         showError();
       });
@@ -48,8 +49,7 @@ const StatesDropDown = () => {
       })
     );
 
-    //TODO:هم زمان با دیسپچ باید درخواست هم بکنه.یه راه حل برای این پیدا کن
-  };
+   };
   const showError = () => {
     toastBC.current.show({
       severity: "error",

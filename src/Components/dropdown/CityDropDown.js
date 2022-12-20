@@ -11,6 +11,7 @@ import allActions from "../../app/Actions/AllActions";
 import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordion";
 import { Button } from "primereact/button";
 import { Toast } from 'primereact/toast';
+import Show400Errors, { Show500Errors, ShowNetorkErrors, ShowTokenErrors } from '../ShowErrors/ShowErrors';
  // import './DropdownDemo.css';
 
 const CityDropDown = () => {
@@ -46,8 +47,20 @@ const CityDropDown = () => {
             })
             .catch((exception) => {
               console.log(exception);
-              showError();
+             
+              if (exception.response.status == 400) {
+                Show400Errors(toastBC);
+              } else if (exception.response.status == 500) {
+                Show500Errors(toastBC);
+              }
+              else if (exception.response.status == 401) {
+                ShowTokenErrors(toastBC);
+              }
+              else if (exception.code=="ERR_NETWORK") {
+                ShowNetorkErrors(toastBC)
+              }
             });
+            
         } else {
           console.log("GG");
         }

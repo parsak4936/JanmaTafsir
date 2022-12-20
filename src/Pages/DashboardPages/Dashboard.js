@@ -1,64 +1,99 @@
 import React from "react";
-import '../../Styles/dashboard.css';
-import 'primeflex/primeflex.scss';
-import Header from "../../Components/header/header"
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Features from "./dashboardFeatures";
-import DetailedFatures from './DetailedFatures'
+import "../../Styles/dashboard.css";
+import "primeflex/primeflex.scss";
+import Header from "../../Components/header/header";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import HeaderImg from "../../Assets/DashboardAsset/bg2.jpg";
+import ContactUsBG from "../../Assets/DashboardAsset/ContantUs.svg";
+import AboutUsImageBG from "../../Assets/DashboardAsset/AboutUsBG.jpg";
+
+import UsersBg from "../../Assets/DashboardAsset/UserShowup.svg";
+
 import UserShowUp from "./UserShowUp";
 import Footer from "../../Components/Footer/Footer";
-import MapShowUp from "./MapShowUp";
 import GoTopScroll from "../../Components/GoTop/goTopScroll";
 import Appdescription from "./Appdescription";
-import ContactusCard from "../../Components/Cards/ContactusCard";
 import Aboutus from "./Aboutus";
- 
- function Dashboard() {
-  
-    return(
- 
-  <div  className="grid" >
- <GoTopScroll />
-  {/* navbar Row */}
+import ContactUs from "./ContactUs";
+import DescriptionImage from "../../Assets/DashboardAsset/DetailInfoBG.svg";
 
-  <div className="grid col-12 h-full"   >
-       
-       <Col><Header/></Col>
+function Dashboard() {
+  return (
+    <div className="grid">
+      <GoTopScroll />
+      {/* navbar Row */}
 
-     </div>
- {/* features Row */}
-    
-     <div className="grid col-12 h-full"  style={{height:'100vh'}}>
-      
-      <Col lg={true}> <Appdescription/></Col>
-    </div>
+      <div
+        className="grid col-12 w-full"
+        style={{
+          height: "100vh",
+          backgroundImage: `url(${HeaderImg})`,
+
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <Header />
+      </div>
+      {/* features Row */}
+
+      <div
+        className="grid col-12 w-full"
+        style={{
+          height: "100vh",
+          backgroundImage: `url(${DescriptionImage})`,
+
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        {" "}
+        <Appdescription />
+      </div>
       {/* users Row */}
-     <div className="grid col-12 h-full"  style={{height:'100vh'}} >
-       <Col lg={true}>  <UserShowUp /></Col>
-     </div>
-     
-<div className="grid col-12 h-full">
-  <Aboutus/>
-</div>
-     <div className="grid col-12 h-full"  style={{height:'100vh'}} > 
-     
-   فرم ارتباط با ما
-     
-      
-     </div>
-     <div className="grid col-12 "    > 
-     <Footer/>
-     </div>
+      <div
+        className="grid col-12 w-full"
+        style={{
+          height: "auto",
+          backgroundImage: `url(${UsersBg})`,
 
-     
-       
-         
- 
-        </div> 
-     
-    );
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        {" "}
+        <UserShowUp />
+      </div>
+
+      <div
+        className="grid col-12 w-full"
+        style={{
+          height: "200vh",
+          backgroundImage: `url(${AboutUsImageBG})`,
+
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <Aboutus />
+      </div>
+      <div
+        className="grid col-12 w-full"
+        style={{
+          height: "100vh",
+          backgroundImage: `url(${ContactUsBG})`,
+
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <ContactUs />
+      </div>
+      <div className="grid col-12 ">
+        <Footer />
+      </div>
+    </div>
+  );
 }
 export default Dashboard;

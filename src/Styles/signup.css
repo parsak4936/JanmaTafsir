@@ -1,12 +1,32 @@
-.body {
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-     
+
+  .a {
+    width: 100%;
+    
+    
+    justify-content: center;
+    align-items: center;
+    background-image: url("../Assets/DashboardAsset/bg1.jpg");
+    background-color: #cccccc;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat !important;
+    background-size: cover;
+  
+  
+  }
+   
+  
+  
+  
+  .right-signup {
+       
+     position: relative;
+    
+    
+    margin: 20px;
     justify-content: center;
     align-items: center;
   }
-  
   a{
     position: relative;
     color: #fff;
@@ -33,37 +53,12 @@
     transform: scaleX(1);
   }
   
-  .left-signup {
-    width: 50vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  
-  .left-signup h1 {
-    color: #77ffc0;
-  }
-  
-  .right-signup {
-    width: 100vh;
-   height: 76vh;
-   
-  
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
-  justify-content: center;
-  align-items: center;
-  }
+    
   
   .card-signup {
     direction: rtl;
 
-    width: 60%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

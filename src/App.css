@@ -1,12 +1,19 @@
 .App {
-  text-align: center;
+  
+/*   
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background: url("./Assets/DashboardAsset/janamaTafsirBody1.jpg") no-repeat
+    center center ; */
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-ul{
+ul {
   list-style: none;
 }
 
@@ -19,8 +26,7 @@ a {
     animation: App-logo-float infinite 3s ease-in-out;
   }
 }
-body{
-  
+body {
 }
 .App-header {
   min-height: 100vh;

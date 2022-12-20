@@ -1,28 +1,63 @@
 import React from "react";
-import initialState from "./Initialstate";
-
-const SignupReducer = (state = initialState, action) => {
+ const InitialState = {
+  
+    firstname: "",
+    lastname: "",
+    phoneNumber: "",
+    nationalCode: "",
+    password: "",
+    confirmPassword: "",
+    shabaNumber: 0,
+    userType: null,
+    address: "",
+    
+    statename: "",
+    stateID: 0,
+    cityname:"",
+  
+  Token: "",
+  SubscribedUser: false,
+ 
+};
+const SignupReducer = (state = InitialState, action) => {
   switch (action.type) {
     case "Register":
       return {
-        ...state,
-        normalusers: {
-          ...state.normalusers,
-          nationalCode: action.payload.nationCode,
-          password: action.payload.password,
-          userType: action.payload.userType,
-          confirmPassword: action.payload.confirmPassword,
-          phoneNumber: action.payload.phoneNumber,
-        },
+        ...state, 
+          // nationalCode: action.payload.nationCode,
+          // password: action.payload.password,
+          // userType: action.payload.userType,
+          // confirmPassword: action.payload.confirmPassword,
+          // phoneNumber: action.payload.phoneNumber,
+          // firstname: action.payload.firstname,
+          // lastname: action.payload.lastname,
+        Token: action.payload,
       };
-
+    case "SelectState":
+      return {
+        ...state,
+      
+           statename: action.payload.statename,
+           stateID: action.payload.stateID,
+       
+      };
+      case "SelectCity":
+      return {
+        ...state,
+       
+            cityname: action.payload.cityname,
+           
+            cityID: action.payload.cityID,
+         
+       
+      };
     case "UserTypeChange":
       return {
         ...state,
-        normalusers: {
+       
           ...state.normalusers,
           userType: action.payload,
-        },
+       
       };
 
     default:

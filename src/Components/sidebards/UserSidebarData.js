@@ -3,7 +3,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 
-export const SidebarData = [
+export const UserSidebarData = [
   {
     title: 'اطلاعات نقشه',
     path: '/MapView',
@@ -17,26 +17,38 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Products',
-    path: '/products',
+    title: 'درخواست های انجام شده',
+    path: '/WorkDone',
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text'
   },
   {
-    title: 'Team',
-    path: '/team',
+    title: ' درخواست های  در حال اجرا  ',
+    path: '/WorkInProgress',
     icon: <IoIcons.IoMdPeople />,
     cName: 'nav-text'
   },
   {
-    title: 'Messages',
-    path: '/messages',
+    title: 'درخواست های رد شده',
+    path: '/WorkCanceled',
     icon: <FaIcons.FaEnvelopeOpenText />,
     cName: 'nav-text'
   },
   {
-    title: 'تنظیمات',
-    path: '/setting',
+    title: 'فاکتورها  ',
+    path: '/PaymentReports',
+    icon: <IoIcons.IoMdHelpCircle />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'پشتیبانی',
+    path: '/support',
+    icon: <FaIcons.FaEnvelopeOpenText />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'سوالات متداول',
+    path: '/FAQs',
     icon: <IoIcons.IoMdHelpCircle />,
     cName: 'nav-text'
   }

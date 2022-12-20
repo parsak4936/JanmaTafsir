@@ -7,11 +7,14 @@
       password: "",
       confirmPassword: "",
       shabaNumber: 0,
-      userType: 0,
+      userType: null,
       address: "",
       cityId: 0,
+      statename: "",
+      stateID: 0,
+      cityname:"",
     },
-    LogInToken: "",
+    Token: "",
     SubscribedUser: false,
    
   };

@@ -1,119 +1,137 @@
-import { Field, Formik, useFormik, Form } from "formik";
-import React, { useState } from "react";
+// const ValidationURL =
+//   "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserValidationNumber";
+
+//     axios
+//       .post(ValidationURL, {
+//         randCode: user["randCode"],
+//         phoneNumber: user["phoneNumber"],
+//       })
+//       .then((response) => {
+
+//       })
+//       .catch((exception) => {
+//         setWaiting(false);
+//         if (exception.response.status == 400) {
+//           console.log("400");
+//         } else {
+//           console.log(exception.response.status);
+//         }
+//       });
+
+import React, { useRef, useState } from "react";
 import axios from "axios";
-import LoadingAnimation from "../../Components/loadingAnimation";
-import { useLocation,useNavigate } from "react-router-dom";
- 
-function SmsValidation({ logado = false }) {
-  const location = useLocation();
-  const [randCode, setrandCode] = useState({ value: "", error: "" });
+import { Button } from "primereact/button";
+
+import { Formik, Form, Field } from "formik";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import allActions from "../../app/Actions/AllActions";
+import { Divider } from "primereact/divider";
+import Spiner from "../../Components/spiner/spiner";
+import { Toast } from "primereact/toast";
+
+function SmsValidation() {
+  const signupToken = useSelector((state) => state.SignupReducer.Token);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${signupToken}`,
+    },
+  };
+  const toastBC = useRef(null);
   const [waiting, setWaiting] = useState(false);
-  const [token, setUserToken] = useState("");
+  const [randCode, setrandCode] = useState();
   const navigate = useNavigate();
-  //TODO : how to send
-  const [phoneNumber, setphoneNumber] = useState(location.state.phoneNumber);
-  //TODO : if you wanted to add some Token to the BackEnd!
-  //   const storeData = async (Token,SystemID) => {
-  //     try {
-  //       await AsyncStorage.setItem('@Token', Token)
-  //       await AsyncStorage.setItem('@SystemID', SystemID)
+  const dispatch = useDispatch();
+  // const userType = useSelector((state) => state.SignupReducer.userType);
 
-  //     } catch (e) {
-  //        console.log(e.message);
-  //     }
+
+  //  URL inputs :{
+  //   "phoneNumber": "string",
+  //   "randCode": "string"
+  // }    const ValidationURL =
+
+  //===================================
+  //URL Response :{
+  //   "isSuccess": true,
+  //   "statusCode": 200,
+  //   "message": "string",
+  //   "data": {
+  //     "token": "string",
+  //     "userType": 1
   //   }
-  const ValidationURL =
-    "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserValidationNumber";
-  const formik = useFormik({
-    initialValues: {
-      phoneNumber: "",
-      randCode: "",
-    },
+  // }
+  const ValidationURL=
+  "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserValidationNumber";
 
-    onSubmit: (values) => {
-      setrandCode({ value: values.randCode, error: "" });
-      console.log("this is value " + values.randCode);
-      
-      navigate('/userDashboard');
 
-      setWaiting(true);
-      const user = {
-        randCode: values.randCode,
-        phoneNumber: phoneNumber,
-      };
-      axios
-        .post(ValidationURL, {
-          randCode: user["randCode"],
-          phoneNumber: user["phoneNumber"],
-        })
-        .then((response) => {
-          console(response.StatusCode);
-          //   const page = response;
-          if (response.StatusCode == 200) {
+  const handleValidation = () => {
+    setWaiting(true);
+    const user = {
+      randCode: randCode,
+    };
+    setTimeout(
+      () => {
+        axios
+          .post(ValidationURL, config, {
+            randCode:user["randCode"]
+          })
+          .then((response) => {
+            if (response.data.statusCode == 200) {
+              setWaiting(false);
+              dispatch(
+                allActions.userActions.PhoneValidation(response.data.data.token)
+              );
+              navigate("/Validation");
+            }
+          })
+          .catch((exception) => {
             setWaiting(false);
-          } else {
-            setWaiting(false);
-          }
-          // if (page === true) {
-          //   localStorage.setItem('@user', JSON.stringify(response.config.data));
-          //   window.location.reload();
-          // } else {
-          //   alert(response.data.msg);
-          //   setWaiting(false)
-          // }
-        })
-        .catch((exception) => {
-          setWaiting(false);
-          if (exception.response.status == 400) {
-            console.log("400");
-          } else {
-            console.log(exception.response.status);
-          }
-        });
-      //   alert(JSON.stringify(values, null, 2));
-    },
-  });
+
+            // if (exception.response.status == 400) {
+            //   Show400Errors();
+            // } else if (exception.response.status == 401) {
+            //   ShowTokenErrors(toastBC);
+            // }
+            //  else if (exception.response.status == 500) {
+            //   Show500Errors();
+            // }
+          });
+      },
+
+      2000
+    );
+  };
+   
 
   return (
-    <div className="body">
-      <div className="left-login">
-        {/* adding a table for informations here */}
-      </div>
+    <div className="grid c-12">
+      <Toast ref={toastBC} position="bottom-center" />
 
-      <div className="right-login">
-        <div className="card-login">
-          <h1>ورود </h1>
+      <div className="right-signup grid c-12">
+        <div className="card-signup">
+
           <Formik
-            initialValues={{ randCode: "", phoneNumber: "" }}
-            onSubmit={formik.handleSubmit}
+            initialValues={{}}
+            onSubmit={handleValidation}
+            // validationSchema={ValidationsRegister}
           >
-            <Form className="login-form" onSubmit={formik.handleSubmit}>
-              {/* -------------------------  code ------------------------- */}
+            <Form className="login-form">
+              {/* -------------------------  Phone number------------------------- */}
               <div className="form-group">
-                {/* <label form="email">Confirme sua senha</label> */}
+                <h5 style={{ color: "white" }}>    کد ارسال شده </h5>
+
                 <Field
                   name="randCode"
-                  id="randCode"
-                  type="text"
-                  onChange={formik.handleChange}
-                  value={formik.values.randCode}
+                  style={{ color: "black" }}
                   className="form-field"
-                  placeholder="تایید"
+                  onChange={(e)=>{setrandCode(e.target.value)}}
+                  placeholder="کد ارسال شده  "
                 />
               </div>
 
-              <div className="form-group" style={{}}>
-                {waiting == false ? (
-                  <button className="button" type="submit">
-                    تایید
-                  </button>
-                ) : (
-                  <div>
-                    {" "}
-                    <LoadingAnimation style={{}} />{" "}
-                  </div>
-                )}
-              </div>
+              <button className="button button align-items-center justify-content-center">
+                تایید
+              </button>
             </Form>
           </Formik>
         </div>

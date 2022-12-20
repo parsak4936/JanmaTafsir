@@ -3,13 +3,8 @@
     padding-top: 10px;
   } 
 .App-Header{
-      background-image: url("../../Assets/DashboardAsset/bg2.jpg");
-      background-color: #cccccc;
-     
-     
-      background-position: center; 
-    background-repeat: no-repeat !important; 
-    background-size: cover; 
+    
+      
    }
 .col{
   padding: 0 !important;

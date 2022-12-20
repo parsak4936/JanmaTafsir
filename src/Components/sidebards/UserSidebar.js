@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
-import { SidebarData } from "../SidebarData";
+import { UserSidebarData } from "./UserSidebarData";
 import { Link } from "react-router-dom";
 
-const UserDashboardSidebar = () => {
+const UserSidebar = () => {
   
   const [visibleRight, setVisibleRight] = useState(false);
   
@@ -17,9 +17,9 @@ const UserDashboardSidebar = () => {
          
         onHide={() => setVisibleRight(false)}
       >
-        <h3>محیط کار</h3>
+        
         <div className=" col-12 text-center w-full">
-       {SidebarData.map((item, index) => {
+       {UserSidebarData.map((item, index) => {
               return (
                 <li
                    
@@ -45,4 +45,4 @@ const UserDashboardSidebar = () => {
   );
 };
 
-export default UserDashboardSidebar;
+export default UserSidebar;

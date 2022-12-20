@@ -1,13 +1,14 @@
 import {combineReducers} from 'redux'
  import LoginReducers from './LoginReducers'
  import SignupReducer from './SignupReducer'
- import UserDataUpdateReducer from './UserDataUpdateReducer'
- import ToggleReducer from './ToggleReducer'
+  import ToggleReducer from './ToggleReducer'
+  import getInfoReducer from './getInfoReducer'
 const rootReducer = combineReducers({
     LoginReducers,
    
-    UserDataUpdateReducer,
-    SignupReducer,
+    getInfoReducer,
+
+   
 })
 
 export default rootReducer

@@ -14,7 +14,9 @@ import  ToggleReducer from './reducers/ToggleReducer'
 import SelectCSReducer from "./reducers/SelectCSReducer";
 import persistStore from "redux-persist/es/persistStore";
 import NewReqReducer from './reducers/NewReqReducer'
-
+import UpdateUserDataReducer from './reducers/UpdateUserDataReducer'
+import getInfoReducer from './reducers/getInfoReducer'
+import  SignupReducer from './reducers/SignupReducer'
 const persistConfig = {
   key: "main-root",
   storage,
@@ -26,7 +28,9 @@ const store = configureStore({
     persistedReducer,
     ToggleReducer,
     SelectCSReducer,
-    NewReqReducer
+    NewReqReducer,
+    UpdateUserDataReducer,
+    SignupReducer,
   } ,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

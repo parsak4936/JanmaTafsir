@@ -10,22 +10,22 @@ const InitialState = {
 const SelectCSReducer = (state = InitialState, action) => {
   
   switch (action.type) {
-    case "SelectState":
-      return {
-        ...state,
-        selectedState:{
-            id:action.payload.id,
-            name:action.payload.name
-        }
-      };
-      case "SelectCity":
-        return {
-          ...state,
-          selectedCity:{
-            id:action.payload.id,
-            name:action.payload.name
-        }
-        };
+    // case "SelectState":
+    //   return {
+    //     ...state,
+    //     selectedState:{
+    //         id:action.payload.id,
+    //         name:action.payload.name
+    //     }
+    //   };
+    //   case "SelectCity":
+    //     return {
+    //       ...state,
+    //       selectedCity:{
+    //         id:action.payload.id,
+    //         name:action.payload.name
+    //     }
+    //     };
   
     default:
       return state;

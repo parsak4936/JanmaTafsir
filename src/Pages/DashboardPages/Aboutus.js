@@ -1,16 +1,17 @@
 import React from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { Avatar } from 'primereact/avatar';
- const Aboutus = () => {
+ import { Avatar } from "primereact/avatar";
+const Aboutus = () => {
   const header = (
     <div className="col-12 md:col-4">
-    
-        <Avatar image="images/avatar/amyelsner.png" className="mr-2" size="xlarge" shape="circle" />
- 
-     
-</div>
-    
+      <Avatar
+        image="images/avatar/amyelsner.png"
+        className="mr-2"
+        size="xlarge"
+        shape="circle"
+      />
+    </div>
   );
   const footer = (
     <span>
@@ -24,11 +25,18 @@ import { Avatar } from 'primereact/avatar';
   );
 
   return (
-    <div className=" grid align-items-center justify-content-center ">
-         <div className="grid   align-items-center justify-content-center md:col-6 lg:col-6 ">
-        <p className="col-12  align-items-center justify-content-center  "> درباره تیم جانما تفسیر</p>
+    <div
+      className=" grid align-items-center justify-content-center "
+      
+    >
+      <div className="grid   align-items-center justify-content-center md:col-6 lg:col-6 ">
+        <p className="col-12  align-items-center justify-content-center  ">
+          {" "}
+          درباره تیم جانما تفسیر
+        </p>
         <p className="col-12 align-items-center justify-content-center ">
-جانما تفسیر تشکیل شده از چندین گروه ؛ ... و ... و ... میباشد .این سامانه در سال ... توسط ... تاسیس شده است
+          جانما تفسیر تشکیل شده از چندین گروه ؛ ... و ... و ... میباشد .این
+          سامانه در سال ... توسط ... تاسیس شده است
         </p>
       </div>
       <div className=" grid p-6 col-12 align-items-center justify-content-center ">

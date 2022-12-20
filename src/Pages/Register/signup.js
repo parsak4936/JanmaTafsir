@@ -1,5 +1,5 @@
 import "../../Styles/signup.css";
-import Dropdown from "../../Components/dropdown/dropdownComponent";
+import userTypeDropDown from "../../Components/dropdown/userTypeDropDown";
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
@@ -12,47 +12,55 @@ import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
 import Spiner from "../../Components/spiner/spiner";
 import { Toast } from "primereact/toast";
+import StateDropDownR from "./StateDropDownR";
+import CityDropdownR from "./cityDropdownR";
+import {
+  Show400Errors,
+  Show500Errors,
+  Show404Errors,
+  ShowNetorkErrors,
+} from "../../Components/ShowErrors/ShowErrors";
 
-function Signup({ login = false }) {
+function Signup() {
   const toastBC = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  //---------------------Variables------------------//
+  const UserSignupURL =
+    "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserRegister";
+    const EpertSignupURL =
+    "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/ExpertRegister";
+  const selectedStateID = useSelector((state) => state.SignupReducer.stateID);
+  const selectedcityID = useSelector((state) => state.SignupReducer.cityID);
+  const userType = useSelector((state) => state.SignupReducer.userType);
+
+  const [errors, setErrors] = useState({});
   const [waiting, setWaiting] = useState(false);
   const [userData, setUserData] = useState({
     nationCode: "",
     phoneNumber: "",
     password: "",
     confirmPassword: "",
+    firstname: "",
+    lastname: "",
+    Token: "",
   });
-  const header = <h6>Pick a password</h6>;
+  //---------------------password popUp Header And Footer------------------//
+
+  const header = <h6> یک رمز برای ورود انتخاب کنید </h6>;
   const footer = (
     <React.Fragment>
       <Divider />
-      <p className="mt-2">Suggestions</p>
+      <p className="mt-2">پیشنهادات</p>
       <ul className="pl-2 ml-2 mt-0" style={{ lineHeight: "1.5" }}>
-        <li>At least one lowercase</li>
-        <li>At least one uppercase</li>
-        <li>At least one numeric</li>
-        <li>Minimum 8 characters</li>
+        <li>حداقل هشت رقم باشد</li>
+        <li>حداقل یک حرف کوچک و یک جرف بزرگ داشته باشد</li>
+        <li>علامت داشته باشد</li>
+        <li>چند عدد هم درآن وجود داشته باشد</li>
       </ul>
     </React.Fragment>
   );
-  const Show400Errors = () => {
-    toastBC.current.show({
-      severity: "error",
-      summary: " خطایی پیش آمده",
-      detail: "خطایی در اطلاعات است.دوباره امتحان کنید",
-      life: 3000,
-    });
-  };
-  const Show500Errors = () => {
-    toastBC.current.show({
-      severity: "error",
-      summary: " خطایی پیش آمده",
-      detail: "لطفا دوباره امتحان کنید",
-      life: 3000,
-    });
-  };
-  
 
   const handlechange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -60,16 +68,14 @@ function Signup({ login = false }) {
   //---------------------Validations------------------//
   const nationCodeRegExp = /^[0-9]{10}$/;
   const phoneRegExp = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/;
-
-  var nationcodeValiation = false;
+  var natsioncodeValiation = false;
   if (nationCodeRegExp.test(userData.nationCode)) {
-    nationcodeValiation = true;
+    natsioncodeValiation = true;
   }
   var phonenumberValidation = false;
   if (phoneRegExp.test(userData.phoneNumber)) {
     phonenumberValidation = true;
   }
-
   var passwordValidation = false;
   if (userData.password.length >= 6) {
     passwordValidation = true;
@@ -78,17 +84,7 @@ function Signup({ login = false }) {
   if (userData.confirmPassword == userData.password) {
     confirmpasswordValidation = true;
   }
-  //---------------------------------------//
-
-  const dispatch = useDispatch();
-  const userType = useSelector(
-    (state) => state.persistedReducer.SignupReducer.normalusers.userType
-  );
-
-  const SignupURL =
-    "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserRegister";
-
-  const navigate = useNavigate();
+  //-------------------Handle Register Request--------------------//
   const handleRegister = () => {
     setWaiting(true);
     const user = {
@@ -97,78 +93,109 @@ function Signup({ login = false }) {
       userType: userType,
       password: userData.password,
       confirmPassword: userData.confirmPassword,
+      firstname: userData.firstname,
+      lastname: userData.lastname,
+      stateID: selectedStateID,
+      cityID: selectedcityID,
     };
-    setTimeout(
-      () => {
-        axios
-          .post(SignupURL, {
-            nationalCode: user["nationalCode"],
-            userType: user["userType"],
-            phoneNumber: user["phoneNumber"],
-            password: user["password"],
-            confirmPassword: user["confirmPassword"],
-          })
-          .then((response) => {
-            if (response.data.statusCode == 200) {
+    if (userType == 1) {
+      // {
+      //   "firstName": "string",
+      //   "lastName": "string",
+      //   "phoneNumber": "string",
+      //   "nationalCode": "string",
+      //   "password": "stringst",
+      //   "confirmPassword": "stringst",
+      //   "cityId": 0,
+      //   "stateId": 0
+      // }
+      setTimeout(
+        () => {
+          axios
+            .post(UserSignupURL, {
+              nationalCode: user["nationalCode"],
+
+              phoneNumber: user["phoneNumber"],
+              password: user["password"],
+              cityname: user["cityname"],
+              statename: user["statename"],
+              confirmPassword: user["confirmPassword"],
+              stateID: user["stateID"],
+              firstname: user["firstname"],
+              lastname: user["lastname"],
+              cityID: user["cityID"],
+            })
+            .then((response) => {
+              if (response.data.statusCode == 200) {
+                setWaiting(false);
+                dispatch(
+                  allActions.userActions.Register(response.data.data.token)
+                );
+                // navigate("/Validation");
+              }
+            })
+            .catch((exception) => {
               setWaiting(false);
-              dispatch(allActions.userActions.Register(userData));
-              navigate("/Validation");
-            }
-          })
-          .catch((exception) => {
-            setWaiting(false);
+               
+              if (exception.response.status == 400) {
+                Show400Errors(toastBC);
+              } else if (exception.response.status == 500) {
+                Show500Errors(toastBC);
+              }
+              else if (exception.code=="ERR_NETWORK") {
+                ShowNetorkErrors(toastBC)
+              }
+            });
+        },
 
-            if (
-              exception.response.status == 400 
-            
-            ) {
-              Show400Errors();
-            } else if (exception.response.status == 500) {
-             Show500Errors()
-            }
-          });
-      },
-
-      2000
-    );
+        2000
+      );
+    } else {
+      // EpertSignp
+      // {
+      //   "firstName": "string",
+      //   "lastName": "string",
+      //   "phoneNumber": "string",
+      //   "nationalCode": "string",
+      //   "password": "stringst",
+      //   "confirmPassword": "stringst",
+      //   "cityId": 0,
+      //   "stateId": 0,
+      //   "cityGraduationId": 0,
+      //   "stateGraduationId": 0,
+      //   "bio": "string",
+      //   "activityRange": 0
+      // }
+      setWaiting(false);
+    }
   };
+  //-------------------Render--------------------//
 
   return (
-    <div className="grid c-12">
-              <Toast ref={toastBC} position="bottom-center" />
+    <div className="grid c-12 a">
+      <Toast ref={toastBC} position="bottom-center" />
 
-      <div className="right-signup grid c-12">
+      <div className="right-signup grid ">
         <div className="card-signup">
           <div className="user-links">
             <div className="user-link-home">
-              {!login && <Link to="/Login">ورود به حساب </Link>}
+              <Link to="/Login">ورود به حساب </Link>
             </div>
             <div className="user-link-cad">
               <Link to="/signup">ثبت نام</Link>
             </div>
           </div>
           <h1>ثبت نام</h1>
-          <Formik
-            initialValues={{}}
-            onSubmit={handleRegister}
-            // validationSchema={ValidationsRegister}
-          >
+          <Formik initialValues={{}} onSubmit={handleRegister}>
             <Form className="login-form">
-              {/* -------------------------  DropDown------------------------- */}
-
-              <div className="form-group">
-                <h5 style={{ color: "white" }}> نوع کاربری </h5>
-
-                <Dropdown />
-              </div>
-
               {/* -------------------------  Phone number------------------------- */}
-              <div className="form-group">
+              <div className="form-group grid col-12">
                 <h5 style={{ color: "white" }}> شماره تماس </h5>
 
                 <Field
                   name="phoneNumber"
-                  className="form-field"
+                  style={{ color: "black" }}
+                  className="form-field "
                   onChange={handlechange}
                   placeholder="شماره تلفن همراه"
                 />
@@ -179,77 +206,154 @@ function Signup({ login = false }) {
                   <div style={{ color: "red" }}> شماره تلفن درست نمیباشد </div>
                 )}
               </div>
-              {/* -------------------------  NationCode------------------------- */}
+              {/* -------------------------  userType ------------------------- */}
+
+              <div className="form-group">
+                <h5 style={{ color: "white" }}> نوع کاربری </h5>
+
+                <userTypeDropDown />
+              </div>
+              {/* -------------------------  state and city  ------------------------- */}
+
+              <div className="grid col-12">
+                <div className="col-6">
+                  <div className="form-group ">
+                    <h5 style={{ color: "white" }}> استان </h5>
+                    <StateDropDownR name="statename" onChange={handlechange} />
+                  </div>
+                </div>
+                <div className="col-6  ">
+                  <div className="form-group  ">
+                    <h5 style={{ color: "white" }}> شهر </h5>
+
+                    <CityDropdownR />
+                  </div>
+                </div>
+              </div>
+
+              {/* -------------------------  nationCode ------------------------- */}
 
               <div className="form-group">
                 <h5 style={{ color: "white" }}> کد ملی </h5>
 
                 <Field
+                  style={{ color: "black" }}
                   name="nationCode"
                   onChange={handlechange}
                   className="form-field"
                   placeholder="کدملی/کدشناسایی/کد اقتصاد"
                 />
-                {nationcodeValiation == true ? (
+                {natsioncodeValiation == true ? (
                   <div></div>
                 ) : (
                   <div style={{ color: "red" }}> کد ملی درست نمیباشد </div>
                 )}
               </div>
-              {/* -------------------------  Password ------------------------- */}
 
-              <div className="form-group">
-                <h5 style={{ color: "white" }}> رمز عبور </h5>
+              {/* ------------------------- firstname and lastname ------------------------- */}
 
-                <Password
-                  name="password"
-                  toggleMask
-                  header={header}
-                  footer={footer}
-                  className="form-field   "
-                  onChange={handlechange}
-                  placeholder="رمز ورود"
-                />
-                {passwordValidation == true ? (
-                  <div></div>
-                ) : (
-                  <div style={{ color: "red" }}>
-                    {" "}
-                    رمز نباید کمتر از 8 کاراکتر باشد{" "}
+              <div className="grid col-12">
+                <div className="col-6">
+                  <div className="form-group ">
+                    <h5 style={{ color: "white" }}> نام </h5>
+
+                    <Field
+                      style={{ color: "black" }}
+                      name="firstname"
+                      onChange={handlechange}
+                      className="form-field"
+                      placeholder="نام "
+                    />
                   </div>
-                )}
+                </div>
+                <div className="col-6  ">
+                  <div className="form-group  ">
+                    <h5 style={{ color: "white" }}> نام خانوادگی </h5>
+                    <Field
+                      style={{ color: "black" }}
+                      name="lastname"
+                      onChange={handlechange}
+                      className="form-field"
+                      placeholder="نام خانوادگی "
+                    />
+                  </div>
+                </div>
               </div>
 
-              {/* ------------------------- Confirm  Password ------------------------- */}
+              {/* ------------------------- Password ------------------------- */}
+              <div className="grid   col-12   ">
+                {/* password */}
+                <div className="col-12  md:col-6 lg:col-6">
+                  <div className="form-group ">
+                    <h5 style={{ color: "white" }}> رمز عبور </h5>
 
-              <div className="form-group">
-                <h5 style={{ color: "white" }}>تکرار رمز عبور </h5>
-                <Password
-                  name="confirmPassword"
-                  toggleMask
-                  header={header}
-                  footer={footer}
-                  className="form-field   "
-                  onChange={handlechange}
-                  placeholder=" تکرار رمز ورود"
-                />
-                {confirmpasswordValidation == true ? (
-                  <div></div>
-                ) : (
-                  <div style={{ color: "red" }}>
-                    {" "}
-                    رمز باید با قبلی برابر باشد{" "}
+                    <Password
+                      style={{ color: "black" }}
+                      name="password"
+                      toggleMask
+                      header={header}
+                      footer={footer}
+                      className="form-field   "
+                      onChange={handlechange}
+                      placeholder="رمز ورود"
+                    />
+                    {passwordValidation == true ? (
+                      <div></div>
+                    ) : (
+                      <div style={{ color: "red" }}>
+                        {" "}
+                        رمز نباید کمتر از 8 کاراکتر باشد{" "}
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
+                {/* Confirm password */}
+
+                <div className="col-12  md:col-6 lg:col-6">
+                  <div className="form-group ">
+                    <h5 style={{ color: "white" }}>تکرار رمز عبور </h5>
+                    <Password
+                      name="confirmPassword"
+                      toggleMask
+                      style={{ color: "black" }}
+                      className="form-field   "
+                      onChange={handlechange}
+                      placeholder=" تکرار رمز ورود"
+                    />
+                    {confirmpasswordValidation == true ? (
+                      <div></div>
+                    ) : (
+                      <div style={{ color: "red" }}>
+                        {" "}
+                        رمز باید با قبلی برابر باشد{" "}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
-              {/* -------------------------   ------------------------- */}
+              {/* -------------------------  make expert list different from normal user ------------------------- */}
+              {userType == 0 && (
+                <div className="form-group">
+                  <h5 style={{ color: "white" }}>مخصوص کارشناس </h5>
+                  <Field
+                    // name="confirmPassword"
+                    // toggleMask
+                    style={{ color: "black" }}
+                    className="form-field   "
+                    // onChange={handlechange}
+                    placeholder=" مخصوص کارشناس  "
+                  />
+                </div>
+              )}
+
+              {/* ------------------------- submit Buttons ------------------------- */}
 
               <div className="form-group" style={{}}>
-                {nationcodeValiation == false ||
+                {natsioncodeValiation == false ||
                 passwordValidation == false ||
                 phonenumberValidation == false ||
-                nationcodeValiation == false ? (
+                natsioncodeValiation == false ? (
                   <Button
                     className="button button align-items-center justify-content-center"
                     disabled
@@ -269,6 +373,7 @@ function Signup({ login = false }) {
                     )}
                   </>
                 )}
+                {/* -------------------------------------------------- */}
               </div>
             </Form>
           </Formik>

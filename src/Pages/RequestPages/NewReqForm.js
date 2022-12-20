@@ -13,93 +13,108 @@ import StatesDropDown from "../../Components/dropdown/StatesDropDown";
 import CityDropDown from "../../Components/dropdown/CityDropDown";
 import { Toast } from "primereact/toast";
 function NewReqForm() {
-    
   const toastTL = useRef(null);
-  
-  const selectedStateID = useSelector(
-    (state) => state.NewReqReducer.stateID
-  );
-  const selectedCityID = useSelector(
-    (state) => state.NewReqReducer.cityID
-  );
- 
-  
+
+  const selectedStateID = useSelector((state) => state.NewReqReducer.stateID);
+  const selectedCityID = useSelector((state) => state.NewReqReducer.cityID);
+
   const [newReqData, setnewReqData] = useState({
-    // ctiveIndex: 0,
+    
     selectedState: { id: "", name: "" },
     selectedCity: { id: "", name: "" },
-    // len: null,
-    // lon: null,
-    // uploadedFile: null,
-    // Address: "",
+     len: "",
+     lon: "",
+     uploadedFile: null,
+     Address: "",
   });
-  const showTopLeft = () => {
-    toastTL.current.show({severity:'error', summary: ' خطا در اطلاعات', detail:' باید شهر و استان خود را انتخاب کنید', life: 3000});
-    
-}
-  // const [modaltoggle, setmodaltoggle] = useState(false);
+  console.log(newReqData.Address)
   const [uploadFile, setuploadFile] = useState();
-
-  //TODO: after dispatch use a code immediately
   const dispatch = useDispatch();
-
+  const handlechange = (e) => {
+    setnewReqData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
   return (
     <Form style={{ margin: "40px" }}>
       <Toast ref={toastTL} position="bottom-center" />
-      <Form.Group>
-        <StatesDropDown />
-      </Form.Group>
-      {selectedStateID === "" ? (
-        <></>
-      ) : (
-        <Form.Group>
-          <CityDropDown />
-        </Form.Group>
-      )}
+      <div className="grid">
+        <div className="col-6">
+          <Form.Group>
+            <Form.Label>
+              {" "}
+              استانی که زمین در آن قرار دارد:
+              <span style={{ color: "red" }}>(اجباری)</span>
+            </Form.Label>
+            <StatesDropDown />
+          </Form.Group>
+        </div>
+        <div className="col-6">
+          {selectedStateID === "" ? (
+            <></>
+          ) : (
+            <Form.Group>
+              <Form.Label>
+                {" "}
+                شهری که زمین در آن قرار دارد:
+                <span style={{ color: "red" }}>(اجباری)</span>
+              </Form.Label>
+              <CityDropDown />
+            </Form.Group>
+          )}
+        </div>
+      </div>
 
-      <Form.Group className="mb-3" controlId="formGridAddress1">
-        <SelectLocationAcc />
-      </Form.Group>
+      <div className=" grid  ">
+        <div className=" col-12">
+          <Form.Group className="  " controlId="formGridAddress1">
+            <Form.Label>
+              {" "}
+              مختصات زمین را روی نقشه مشخص نمایید.
+              <span>(اختیاری)</span>
+            </Form.Label>
+            <SelectLocationAcc />
+          </Form.Group>
+        </div>
+      </div>
 
-      <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Default file input example</Form.Label>
+     
 
-        <Form.Control
-          onChange={(e) => setuploadFile(e.target.files[0])}
-          label="Upload The End-Game Photo"
-          accept=".zip"
-          type="file"
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Example textarea</Form.Label>
-        <Form.Control as="textarea" rows={3} />
-      </Form.Group>
-      {selectedStateID == "" || selectedCityID == ""  ? (
-        <Button
-          variant="primary"
-          className="p-button-danger"
-          type="button"
-          onClick={
-            showTopLeft
-          }
-        >
-          تایید
-        </Button>
-      ) : (
-        <Button
-          variant="primary"
-          type="button"
-          onClick={() => {
-            dispatch(allActions.NewReqActions.FirstFormSubmit(newReqData));
-            // setmodaltoggle(true);
-            // dispatch(allActions.ToggleActions.ModalToggle(true));
-          }}
-        >
-          Submit
-        </Button>
-      )}
+      <div className=" grid  ">
+        <div className=" col-8">
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>
+              {" "}
+              آدرس محل زمین <span>(اختیاری)</span>
+            </Form.Label>
+            <Form.Control name="Address"  onChange={handlechange} as="textarea" rows={3} />
+          </Form.Group>
+        </div>
+      </div>
+      <div className="grid">
+        <div className="col-12">
+          {/* {selectedStateID == "" || selectedCityID == "" ? (
+            <Button
+              variant="primary"
+              className="p-button-danger"
+              type="button"
+              onClick={showTopLeft}
+            >
+              تایید
+            </Button>
+          ) : ( */}
+            <Button
+              variant="primary"
+              type="button"
+              onClick={() => {
+                dispatch(allActions.NewReqActions.FirstFormSubmit(newReqData));
+                // setmodaltoggle(true);
+                // dispatch(allActions.ToggleActions.ModalToggle(true));
+              }}
+            >
+              تایید
+            </Button>
+          {/* )} */}
+        </div>
+      </div>
     </Form>
   );
 }

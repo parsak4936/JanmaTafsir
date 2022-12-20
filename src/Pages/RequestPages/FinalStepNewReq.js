@@ -7,32 +7,197 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
- import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordion";
+import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordion";
 import { Button } from "primereact/button";
+import { Modal } from "react-bootstrap";
+import { Field } from "formik";
 function FinalStepNewReq() {
-    const dispatch = useDispatch();
-    const selectedStateID = useSelector(
-      (state) => state.NewReqReducer.stateID
-    );
-    const selectedCityID = useSelector(
-      (state) => state.NewReqReducer.cityID
-    );
-   
+  const dispatch = useDispatch();
+  const ReqDetails = useSelector((state) => state.NewReqReducer);
+  // ReqDetail Body :
+  //   Address :  ""
+  // SelectReason :  " ارائه گزارش به سازمانهای دولتی"
+  // SubstantialTopics :  "salam"
+  // activeIndex:  3
+  // city :  "آذرشهر"
+  // cityID : 3
+  // len:  null
+  // lon :  null
+  // state :  "آذربایجان‌شرقی"
+  // stateID :  1
+  // uploadedFile: null
+
+  console.log(ReqDetails);
+  const [NewReqData, setNewReqData] = useState({
+    cityId: useSelector((state) => state.NewReqReducer.cityID),
+    expertId: 1,
+    reasonRequestId: useSelector((state) => state.NewReqReducer.SelectReasonID),
+    substantiaTopicsId: useSelector((state) => state.NewReqReducer.SubstantialTopicsID),
+    address: useSelector((state) => state.NewReqReducer.Address),
+    lat: useSelector((state) => state.NewReqReducer.len),
+    lng: useSelector((state) => state.NewReqReducer.lon),
+    moreDetails:useSelector((state) => state.NewReqReducer.moreDetails)
+  });
+  
+  // userrequests/addNewReq inputs in backEnd :
+  // {
+  //   "expertId": 0,
+  //   "cityId": 0,
+  //   "reasonRequestId": 0,
+  //   "substantiaTopicsId": 0,
+  //   "address": "string",
+  //   "lat": "string",
+  //   "lng": "string"
+  // }
+
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  // const handleNewReq = () => {
+  //   const user = {
+  //     cityId: NewReqData.cityId,
+  //   expertId: 1,
+  //   reasonRequestId: NewReqData.reasonRequestId,
+  //   substantiaTopicsId: NewReqData.substantiaTopicsId,
+  //   address: NewReqData.address,
+  //   lat: NewReqData.lat,
+  //   lng: NewReqData.lng,
+
+  //   };
+  //   if (userType == 1) {
+  //     setTimeout(
+  //       () => {
+  //         axios
+  //           .post(SignupURL, {
+  //             // nationalCode: user["nationalCode"],
+
+  //             // phoneNumber: user["phoneNumber"],
+  //             // password: user["password"],
+  //             // cityname: user["cityname"],
+  //             // statename: user["statename"],
+  //             // confirmPassword: user["confirmPassword"],
+  //             // stateID: user["stateID"],
+  //             // firstname: user["firstname"],
+  //             // lastname: user["lastname"],
+  //             // cityID: user["cityID"],
+  //           })
+  //           .then((response) => {
+  //             if (response.data.statusCode == 200) {
+  //               setWaiting(false);
+  //               dispatch(
+  //                 allActions.userActions.Register(response.data.data.token)
+  //               );
+  //               // navigate("/Validation");
+  //             }
+  //           })
+  //           .catch((exception) => {
+  //             setWaiting(false);
+
+  //             if (exception.response.status == 400) {
+  //               Show400Errors(toastBC);
+  //             } 
+  // else if (exception.response.status == 401) {
+  //   ShowTokenErrors(toastBC);
+  // }
+  
+  // else if (exception.response.status == 500) {
+  //               Show500Errors(toastBC);
+  //             } else if (exception.code == "ERR_NETWORK") {
+  //               ShowNetorkErrors(toastBC);
+  //             }
+  //           });
+  //       },
+
+  //       2000
+  //     );
+  //   } else {
+  //     setWaiting(false);
+  //   }
+  // };
   return (
     <>
- <Button onClick={()=>{
- dispatch(allActions.NewReqActions.FourthFormSubmit());
+      <Modal
+        className="align-items-center justify-content-center "
+        show={show}
+        onHide={handleClose}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title
+            className="align-items-center justify-content-center text-lg"
+            style={{ direction: "rtl" }}
+          >
+            {" "}
+            آیا از درست بودن اطلاعات مطمئن هستید؟
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ direction: "rtl" }}>
+اگر از درست بودن اطلاعات درخواست مطمئن هستید،آنها را تایید کنید و منتظر نظر کارشناس بمانید        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="align-items-center justify-content-center m-2"
+            variant="secondary"
+            onClick={handleClose}
+          >
+            مطمئن نیستم
+          </Button>
+          <Button
+            className="align-items-center justify-content-center m-2"
+            variant="primary"
+            onClick={handleClose}
+          >
+            مطمئن هستم{" "}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <div className="grid card col-12 m-4">
+        <div className="grid ">
+          <div className="col-6">نام استان :{NewReqData.stateId}</div>{" "}
+          <div className="col-6">نام شهر :{NewReqData.cityId}</div>
+        </div>
 
-}}>
-    تایید
-</Button>
-<Button 
-onClick={()=>{
-    dispatch(allActions.NewReqActions.FourthFormBack());
-   
-   }}>
-    برگشت
-</Button>
+        <div className="grid ">
+          <div className="col-6">
+            دلیل اولیه درخواست:
+            {NewReqData.reasonRequestId}
+          </div>{" "}
+          <div className="col-6">
+            دلیل ثانویه درخواست :{NewReqData.substantiaTopicsId}
+          </div>
+        </div>
+
+        <div className="grid ">
+          <div className="col-6">
+            آدرس زمین:
+            {NewReqData.address}
+          </div>{" "}
+          <div className="col-6">شماره پرونده دادگاه (درصورت وجود):{NewReqData.moreDetails}</div>
+        </div>
+        <div className="grid ">
+          <div className="col-12">اطلاعات کارشناس :{NewReqData.expertId}</div>{" "}
+        </div>
+      </div>
+      <div className="grid col-12  ">
+        <div className="m-2">
+          <Button
+            onClick={() => {
+              handleShow(true);
+              dispatch(allActions.NewReqActions.FourthFormSubmit());
+            }}
+          >
+            تایید
+          </Button>
+        </div>
+        <div className="m-2">
+          <Button
+            onClick={() => {
+              dispatch(allActions.NewReqActions.FourthFormBack());
+            }}
+          >
+            برگشت
+          </Button>
+        </div>
+      </div>
     </>
   );
 }

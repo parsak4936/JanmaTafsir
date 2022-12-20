@@ -22,7 +22,7 @@ function Header() {
   return (
     <div className="flex flex-wrap App-Header grid">
       <div
-        className="   navbar navbar-expand-lg p-6 h-full grid navbar-scroll  "
+        className="   navbar navbar-expand-lg flex flex-row p-6 h-full grid navbar-scroll  "
         style={{ direction: "rtl" }}
         expand="lg"
       >
@@ -30,12 +30,12 @@ function Header() {
           سامانه جانماتفسیر
         </div>
 
-        <div className=" fadeinleft animation-duration-500  align-items-center justify-content-center col-6 md:col-6 lg:col-6">
-          <div className="grid col-12 align-items-center justify-content-center ">
+        <div className=" fadeinleft animation-duration-500    col-6 md:col-6 lg:col-6">
+          <div className="grid col-12  flex flex-row-reverse ">
             {SubscribedUser == true ? (
               <Button
-                className="mr-2"
-                style={{ float: "left" }}
+                
+               
                 label="ورود به سامانه"
                 onClick={() => {
                   navigate("/MapView");
@@ -44,8 +44,7 @@ function Header() {
 
             ) : (
               <Button
-                className="mr-2"
-                style={{ float: "left" }}
+                
                 label="ورود به سامانه"
                 onClick={() => {
                   navigate("/Login");

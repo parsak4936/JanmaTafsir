@@ -9,14 +9,20 @@ import "primeflex/primeflex.css";
 import "./profile.css";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
+import AvaTarImage from '../../Assets/DashboardAsset/detailExpert.jpg'
+
 function Profile() {
+  const UserInfoes = useSelector(
+    (state) => state.persistedReducer.getInfoReducer
+  );
+
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   const navigate = useNavigate();
   const menu = useRef(null);
   const dispatch = useDispatch();
 
-   const toastBC = useRef(null);
+  const toastBC = useRef(null);
   const SubscribedUserafter = useSelector(
     (state) => state.persistedReducer.LoginReducers.normalusers.nationalCode
   );
@@ -73,15 +79,15 @@ function Profile() {
               id="circle-avatar"
               className="text-center  align-items-center p-1   justify-content-center w-full"
             >
-              <Avatar size="large" shape="circle" />{" "}
+              <Avatar image={AvaTarImage} size="large" shape="circle" />{" "}
             </div>
 
             <h5 className="text-center   align-items-center p-1   justify-content-center w-full">
               {" "}
-              نام خانوادگی
+              {UserInfoes.lastName} {UserInfoes.firstName}
             </h5>
             <p className="text-center  align-items-center p-1   justify-content-center w-full">
-              کد ملی{" "}
+              {UserInfoes.nationalCode}{" "}
             </p>
 
             <hr />
@@ -97,10 +103,10 @@ function Profile() {
               style={{ fontSize: 12 }}
             >
               <p className="grid col-12  align-items-center p-1   justify-content-center ">
-                نوع کاربرک عادی
+                {UserInfoes.userType} نوع کاربرک عادی
               </p>
-              <p className="grid col-6">شهر : قزوین</p>
-              <p className="grid col-6">استان : قزوین</p>
+              <p className="grid col-6">شهر : {UserInfoes.cityName}</p>
+              <p className="grid col-6">استان : {UserInfoes.stateName}</p>
             </p>
 
             <hr className="mb-0" />
@@ -109,14 +115,13 @@ function Profile() {
               className="list-group list-group-flush"
               style={{ margin: "0 -24px 0" }}
             >
-              <button className="list-group-item list-group-item-action px-4">
-                <small> تنظیمات</small>
-              </button>
-              <button className="list-group-item list-group-item-action px-4">
-                <small> پشتیبانی</small>
-              </button>
-              <button className="list-group-item list-group-item-action px-4">
-                <small> پرسش های متداول </small>
+              <button
+                className="list-group-item list-group-item-action px-4"
+                onClick={() => {
+                  navigate("/UpdateUserInfo");
+                }}
+              >
+                <small> تغییر اطلاعات</small>
               </button>
             </div>
 
@@ -147,6 +152,8 @@ function Profile() {
           viewportHeight={320}
         ></SlideMenu>
         <Avatar
+          // image={UserInfoes.profilePhoto}
+          image={AvaTarImage}
           size="large"
           shape="circle"
           onClick={(event) => menu.current.toggle(event)}

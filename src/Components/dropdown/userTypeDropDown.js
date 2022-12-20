@@ -5,26 +5,25 @@ import "primeflex/primeflex.css";
 import React, { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import "./dropdowncss.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
 
 function DropdownComponent() {
   const dispatch = useDispatch();
 
   const [selectedRole, setselectedRole] = useState({
-    name: "کاربر حقیقی",
-    code: "1",
+    name: "",
+    code: "",
   });
 
   const UserKinds = [
     { name: "کاربر حقوقی", code: "0" },
     { name: "کاربر حقیقی", code: "1" },
   ];
-
-  // useEffect(() => {
-  //   setLazyItems(Array.from({ length: 100000 }));
-  //   setLazyLoading(false);
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // const selectedUserType = useSelector(
+  //   (state) => state.SignupReducer.userType
+  // );
+  // console.log(selectedUserType)
 
   const onRoleChange = (e) => {
     setselectedRole(e.value);
@@ -46,5 +45,4 @@ function DropdownComponent() {
   );
 }
 export default DropdownComponent;
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<dropdownComponent />, rootElement);
+ 
