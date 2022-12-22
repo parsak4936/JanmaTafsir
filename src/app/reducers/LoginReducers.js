@@ -3,19 +3,23 @@ import React, { useEffect } from "react";
 import initialState from "./Initialstate";
 
 const LoginReducers = (state = initialState, action) => {
+  console.log(action.payload)
    switch (action.type) {
     case "LOGIN":
       return {
         ...state,
-        normalusers: [
-          {
-            ...state,
-            userType: action.payload.userType,
-          },
-        ],
-        Token: action.payload.token,
+      
+       
+        Token: action.payload,
         SubscribedUser: true,
       };
+      case "updateUserType":
+        return {
+          ...state,
+        
+          userType:action.payload,
+ 
+        };
     case "LogOut":
       return {
         ...state,

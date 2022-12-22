@@ -7,49 +7,49 @@ export const UserSidebarData = [
   {
     title: 'اطلاعات نقشه',
     path: '/MapView',
-    icon: <AiIcons.AiFillHome />,
+    icon: <FaIcons.FaMapMarkerAlt />,
     cName: 'nav-text'
   },
   {
     title: 'ثبت درخواست',
     path: '/RequestRegister',
-    icon: <IoIcons.IoIosPaper />,
+    icon: <FaIcons.FaRegCalendarPlus />,
     cName: 'nav-text'
   },
   {
     title: 'درخواست های انجام شده',
     path: '/WorkDone',
-    icon: <FaIcons.FaCartPlus />,
+    icon: <FaIcons.FaRegCalendarCheck />,
     cName: 'nav-text'
   },
   {
     title: ' درخواست های  در حال اجرا  ',
     path: '/WorkInProgress',
-    icon: <IoIcons.IoMdPeople />,
+    icon: <FaIcons.FaRegCalendar />,
     cName: 'nav-text'
   },
   {
     title: 'درخواست های رد شده',
     path: '/WorkCanceled',
-    icon: <FaIcons.FaEnvelopeOpenText />,
+    icon: <FaIcons.FaRegCalendarTimes />,
     cName: 'nav-text'
   },
   {
     title: 'فاکتورها  ',
     path: '/PaymentReports',
-    icon: <IoIcons.IoMdHelpCircle />,
+    icon: <FaIcons.FaFileInvoiceDollar />,
     cName: 'nav-text'
   },
   {
     title: 'پشتیبانی',
     path: '/support',
-    icon: <FaIcons.FaEnvelopeOpenText />,
+    icon: <FaIcons.FaWrench  />,
     cName: 'nav-text'
   },
   {
     title: 'سوالات متداول',
     path: '/FAQs',
-    icon: <IoIcons.IoMdHelpCircle />,
+    icon: <FaIcons.FaQuestionCircle />,
     cName: 'nav-text'
   }
 ];

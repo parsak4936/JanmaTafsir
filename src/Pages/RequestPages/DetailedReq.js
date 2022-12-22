@@ -12,7 +12,7 @@ import { Button } from "primereact/button";
 import ReasonRequest from "../../Components/dropdown/ReasonRequests";
 import SubstantialTopics from "../../Components/dropdown/SubstantialTopics";
 import { InputTextarea } from "primereact/inputtextarea";
-import ExpertSubjectServicesDropDown from "./ExpertSubjectServicesDropDown";
+import ExpertSubjectServicesDropDown from "../../Components/dropdown/ExpertSubjectServicesDropDown";
 function DetailedReq() {
   const dispatch = useDispatch();
   const [moreDetails, setmoreDetails] = useState("");

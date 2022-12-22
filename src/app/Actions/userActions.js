@@ -1,6 +1,14 @@
 const login = (userObj) => {
+  console.log(userObj.token)
   return {
     type: "LOGIN",
+    payload: userObj,
+  };
+};
+const updateUserType = (userObj) => {
+  
+  return {
+    type: "updateUserType",
     payload: userObj,
   };
 };
@@ -29,6 +37,12 @@ const SelectSubstantialTopics = (userObj) => {
     payload: userObj,
   };
 };
+const selectedExpertSub = (userObj) => {
+  return {
+    type: "selectedExpertSub",
+    payload: userObj,
+  };
+};
 const SelectCity = (userObj) => {
   return {
     type: "SelectCity",
@@ -45,10 +59,26 @@ const UserTypeChange = (userObj) => {
   };
 };
 const UpdateInfo = (userObj) => {
+ 
+  return {
+    type: "UpdateInfo",
+    payload: userObj,
+  };
+};
+
+const UpdateSelectCity = (userObj) => {
   //{name: 'کاربر حقیقی', code: '1'}
 
   return {
-    type: "UpdateInfo",
+    type: "UpdateSelectCity",
+    payload: userObj,
+  };
+};
+const UpdateSelectState = (userObj) => {
+  //{name: 'کاربر حقیقی', code: '1'}
+
+  return {
+    type: "UpdateSelectState",
     payload: userObj,
   };
 };
@@ -81,11 +111,15 @@ export default {
   login,
   PhoneValidation,
   Register,
+  selectedExpertSub,
   UserTypeChange,
   SelectCity,
+  UpdateSelectState,
+  UpdateSelectCity,
   SelectState,
   LogOut,
   SelectReason,
   SelectSubstantialTopics,
   UpdateInfo,
+  updateUserType,
 };

@@ -21,7 +21,7 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
-
+import SmsValidationBG from '../../Assets/NewReqImage.jpg'
 import { Formik, Form, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,11 +32,11 @@ import { Toast } from "primereact/toast";
 
 function SmsValidation() {
   const signupToken = useSelector((state) => state.SignupReducer.Token);
-  const config = {
-    headers: {
-      Authorization: `Bearer ${signupToken}`,
-    },
-  };
+  // const config = {
+  //   headers: {
+  //     Authorization: `Bearer ${signupToken}`,
+  //   },
+  // };
   const toastBC = useRef(null);
   const [waiting, setWaiting] = useState(false);
   const [randCode, setrandCode] = useState();
@@ -63,17 +63,22 @@ function SmsValidation() {
   const ValidationURL=
   "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserValidationNumber";
 
-
+  const phoneNumber = useSelector(
+    (state) => state.persistedReducer.SignupReducer.phoneNumber
+  );
+  console.log(phoneNumber)
   const handleValidation = () => {
     setWaiting(true);
     const user = {
       randCode: randCode,
+      phoneNumber:phoneNumber
     };
     setTimeout(
       () => {
         axios
-          .post(ValidationURL, config, {
-            randCode:user["randCode"]
+          .post(ValidationURL, {
+            randCode:user["randCode"],
+            phoneNumber:user["phoneNumber"],
           })
           .then((response) => {
             if (response.data.statusCode == 200) {
@@ -81,7 +86,11 @@ function SmsValidation() {
               dispatch(
                 allActions.userActions.PhoneValidation(response.data.data.token)
               );
-              navigate("/Validation");
+              dispatch(
+                allActions.userActions.updateUserType(response.data.data.userType)
+              );
+              
+              navigate("/MapView");
             }
           })
           .catch((exception) => {
@@ -104,7 +113,16 @@ function SmsValidation() {
    
 
   return (
-    <div className="grid c-12">
+    <div className="grid c-12 "  style={{
+      backgroundImage: `url(${SmsValidationBG})`,
+      width:"100%",
+      alignItems:'center',
+      textAlign:'center',
+      justifyContent:'center',
+      height:'100vh',
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+    }}>
       <Toast ref={toastBC} position="bottom-center" />
 
       <div className="right-signup grid c-12">

@@ -13,7 +13,7 @@ import allActions from "../../app/Actions/AllActions";
 import ExpertList from "./ExpertListForNewReq";
 import DetailedReq from "./DetailedReq";
 import FinalStepNewReq from "./FinalStepNewReq";
-
+import RRImage from "../../Assets/NewReqImage.jpg"
 function RequestRegister() {
    const dispatch = useDispatch();
   // dispatch(allActions.userActions.login(userData));
@@ -36,9 +36,16 @@ function RequestRegister() {
     },
   ];
   return (
-    <div style={{ direction: "rtl" }}>
+    <div style={{direction:"rtl"}}  >
       <Navbar />
-      <Steps model={items} activeIndex={GlobalactiveIndex} />
+      <div style={{
+      direction:"rtl",
+      backgroundImage: `url(${RRImage})`,
+     height:"auto",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+    }}>
+<Steps model={items} activeIndex={GlobalactiveIndex} />
       {GlobalactiveIndex == 0 ? (
         <NewReqForm />
       ) : GlobalactiveIndex == 1 ? (
@@ -50,6 +57,8 @@ function RequestRegister() {
       ) : (
         <></>
       )}
+      </div>
+      
     </div>
   );
 }

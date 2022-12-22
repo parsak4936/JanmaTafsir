@@ -1,11 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { Toast } from "primereact/toast";
+import React, { useEffect, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
 import Navbar from "../../Components/navbars/Navbar";
+import Show400Errors, { Show404Errors, Show500Errors, ShowNetorkErrors, ShowTokenErrors } from "../../Components/ShowErrors/ShowErrors";
+
 function MapView() {
   const dispatch = useDispatch();
+  const toastBC = useRef(null);
 
   const SubscribedUser = useSelector(
     (state) => state.persistedReducer.LoginReducers.SubscribedUser
@@ -13,7 +17,7 @@ function MapView() {
   const Token = useSelector(
     (state) => state.persistedReducer.LoginReducers.Token
   );
-  const config = {
+   const config = {
     headers: {
       Authorization: `Bearer ${Token}`,
     },
@@ -34,6 +38,19 @@ function MapView() {
       })
       .catch((exception) => {
         console.log(exception);
+        if (exception.response.status == 400) {
+          Show400Errors(toastBC);
+        } else if (exception.response.status == 404) {
+          Show404Errors(toastBC);
+        } else if (exception.response.status == 500) {
+          Show500Errors(toastBC);
+        }
+        else if (exception.response.status == 401) {
+          ShowTokenErrors(toastBC);
+        }
+        else if (exception.code=="ERR_NETWORK") {
+          ShowNetorkErrors(toastBC)
+        }
       });
   };
 
@@ -47,7 +64,7 @@ function MapView() {
       {SubscribedUser === true ? (
         <div style={{ direction: "rtl" }}>
           <Navbar />
-
+          <Toast ref={toastBC} position="bottom-center" />
           <MapContainer
             center={position}
             zoom={13}

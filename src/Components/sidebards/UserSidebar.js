@@ -9,26 +9,32 @@ const UserSidebar = () => {
   const [visibleRight, setVisibleRight] = useState(false);
   
   return (
-    <>
+    <div className=""
+    style={{
+  
+      
+    }}>
       <Sidebar
-      className="bg-blue-400 w-3"
+      className="surface-400  w-auto "
+       
         visible={visibleRight}
         position="right"
          
         onHide={() => setVisibleRight(false)}
       >
-        
-        <div className=" col-12 text-center w-full">
+        <div className="align-items-center text-center align-items-center">محیط کار </div>
+        <div className=" col-12 text-end  ">
        {UserSidebarData.map((item, index) => {
               return (
                 <li
-                   
+                 
                   key={index}
-                  className="align-items-center p-1 list-none justify-content-center w-full"
+                  className="  text-500 align-items-center p-3 list-none align-items-center w-full"
                 >
-                  <Link to={item.path} className="align-items-center w-full justify-content-center">
-                   
-                    <span className="align-items-center w-full justify-content-center">{item.title}</span>
+                  <Link to={item.path} className="text-800">
+                    <span className="m-3">{item.title}</span>
+                    <span className="">{item.icon}</span>
+
                   </Link>
                 </li>
               );
@@ -41,7 +47,7 @@ const UserSidebar = () => {
         onClick={() => setVisibleRight(true)}
         className="mr-2"
       />
-    </>
+    </div>
   );
 };
 

@@ -12,6 +12,7 @@ import { Button } from "primereact/button";
 import StatesDropDown from "../../Components/dropdown/StatesDropDown";
 import CityDropDown from "../../Components/dropdown/CityDropDown";
 import { Toast } from "primereact/toast";
+import { ShowEmptyState } from "../../Components/ShowErrors/ShowErrors";
 function NewReqForm() {
   const toastTL = useRef(null);
 
@@ -91,16 +92,16 @@ function NewReqForm() {
       </div>
       <div className="grid">
         <div className="col-12">
-          {/* {selectedStateID == "" || selectedCityID == "" ? (
+          {selectedStateID == "" || selectedCityID == "" ? (
             <Button
               variant="primary"
               className="p-button-danger"
               type="button"
-              onClick={showTopLeft}
+              onClick={()=>{ShowEmptyState(toastTL)}}
             >
               تایید
             </Button>
-          ) : ( */}
+          ) : (
             <Button
               variant="primary"
               type="button"
@@ -112,7 +113,8 @@ function NewReqForm() {
             >
               تایید
             </Button>
-          {/* )} */}
+
+        )} 
         </div>
       </div>
     </Form>

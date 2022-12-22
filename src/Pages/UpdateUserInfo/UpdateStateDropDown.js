@@ -13,71 +13,67 @@ import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordio
 import { Button } from "primereact/button";
 // import './DropdownDemo.css';
 
-const ExpertSubjectServicesDropDown = () => {
+const UpdateStateDropDown = () => {
   const toastBC = useRef(null);
 
-  const [selectedExpertSub, setselectedExpertSub] = useState("");
+  const [selectedState, setSelectedCountry] = useState("");
 
   const dispatch = useDispatch();
-//   const SubscribedUser = useSelector(
-//     (state) => state.NewReqReducer.selectReason
-//   );
-//   const ass = useSelector(
-//     (state) => state.NewReqReducer
-//   );
-//   console.log(ass)
-  const [ExpertSubjectsOtions, setExpertSubjectsOtions] = useState([]);
-  
-  const getselectedExpertSubURL =
-    "https://elated-swanson-mrhungrj5.iran.liara.run/api/ExpertRequests/GetExpertSubjectServices ";
 
-  const getReasons = () => {
+  const [stateData, setstateData] = useState([]);
+  const getStateURL =
+    "https://elated-swanson-mrhungrj5.iran.liara.run/api/General/GetStates";
+
+  const getState = () => {
     axios
-      .get(getselectedExpertSubURL)
+      .get(getStateURL)
       .then((response) => {
         if (response.data.statusCode == 200) {
-          setExpertSubjectsOtions(response.data.data);
+          setstateData(response.data.data);
         } else {
         }
       })
       .catch((exception) => {
+        //TODO: if error is 500 show errors
         console.log(exception);
-        
+        showError();
       });
   };
 
   const onStateChange = (e) => {
-    setselectedExpertSub(e.target.value.caption);
-    // "id": 14,
-    // "caption": " ارائه گزارش به دوائر حقوقی و قضایی"
-
-     dispatch(
-       allActions.userActions.setselectedExpertSub({
-         id: e.target.value.id,
-         caption: e.target.value.caption,
+    setSelectedCountry(e.target.value.name);
+    dispatch(
+      allActions.userActions.UpdateSelectState({
+        id: e.target.value.id,
+        name: e.target.value.name,
       })
-     );
+    );
 
-    
+   };
+  const showError = () => {
+    toastBC.current.show({
+      severity: "error",
+      summary: " خطایی پیش آمده",
+      detail:"از وصل بودن شبکه خود مطمئن شوید و صفحه را رفرش کنید",
+       life: 3000,
+    });
   };
-  
   useEffect(() => {
-    getReasons();
+    getState();
   }, []);
 
   const selectedCountryTemplate = (option, props) => {
-    
     if (option) {
       return (
         <div className="country-item country-item-value">
-          <div>{option.value}</div>
+          <div>{option.name}</div>
         </div>
       );
     }
 
     return (
       <span>
-        {ExpertSubjectsOtions == "" ? <>یک زیر مجموعه را انتخاب کنید</> : <> {props.value}</>}
+        {selectedState == "" ? <>یک استان انتخاب کنید</> : <> {props.value}</>}
       </span>
     );
   };
@@ -85,18 +81,18 @@ const ExpertSubjectServicesDropDown = () => {
   const countryOptionTemplate = (option) => {
     return (
       <div className="country-item">
-        <div>{option.caption}</div>
+        <div>{option.name}</div>
       </div>
     );
   };
 
   return (
     <div className="dropdown-demo">
-     
+      <Toast ref={toastBC} position="bottom-center" />
       <div className="card">
         <Dropdown
-          value={selectedExpertSub}
-          options={ExpertSubjectsOtions}
+          value={selectedState}
+          options={stateData}
           onChange={onStateChange}
           optionLabel="name"
           filter
@@ -110,4 +106,4 @@ const ExpertSubjectServicesDropDown = () => {
   );
 };
 
-export default ExpertSubjectServicesDropDown;
+export default UpdateStateDropDown;

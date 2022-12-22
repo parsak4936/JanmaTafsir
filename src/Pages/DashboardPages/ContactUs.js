@@ -55,7 +55,7 @@ const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name
         return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
     };
 
-    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false)} /></div>;
+    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"   onClick={() => setShowMessage(false)} /></div>;
 
   return (
     <div
@@ -86,7 +86,7 @@ const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name
                     <form onSubmit={formik.handleSubmit} className="p-fluid">
                         <div className="field">
                             <span className="p-float-label">
-                                <InputText id="name" name="name" value={formik.values.name} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('name') })} />
+                                <InputText id="name" name="name" value={formik.values.name} onChange={formik.handleChange}   className={classNames({ 'p-invalid': isFormFieldValid('name') })} />
                                 <label htmlFor="name" className={classNames({ 'p-error': isFormFieldValid('name') })}>Name*</label>
                             </span>
                             {getFormErrorMessage('name')}

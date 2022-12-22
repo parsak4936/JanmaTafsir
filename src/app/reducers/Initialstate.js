@@ -1,5 +1,5 @@
   const InitialState = {
-    normalusers: {
+   
       firstname: "",
       lastname: "",
       phoneNumber: "",
@@ -7,13 +7,13 @@
       password: "",
       confirmPassword: "",
       shabaNumber: 0,
-      userType: null,
+      userType: "",
       address: "",
       cityId: 0,
       statename: "",
       stateID: 0,
       cityname:"",
-    },
+    
     Token: "",
     SubscribedUser: false,
    

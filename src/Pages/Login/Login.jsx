@@ -8,7 +8,7 @@ import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
-import LoginBackGroundImg from '../../Assets/DashboardAsset/bg3.jpg'
+import LoginBackGroundImg from "../../Assets/DashboardAsset/bg3.jpg";
 import { Message } from "primereact/message";
 import {
   Show400Errors,
@@ -17,7 +17,7 @@ import {
 } from "../../Components/ShowErrors/ShowErrors";
 
 import { Toast } from "primereact/toast";
-function Login({ logado = false }) {
+function Login() {
   const [waiting, setWaiting] = useState(false);
   const navigate = useNavigate();
   const nationCodeRegExp = /^[0-9]{10}$/;
@@ -29,6 +29,8 @@ function Login({ logado = false }) {
     password: "",
     token: "",
   });
+  const Token = useSelector((state) => state.persistedReducer.LoginReducers);
+  console.log(Token);
   var nationcodeValiation = false;
   if (nationCodeRegExp.test(userData.nationCode)) {
     nationcodeValiation = true;
@@ -66,14 +68,14 @@ function Login({ logado = false }) {
             if (response.data.statusCode == 200) {
               console.log();
               setWaiting(false);
-              const dispatchData = [
-                {
-                  token: response.data.data.token,
-                  userType: response.data.data.userType,
-                },
-              ];
-              dispatch(allActions.userActions.login(dispatchData));
 
+              dispatch(
+                allActions.userActions.updateUserType(
+                  response.data.data.userType
+                )
+              );
+
+              dispatch(allActions.userActions.login(response.data.data.token));
               navigate("/MapView");
             }
           })
@@ -96,21 +98,18 @@ function Login({ logado = false }) {
 
   return (
     <>
-      <div
-        className="grid a"
-         
-      >
+      <div className="grid a">
         <Toast ref={toastBC} position="bottom-center" />
 
-        <div className=" grid col-6 right-login " >
+        <div className=" grid col-6 right-login ">
           <div className="card-login">
             <div className="user-links">
               <div className="user-link-home">
-                {!logado && <Link to="/Login">ورود به حساب</Link>}
+                <Link to="/Login">ورود به حساب</Link>
               </div>
 
               <div className="user-link-cad">
-                {!logado && <Link to="/signup">ثبت نام</Link>}
+                <Link to="/signup">ثبت نام</Link>
               </div>
             </div>
             <h1>ورود </h1>
@@ -186,6 +185,29 @@ function Login({ logado = false }) {
                         )}
                       </>
                     )}
+                  </div>
+
+                  <div className="form-group" style={{ color: "white" }}>
+                    {/* <span style={{color:'red'}}>کلیک کنید</span>   */}
+                    <Link
+                      onClick={() => {
+                        //TODO : navigation to ForgetPassword
+                        //URL :
+                        //https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/ForgetPassword
+                        //inputs : unknown
+                        //output : {
+                        //   "isSuccess": true,
+                        //   "statusCode": 200,
+                        //   "message": "string",
+                        //   "data": {
+                        //     "token": "string",
+                        //     "userType": 1
+                        //   }
+                        // }
+                      }}
+                    >
+                      فراموشی رمز ورود
+                    </Link>
                   </div>
                 </Form>
               )}

@@ -19,6 +19,7 @@ const InitialState = {
   SubstantialTopicsID: "",
   SelectReason: "",
   SelectReasonID: "",
+  selectedExpertSub:"",
   moreDetails: "",
   //forth form data-->finalstepnewReq.js
   //it will just send datas from prev forms to the API (after accept in a modal)
@@ -55,12 +56,19 @@ const NewReqReducer = (state = InitialState, action) => {
         SelectReason: action.payload.caption,
         SelectReasonID: action.payload.id,
       };
+      
     case "SelectSubstantialTopics":
       return {
         ...state,
         SubstantialTopics: action.payload.caption,
         SubstantialTopicsID: action.payload.id,
       };
+      case "selectedExpertSub":
+        return {
+          ...state,
+          selectedExpertSub: action.payload.caption,
+          selectedExpertSubID: action.payload.id,
+        };
     case "SecondFormSubmit":
       return {
         ...state,

@@ -5,7 +5,7 @@ import {combineReducers} from 'redux'
   import getInfoReducer from './getInfoReducer'
 const rootReducer = combineReducers({
     LoginReducers,
-   
+    SignupReducer,
     getInfoReducer,
 
    

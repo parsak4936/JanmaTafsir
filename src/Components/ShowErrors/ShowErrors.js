@@ -24,6 +24,14 @@ export const Show404Errors = (toast) => {
       life: 3000,
     });
   };
+  export const ShowEmptyState = (toast) => {
+    toast.current.show({
+      severity: "error",
+      summary: "  اطلاعات ناقص میباشد",
+      detail: "شهر و استان نباید خالی باشند   ",
+      life: 3000,
+    });
+  };
   export const ShowTokenErrors = (toast) => {
     toast.current.show({
       severity: "error",

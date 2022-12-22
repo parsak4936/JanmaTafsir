@@ -6,7 +6,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FeaturesCarousel from "../../Components/Carousel/FeaturesCarousel";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 function Features() {
+  const navigate = useNavigate();
+  const SubscribedUser = useSelector(
+    (state) => state.persistedReducer.LoginReducers.SubscribedUser
+  );
   return (
     <div 
       className=" flex flex-wrap noPadding grid threeViewMain"
@@ -59,7 +65,16 @@ function Features() {
 
                </li>
               <div style={{marginTop:'30px',textAlign:'center'}}>
-              <Button >همین الان شروع کن!</Button>
+              <Button onClick={
+                ()=>{
+                  if(SubscribedUser==true){
+                    navigate("/MapView");
+                  }else{
+                    navigate("/Login");
+                  }
+                 
+                }
+              } >همین الان شروع کن!</Button>
               </div>
               
                

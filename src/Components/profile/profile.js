@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-
+ 
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
@@ -23,9 +23,10 @@ function Profile() {
   const dispatch = useDispatch();
 
   const toastBC = useRef(null);
-  const SubscribedUserafter = useSelector(
-    (state) => state.persistedReducer.LoginReducers.normalusers.nationalCode
+  const userType = useSelector(
+    (state) => state.persistedReducer.LoginReducers.userType
   );
+  console.log(userType)
   const showConfirm = () => {
     toastBC.current.show({
       severity: "warn",
@@ -79,7 +80,8 @@ function Profile() {
               id="circle-avatar"
               className="text-center  align-items-center p-1   justify-content-center w-full"
             >
-              <Avatar image={AvaTarImage} size="large" shape="circle" />{" "}
+             
+              <Avatar label="P " image={AvaTarImage} size="large" shape="circle" />{" "}
             </div>
 
             <h5 className="text-center   align-items-center p-1   justify-content-center w-full">
@@ -102,11 +104,11 @@ function Profile() {
               className="grid col-12  align-items-center p-1   justify-content-center w-full "
               style={{ fontSize: 12 }}
             >
-              <p className="grid col-12  align-items-center p-1   justify-content-center ">
-                {UserInfoes.userType} نوع کاربرک عادی
-              </p>
-              <p className="grid col-6">شهر : {UserInfoes.cityName}</p>
-              <p className="grid col-6">استان : {UserInfoes.stateName}</p>
+              {/* <p className="grid col-12  align-items-center p-1   justify-content-center ">
+                {UserInfoes.userType} نوع کاربرک عادی  {userType}
+              </p> */}
+              <p className="grid col-6">{UserInfoes.cityName}</p>
+              <p className="grid col-6">  {UserInfoes.stateName}</p>
             </p>
 
             <hr className="mb-0" />
@@ -124,6 +126,20 @@ function Profile() {
                 <small> تغییر اطلاعات</small>
               </button>
             </div>
+            <div
+              className="list-group list-group-flush"
+              style={{ margin: "0 -24px 0" }}
+            >
+              <button
+                className="list-group-item list-group-item-action px-4"
+                onClick={() => {
+                  navigate("/UpdatePassword");
+                }}
+              >
+                <small> تغییر رمز عبور </small>
+              </button>
+            </div>
+
 
             <hr style={{ margin: "0 -24px 24px" }} />
 

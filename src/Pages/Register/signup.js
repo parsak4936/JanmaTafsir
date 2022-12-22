@@ -1,5 +1,5 @@
 import "../../Styles/signup.css";
-import userTypeDropDown from "../../Components/dropdown/userTypeDropDown";
+import UserTypeDropDown from "../../Components/dropdown/userTypeDropDown";
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
@@ -129,14 +129,17 @@ function Signup() {
               if (response.data.statusCode == 200) {
                 setWaiting(false);
                 dispatch(
-                  allActions.userActions.Register(response.data.data.token)
+                  allActions.userActions.Register(userData)
                 );
-                // navigate("/Validation");
+                  navigate("/Validation");
               }
             })
             .catch((exception) => {
               setWaiting(false);
-               
+              dispatch(
+                allActions.userActions.Register(userData)
+              );
+                navigate("/Validation");
               if (exception.response.status == 400) {
                 Show400Errors(toastBC);
               } else if (exception.response.status == 500) {
@@ -166,6 +169,7 @@ function Signup() {
       //   "bio": "string",
       //   "activityRange": 0
       // }
+      
       setWaiting(false);
     }
   };
@@ -211,7 +215,7 @@ function Signup() {
               <div className="form-group">
                 <h5 style={{ color: "white" }}> نوع کاربری </h5>
 
-                <userTypeDropDown />
+                <UserTypeDropDown />
               </div>
               {/* -------------------------  state and city  ------------------------- */}
 

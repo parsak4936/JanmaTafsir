@@ -22,7 +22,7 @@ function Navbar() {
  
       template: (item, options) => {
           return (
-               <Profile/>
+               <Profile />
              
           );
       }
@@ -31,10 +31,10 @@ function Navbar() {
     
 ];
 const UserType = useSelector(
-  (state) => state.persistedReducer.LoginReducers.normalusers.userType
+  (state) => state.persistedReducer.LoginReducers.userType
 );
  
-const start =()=>{ if (UserType==0){
+const start =()=>{ if (UserType==1){
   return <UserSidebar/> ;
 } else if (UserType==1){
   return <ExpertSidebar/> ;
