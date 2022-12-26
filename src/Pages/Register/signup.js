@@ -29,7 +29,7 @@ function Signup() {
   //---------------------Variables------------------//
   const UserSignupURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UserRegister";
-    const EpertSignupURL =
+  const EpertSignupURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/ExpertRegister";
   const selectedStateID = useSelector((state) => state.SignupReducer.stateID);
   const selectedcityID = useSelector((state) => state.SignupReducer.cityID);
@@ -46,7 +46,32 @@ function Signup() {
     lastname: "",
     Token: "",
   });
-  //---------------------password popUp Header And Footer------------------//
+  const [ExpertData, setExpertData] = useState({
+    //   "firstName": "string",
+    //   "lastName": "string",
+    //   "phoneNumber": "string",
+    //   "nationalCode": "string",
+    //   "password": "stringst",
+    //   "confirmPassword": "stringst",
+    //   "cityId": 0,
+    //   "stateId": 0,
+    //   "cityGraduationId": 0,
+    //   "stateGraduationId": 0,
+    //   "bio": "string",
+    //   "activityRange": 0
+    nationCode: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+    firstname: "",
+    lastname: "",
+    Token: "",
+    cityGraduationId: 1,
+    stateGraduationId: 1,
+    bio: "",
+    activityRange: 1,
+  }); //---------------------password popUp Header And Footer------------------//
+  console.log(ExpertData);
 
   const header = <h6> یک رمز برای ورود انتخاب کنید </h6>;
   const footer = (
@@ -63,42 +88,78 @@ function Signup() {
   );
 
   const handlechange = (e) => {
-    setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (userType == 1) {
+      setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    } else {
+      setExpertData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
   };
   //---------------------Validations------------------//
   const nationCodeRegExp = /^[0-9]{10}$/;
   const phoneRegExp = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/;
   var natsioncodeValiation = false;
-  if (nationCodeRegExp.test(userData.nationCode)) {
-    natsioncodeValiation = true;
+  
+  if(userType==0){
+    if (nationCodeRegExp.test(ExpertData.nationCode)) {
+      natsioncodeValiation = true;
+    }
+  }else{
+    if (nationCodeRegExp.test(userData.nationCode)) {
+      natsioncodeValiation = true;
+    }
   }
+  //==================================
   var phonenumberValidation = false;
-  if (phoneRegExp.test(userData.phoneNumber)) {
-    phonenumberValidation = true;
+  if(userType==0){
+    if (phoneRegExp.test(ExpertData.phoneNumber)) {
+      phonenumberValidation = true;
+    }
+  }else{
+    if (phoneRegExp.test(userData.phoneNumber)) {
+      phonenumberValidation = true;
+    }
   }
+ //=================================
   var passwordValidation = false;
-  if (userData.password.length >= 6) {
-    passwordValidation = true;
+  if(userType==0){
+    if (ExpertData.password.length >= 8) {
+      passwordValidation = true;
+    }
+  }else{
+    if (userData.password.length >= 8) {
+      passwordValidation = true;
+    }
   }
+ //================================
+ 
   var confirmpasswordValidation = false;
-  if (userData.confirmPassword == userData.password) {
-    confirmpasswordValidation = true;
+  if(userType==0){
+    if (ExpertData.confirmPassword.length >= 8) {
+      confirmpasswordValidation = true;
+    }
+  }else{
+    if (userData.confirmPassword.length >= 8) {
+      confirmpasswordValidation = true;
+    }
   }
+  
+
   //-------------------Handle Register Request--------------------//
   const handleRegister = () => {
     setWaiting(true);
-    const user = {
-      nationalCode: userData.nationCode,
-      phoneNumber: userData.phoneNumber,
-      userType: userType,
-      password: userData.password,
-      confirmPassword: userData.confirmPassword,
-      firstname: userData.firstname,
-      lastname: userData.lastname,
-      stateID: selectedStateID,
-      cityID: selectedcityID,
-    };
-    if (userType == 1) {
+
+    if (userType === 1) {
+      const user = {
+        nationalCode: userData.nationCode,
+        phoneNumber: userData.phoneNumber,
+        userType: userType,
+        password: userData.password,
+        confirmPassword: userData.confirmPassword,
+        firstname: userData.firstname,
+        lastname: userData.lastname,
+        stateID: selectedStateID,
+        cityID: selectedcityID,
+      };
       // {
       //   "firstName": "string",
       //   "lastName": "string",
@@ -126,27 +187,22 @@ function Signup() {
               cityID: user["cityID"],
             })
             .then((response) => {
-              if (response.data.statusCode == 200) {
+              if (response.data.statusCode === 200) {
                 setWaiting(false);
-                dispatch(
-                  allActions.userActions.Register(userData)
-                );
-                  navigate("/Validation");
+                dispatch(allActions.userActions.Register(userData));
+                navigate("/Validation");
               }
             })
             .catch((exception) => {
               setWaiting(false);
-              dispatch(
-                allActions.userActions.Register(userData)
-              );
-                navigate("/Validation");
-              if (exception.response.status == 400) {
+              dispatch(allActions.userActions.Register(userData));
+              navigate("/Validation");
+              if (exception.response.status === 400) {
                 Show400Errors(toastBC);
-              } else if (exception.response.status == 500) {
+              } else if (exception.response.status === 500) {
                 Show500Errors(toastBC);
-              }
-              else if (exception.code=="ERR_NETWORK") {
-                ShowNetorkErrors(toastBC)
+              } else if (exception.code === "ERR_NETWORK") {
+                ShowNetorkErrors(toastBC);
               }
             });
         },
@@ -154,6 +210,21 @@ function Signup() {
         2000
       );
     } else {
+      const Expert = {
+        nationalCode: ExpertData.nationCode,
+        phoneNumber: ExpertData.phoneNumber,
+        userType: userType,
+        password: ExpertData.password,
+        confirmPassword: ExpertData.confirmPassword,
+        firstname: ExpertData.firstname,
+        lastname: ExpertData.lastname,
+        stateID: selectedStateID,
+        cityID: selectedcityID,
+        cityGraduationId: ExpertData.cityGraduationId,
+        stateGraduationId: ExpertData.stateGraduationId,
+        bio: ExpertData.bio,
+        activityRange: ExpertData.activityRange,
+      };
       // EpertSignp
       // {
       //   "firstName": "string",
@@ -169,8 +240,52 @@ function Signup() {
       //   "bio": "string",
       //   "activityRange": 0
       // }
-      
-      setWaiting(false);
+
+      setTimeout(
+        () => {
+          axios
+            .post(EpertSignupURL, {
+              nationalCode: Expert["nationalCode"],
+              phoneNumber: Expert["phoneNumber"],
+              cityGraduationId: Expert["cityGraduationId"],
+              stateGraduationId: Expert["stateGraduationId"],
+
+              bio: Expert["bio"],
+
+              activityRange: Expert["activityRange"],
+
+              password: Expert["password"],
+              cityname: Expert["cityname"],
+              statename: Expert["statename"],
+              confirmPassword: Expert["confirmPassword"],
+              stateID: Expert["stateID"],
+              firstname: Expert["firstname"],
+              lastname: Expert["lastname"],
+              cityID: Expert["cityID"],
+            })
+            .then((response) => {
+              if (response.data.statusCode === 200) {
+                setWaiting(false);
+                dispatch(allActions.userActions.Register(ExpertData));
+                navigate("/Validation");
+              }
+            })
+            .catch((exception) => {
+              setWaiting(false);
+              dispatch(allActions.userActions.Register(ExpertData));
+              // navigate("/Validation");
+              if (exception.response.status === 400) {
+                Show400Errors(toastBC);
+              } else if (exception.response.status === 500) {
+                Show500Errors(toastBC);
+              } else if (exception.code === "ERR_NETWORK") {
+                ShowNetorkErrors(toastBC);
+              }
+            });
+        },
+
+        2000
+      );
     }
   };
   //-------------------Render--------------------//
@@ -204,7 +319,7 @@ function Signup() {
                   placeholder="شماره تلفن همراه"
                 />
 
-                {phonenumberValidation == true ? (
+                {phonenumberValidation === true ? (
                   <div></div>
                 ) : (
                   <div style={{ color: "red" }}> شماره تلفن درست نمیباشد </div>
@@ -214,7 +329,6 @@ function Signup() {
 
               <div className="form-group">
                 <h5 style={{ color: "white" }}> نوع کاربری </h5>
-
                 <UserTypeDropDown />
               </div>
               {/* -------------------------  state and city  ------------------------- */}
@@ -247,7 +361,7 @@ function Signup() {
                   className="form-field"
                   placeholder="کدملی/کدشناسایی/کد اقتصاد"
                 />
-                {natsioncodeValiation == true ? (
+                {natsioncodeValiation === true ? (
                   <div></div>
                 ) : (
                   <div style={{ color: "red" }}> کد ملی درست نمیباشد </div>
@@ -301,7 +415,7 @@ function Signup() {
                       onChange={handlechange}
                       placeholder="رمز ورود"
                     />
-                    {passwordValidation == true ? (
+                    {passwordValidation === true ? (
                       <div></div>
                     ) : (
                       <div style={{ color: "red" }}>
@@ -324,7 +438,7 @@ function Signup() {
                       onChange={handlechange}
                       placeholder=" تکرار رمز ورود"
                     />
-                    {confirmpasswordValidation == true ? (
+                    {confirmpasswordValidation === true ? (
                       <div></div>
                     ) : (
                       <div style={{ color: "red" }}>
@@ -339,14 +453,49 @@ function Signup() {
               {/* -------------------------  make expert list different from normal user ------------------------- */}
               {userType == 0 && (
                 <div className="form-group">
-                  <h5 style={{ color: "white" }}>مخصوص کارشناس </h5>
+                  <h5 style={{ color: "white" }}>مخصوص cityGraduationId </h5>
                   <Field
-                    // name="confirmPassword"
-                    // toggleMask
+                    name="cityGraduationId"
                     style={{ color: "black" }}
                     className="form-field   "
-                    // onChange={handlechange}
-                    placeholder=" مخصوص کارشناس  "
+                    onChange={handlechange}
+                    placeholder="    "
+                  />
+                </div>
+              )}
+              {userType == 0 && (
+                <div className="form-group">
+                  <h5 style={{ color: "white" }}>stateGraduationId </h5>
+                  <Field
+                    name="stateGraduationId"
+                    style={{ color: "black" }}
+                    className="form-field   "
+                    onChange={handlechange}
+                    placeholder="    "
+                  />
+                </div>
+              )}
+              {userType == 0 && (
+                <div className="form-group">
+                  <h5 style={{ color: "white" }}>activityRange </h5>
+                  <Field
+                    name="activityRange"
+                    style={{ color: "black" }}
+                    className="form-field   "
+                    onChange={handlechange}
+                    placeholder="    "
+                  />
+                </div>
+              )}
+              {userType == 0 && (
+                <div className="form-group">
+                  <h5 style={{ color: "white" }}>bio </h5>
+                  <Field
+                    name="bio"
+                    style={{ color: "black" }}
+                    className="form-field   "
+                    onChange={handlechange}
+                    placeholder="    "
                   />
                 </div>
               )}
@@ -354,10 +503,10 @@ function Signup() {
               {/* ------------------------- submit Buttons ------------------------- */}
 
               <div className="form-group" style={{}}>
-                {natsioncodeValiation == false ||
-                passwordValidation == false ||
-                phonenumberValidation == false ||
-                natsioncodeValiation == false ? (
+                {natsioncodeValiation === false ||
+                passwordValidation === false ||
+                phonenumberValidation === false ||
+                natsioncodeValiation === false ? (
                   <Button
                     className="button button align-items-center justify-content-center"
                     disabled
@@ -366,7 +515,7 @@ function Signup() {
                   </Button>
                 ) : (
                   <>
-                    {waiting == false ? (
+                    {waiting === false ? (
                       <button className="button button align-items-center justify-content-center">
                         تایید
                       </button>

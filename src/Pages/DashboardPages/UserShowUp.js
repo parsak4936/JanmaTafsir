@@ -7,7 +7,7 @@ import userImage from "../../Assets/DashboardAsset/experts.jpg";
 function UserShowUp() {
   return (
     <div
-      className="grid  align-items-center justify-content-center  "
+      className="grid  align-items-center justify-content-center   "
       style={{
         
       }}

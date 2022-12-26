@@ -4,11 +4,10 @@ import { Button } from "primereact/button";
  import { Avatar } from "primereact/avatar";
 const Aboutus = () => {
   const header = (
-    <div className="col-12 md:col-4">
+    <div className="col-12  flex flex-wrap md:col-4 text-center align-items-center justify-content-center " >
       <Avatar
         image="images/avatar/amyelsner.png"
-        className="mr-2"
-        size="xlarge"
+         size="xlarge"
         shape="circle"
       />
     </div>
@@ -26,7 +25,7 @@ const Aboutus = () => {
 
   return (
     <div
-      className=" grid align-items-center justify-content-center "
+      className=" grid align-items-center justify-content-center  "
       
     >
       <div className="grid   align-items-center justify-content-center md:col-6 lg:col-6 ">
@@ -39,9 +38,9 @@ const Aboutus = () => {
           سامانه در سال ... توسط ... تاسیس شده است
         </p>
       </div>
-      <div className=" grid p-6 col-12 align-items-center justify-content-center ">
+      <div className=" grid p-6 col-12 align-items-center justify-content-center  ">
         <Card
-          className="col-12 m-3  md:col-6 lg:col-6 "
+          className="col-12 m-3 text-center  md:col-6 lg:col-6 "
           title="Advanced Card"
           subTitle="Subtitle"
           style={{ width: "25em" }}
@@ -56,7 +55,7 @@ const Aboutus = () => {
           </p>
         </Card>
         <Card
-          className="col-12 m-3  md:col-6 lg:col-6"
+          className="col-12 m-3 text-center   md:col-6 lg:col-6"
           title="Advanced Card"
           subTitle="Subtitle"
           style={{ width: "25em" }}
@@ -71,7 +70,7 @@ const Aboutus = () => {
           </p>
         </Card>
         <Card
-          className="col-12 m-3   md:col-6 lg:col-6"
+          className="col-12 m-3 text-center   md:col-6 lg:col-6"
           title="Advanced Card"
           subTitle="Subtitle"
           style={{ width: "25em" }}

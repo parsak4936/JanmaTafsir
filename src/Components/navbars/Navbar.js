@@ -33,10 +33,10 @@ function Navbar() {
 const UserType = useSelector(
   (state) => state.persistedReducer.LoginReducers.userType
 );
- 
-const start =()=>{ if (UserType==1){
+ console.log(UserType)
+const start =()=>{ if (UserType===1){
   return <UserSidebar/> ;
-} else if (UserType==1){
+} else if (UserType==2){
   return <ExpertSidebar/> ;
 }}
 

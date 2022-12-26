@@ -20,14 +20,17 @@ import DescriptionImage from "../../Assets/DashboardAsset/DetailInfoBG.svg";
 
 function Dashboard() {
   return (
-    <div className="grid">
+    <div className="grid  ">
       <GoTopScroll />
       {/* navbar Row */}
 
       <div
-        className="grid col-12 w-full"
+        className="grid col-12 w-full     
+       h-auto 
+        
+        "
         style={{
-          height: "100vh",
+         
           backgroundImage: `url(${HeaderImg})`,
 
           backgroundSize: "cover",
@@ -39,9 +42,13 @@ function Dashboard() {
       {/* features Row */}
 
       <div
-        className="grid col-12 w-full"
+        className="grid col-12 w-full   sm:h-auto 
+        md:h-auto 
+        lg:h-screen 
+        xl:h-screen "
+       
         style={{
-          height: "100vh",
+          
           backgroundImage: `url(${DescriptionImage})`,
 
           backgroundSize: "cover",
@@ -53,9 +60,12 @@ function Dashboard() {
       </div>
       {/* users Row */}
       <div
-        className="grid col-12 w-full"
+        className="grid col-12 w-full     
+        h-auto 
+        
+        p-7"
         style={{
-          height: "auto",
+           
           backgroundImage: `url(${UsersBg})`,
 
           backgroundSize: "cover",
@@ -67,9 +77,12 @@ function Dashboard() {
       </div>
 
       <div
-        className="grid col-12 w-full"
+        className="grid col-12 w-full
+        
+        h-auto p-2
+        "
         style={{
-          height: "200vh",
+          
           backgroundImage: `url(${AboutUsImageBG})`,
 
           backgroundSize: "cover",
@@ -79,9 +92,15 @@ function Dashboard() {
         <Aboutus />
       </div>
       <div
-        className="grid col-12 w-full"
+        className="grid col-12 w-full
+        
+        sm:h-auto 
+        md:h-auto 
+        lg:h-screen 
+        xl:h-screen
+        "
         style={{
-          height: "100vh",
+          
           backgroundImage: `url(${ContactUsBG})`,
 
           backgroundSize: "cover",
@@ -90,7 +109,7 @@ function Dashboard() {
       >
         <ContactUs />
       </div>
-      <div className="grid col-12 ">
+      <div className="grid col-12 w-full h-auto   ">
         <Footer />
       </div>
     </div>

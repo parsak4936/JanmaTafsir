@@ -14,12 +14,17 @@ const InitialState = {
   cityname: "",
   Token: "",
   SubscribedUser: false,
+  cityGraduationId :1,
+  bio :"",
+  stateGraduationId :1,
+  activityRange :1,
 };
 const SignupReducer = (state = InitialState, action) => {
   switch (action.type) {
     case "Register":
       return {
         ...state,
+        //ExperDatas :
         nationalCode: action.payload.nationCode,
         password: action.payload.password,
         userType: action.payload.userType,
@@ -27,6 +32,19 @@ const SignupReducer = (state = InitialState, action) => {
         phoneNumber: action.payload.phoneNumber,
         firstname: action.payload.firstname,
         lastname: action.payload.lastname,
+        // cityGraduationId: action.payload.cityGraduationId,
+        // stateGraduationId: action.payload.stateGraduationId,
+        bio: action.payload.bio,
+        //activityRange: action.payload.activityRange,
+      //-------------------------------
+      //UserDatas:
+        // nationalCode: action.payload.nationCode,
+        // password: action.payload.password,
+        // userType: action.payload.userType,
+        // confirmPassword: action.payload.confirmPassword,
+        // phoneNumber: action.payload.phoneNumber,
+        // firstname: action.payload.firstname,
+        // lastname: action.payload.lastname,
       };
     case "SelectState":
       return {

@@ -92,7 +92,7 @@ function NewReqForm() {
       </div>
       <div className="grid">
         <div className="col-12">
-          {selectedStateID == "" || selectedCityID == "" ? (
+          {selectedStateID === "" || selectedCityID == "" ? (
             <Button
               variant="primary"
               className="p-button-danger"

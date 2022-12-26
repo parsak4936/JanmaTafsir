@@ -35,7 +35,7 @@ const ReasonRequest = () => {
     axios
       .get(getReasonURL)
       .then((response) => {
-        if (response.data.statusCode == 200) {
+        if (response.data.statusCode === 200) {
             setReasonReqData(response.data.data);
         } else {
         }
@@ -77,7 +77,7 @@ const ReasonRequest = () => {
 
     return (
       <span>
-        {selectedReason == "" ? <>یک زمینه را  انتخاب کنید</> : <> {props.value}</>}
+        {selectedReason === "" ? <>یک زمینه را  انتخاب کنید</> : <> {props.value}</>}
       </span>
     );
   };

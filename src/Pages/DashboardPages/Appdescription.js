@@ -4,7 +4,9 @@ import { Image } from "primereact/image";
 import description from "../../Assets/DashboardAsset/description1.jpg";
 function Appdescription() {
   return (
-    <div className=" flex flex-wrap grid" style={{}}>
+    <div className=" flex flex-wrap grid 
+  " 
+    style={{}}>
       <div className="grid col-12 scalein  animation-duration-1000  md:col-6 lg:col-6 align-items-center justify-content-center">
         <div className=" grid col-12 text-center    text-center align-items-center justify-content-center">
           <blockquote class="blockquote">
@@ -18,11 +20,16 @@ function Appdescription() {
           </blockquote>
         </div>
 
-        <div className="grid col-12 scalein  animation-duration-1000  md:col-6 lg:col-6 align-items-center justify-content-center w-full"  style={{marginTop:'0px', padding: "20px", direction: "rtl", fontSize: "1rem" }}>
-          <p
-           
-            className="grid col-12  "
-          >
+        <div
+          className="grid col-12 scalein  animation-duration-1000  md:col-6 lg:col-6 align-items-center justify-content-center w-full"
+          style={{
+            marginTop: "0px",
+            padding: "20px",
+            direction: "rtl",
+            fontSize: "1rem",
+          }}
+        >
+          <p className="grid col-12  ">
             سامانه جانما تفسیر پیگی قضایی پرونده اراضی شما را حل میکند!
             <br></br>
             پیگیری پرونده های قضایی از جمله پرونده های اراضی وقت گیر است و در
@@ -36,16 +43,28 @@ function Appdescription() {
         </div>
       </div>
 
-      <div className="grid fadein animation-duration-1000 col-12  md:col-6 lg:col-6 align-items-center justify-content-center">
-        <div style={{ textAlign: "center" }}>
-          <Image
+      <div
+        className="grid
+         fadein 
+         animation-duration-1000 col-12
+         md:col-6 lg:col-6 
+         align-items-center
+         justify-content-center
+ 
+         "
+      >
+        <div 
+        className="    "
+        style={{ textAlign: "center" }}>
+         <Image
+           width="100%"
+           height="500vh"
             template="Preview Content"
             alt="Image Text"
             src={description}
-            width="450"
-            height="450"
+
             // preview
-          />
+          /> 
         </div>
       </div>
     </div>

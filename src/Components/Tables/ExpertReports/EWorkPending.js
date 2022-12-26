@@ -80,7 +80,7 @@ function EWorkPending() {
         config
       )
       .then((response) => {
-        if (response.data.statusCode == 200) {
+        if (response.data.statusCode === 200) {
             setworkinprogressData(response.data.data)
         //   dispatch(allActions.userActions.getInfo(response.data.data));
         setTotalRecords(response.data.data.totalCount);

@@ -39,7 +39,7 @@ const CityDropDown = () => {
           axios
             .get(getCityURL, { params: { statId: selectedStateID } })
             .then((response) => {
-              if (response.data.statusCode == 200) {
+              if (response.data.statusCode === 200) {
                
                 setCityData(response.data.data);
               } else {
@@ -48,15 +48,15 @@ const CityDropDown = () => {
             .catch((exception) => {
               console.log(exception);
              
-              if (exception.response.status == 400) {
+              if (exception.response.status === 400) {
                 Show400Errors(toastBC);
-              } else if (exception.response.status == 500) {
+              } else if (exception.response.status === 500) {
                 Show500Errors(toastBC);
               }
-              else if (exception.response.status == 401) {
+              else if (exception.response.status === 401) {
                 ShowTokenErrors(toastBC);
               }
-              else if (exception.code=="ERR_NETWORK") {
+              else if (exception.code==="ERR_NETWORK") {
                 ShowNetorkErrors(toastBC)
               }
             });
@@ -80,7 +80,7 @@ const CityDropDown = () => {
      
         return (
             <span>
-  {selectedCity=='' ? <>یک شهر انتخاب کنید</>:<>   {props.value}</>}            </span>
+  {selectedCity==='' ? <>یک شهر انتخاب کنید</>:<>   {props.value}</>}            </span>
         );
     }
     const oncityChange = (e) => {

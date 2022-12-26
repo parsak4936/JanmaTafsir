@@ -28,7 +28,7 @@ const StatesDropDown = () => {
     axios
       .get(getStateURL)
       .then((response) => {
-        if (response.data.statusCode == 200) {
+        if (response.data.statusCode === 200) {
           setstateData(response.data.data);
         } else {
         }
@@ -73,7 +73,7 @@ const StatesDropDown = () => {
 
     return (
       <span>
-        {selectedState == "" ? <>یک استان انتخاب کنید</> : <> {props.value}</>}
+        {selectedState === "" ? <>یک استان انتخاب کنید</> : <> {props.value}</>}
       </span>
     );
   };

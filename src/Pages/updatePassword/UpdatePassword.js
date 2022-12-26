@@ -21,7 +21,7 @@ import { Toast } from "primereact/toast";
 function UpdatePassword() {
    const navigate = useNavigate();
    const UpdatePasswordURL =
-    "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UpdatePassword";
+    "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UpdatePasswordWithOutForget";
 
   const [usernewPassword, setusernewPassword] = useState({
     oldPassword: "",
@@ -52,9 +52,9 @@ console.log(usernewPassword)
       () => {
         axios
           .post(UpdatePasswordURL, {
-            newPassword: usernewPassword.newPassword,
+            Password: usernewPassword.newPassword,
             oldPassword: usernewPassword.oldPassword,
-            confirmnewPassword: usernewPassword.confirmnewPassword,
+            confirmPassword: usernewPassword.confirmnewPassword,
 
           },config)
           .then((response) => {

@@ -65,9 +65,11 @@ function Features() {
 
                </li>
               <div style={{marginTop:'30px',textAlign:'center'}}>
-              <Button onClick={
+              <Button 
+             className="bg-indigo-500 h-3rem"
+              onClick={
                 ()=>{
-                  if(SubscribedUser==true){
+                  if(SubscribedUser===true){
                     navigate("/MapView");
                   }else{
                     navigate("/Login");

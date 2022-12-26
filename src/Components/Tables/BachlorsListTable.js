@@ -45,10 +45,10 @@ function BachlorsTable() {
   // https://elated-swanson-mrhungrj5.iran.liara.run/api/Expert/GetExpert?CityId=4&StateId=4&PageNumber=3&PageSize=3
 const getExpertData = () => {
   axios
-    .get(getStateURL,{ params: { CityId: getCityID ,StateId: getstateID,PageNumber:2 ,PageSize:4 } })
+    .get(getStateURL,{ params: { CityId: getCityID ,StateId: getstateID,PageNumber:2 ,PageSize:2 } })
     .then((response) => {
-      if (response.data.statusCode == 200) {
-        
+      if (response.data.statusCode === 200) {
+        console.log(response.data.data.data)
         setTotalRecords(response.data.data.totalCount);
         setCustomers(response.data.data.customers);
         setLoading(false);

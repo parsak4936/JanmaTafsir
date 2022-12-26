@@ -35,7 +35,7 @@ const SubstantialTopics = () => {
     axios
       .get(GetSubstantialTopicsURL)
       .then((response) => {
-        if (response.data.statusCode == 200) {
+        if (response.data.statusCode === 200) {
             setSubstantialTopicsData(response.data.data);
         } else {
         }
@@ -77,7 +77,7 @@ const SubstantialTopics = () => {
 
     return (
       <span>
-        {selectecSub == "" ? <>یک زیر مجموعه را انتخاب کنید</> : <> {props.value}</>}
+        {selectecSub === "" ? <>یک زیر مجموعه را انتخاب کنید</> : <> {props.value}</>}
       </span>
     );
   };

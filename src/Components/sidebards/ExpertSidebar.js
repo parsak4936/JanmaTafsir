@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
-import { UserSidebarData } from "./UserSidebarData";
+import { ExpertSidebarData } from "./ExpertSidebarData";
 import { Link } from "react-router-dom";
 
 const ExpertSidebar = () => {
@@ -19,7 +19,7 @@ const ExpertSidebar = () => {
       >
         
         <div className=" col-12 text-center w-full">
-       {UserSidebarData.map((item, index) => {
+       {ExpertSidebarData.map((item, index) => {
               return (
                 <li
                    

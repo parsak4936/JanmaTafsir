@@ -38,7 +38,7 @@ const CityDropdownR = () => {
           axios
             .get(getCityURL, { params: { statId: selectedStateID } })
             .then((response) => {
-              if (response.data.statusCode == 200) {
+              if (response.data.statusCode === 200) {
                
                 setCityData(response.data.data);
               } else {
@@ -67,7 +67,7 @@ const CityDropdownR = () => {
      
         return (
             <span>
-  {selectedCity=='' ? <>یک شهر انتخاب کنید</>:<>   {props.value}</>}            </span>
+  {selectedCity==='' ? <>یک شهر انتخاب کنید</>:<>   {props.value}</>}            </span>
         );
     }
     const oncityChange = (e) => {

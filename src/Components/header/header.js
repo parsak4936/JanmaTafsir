@@ -20,7 +20,12 @@ function Header() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-wrap App-Header grid">
+    <div className="flex flex-wrap App-Header grid   
+     sm:h-auto 
+    md:h-auto 
+    lg:h-screen 
+    xl:h-screen
+     ">
       <div
         className="   navbar navbar-expand-lg flex flex-row p-6 h-full grid navbar-scroll  "
         style={{ direction: "rtl" }}
@@ -32,7 +37,7 @@ function Header() {
 
         <div className=" fadeinleft animation-duration-500    col-6 md:col-6 lg:col-6">
           <div className="grid col-12  flex flex-row-reverse ">
-            {SubscribedUser == true ? (
+            {SubscribedUser === true ? (
               <Button
                 
                

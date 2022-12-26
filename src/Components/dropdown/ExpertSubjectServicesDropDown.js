@@ -35,7 +35,7 @@ const ExpertSubjectServicesDropDown = () => {
     axios
       .get(getselectedExpertSubURL)
       .then((response) => {
-        if (response.data.statusCode == 200) {
+        if (response.data.statusCode === 200) {
           setExpertSubjectsOtions(response.data.data);
         } else {
         }
@@ -77,7 +77,7 @@ const ExpertSubjectServicesDropDown = () => {
 
     return (
       <span>
-        {selectedExpertSub == "" ? <>در چه زمینه ایی کارشناسی میخواهید</> : <> {props.value}</>}
+        {selectedExpertSub === "" ? <>در چه زمینه ایی کارشناسی میخواهید</> : <> {props.value}</>}
       </span>
     );
   };

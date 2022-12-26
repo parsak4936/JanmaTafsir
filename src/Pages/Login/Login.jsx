@@ -66,7 +66,7 @@ function Login() {
           })
           .then((response) => {
             if (response.data.statusCode == 200) {
-              console.log();
+              
               setWaiting(false);
 
               dispatch(
@@ -76,17 +76,17 @@ function Login() {
               );
 
               dispatch(allActions.userActions.login(response.data.data.token));
-              navigate("/MapView");
+             navigate("/MapView");
             }
           })
           .catch((exception) => {
             setWaiting(false);
 
-            if (exception.response.status == 400) {
+            if (exception.response.status === 400) {
               Show400Errors(toastBC);
-            } else if (exception.response.status == 404) {
+            } else if (exception.response.status === 404) {
               Show404Errors(toastBC);
-            } else if (exception.response.status == 500) {
+            } else if (exception.response.status === 500) {
               Show500Errors(toastBC);
             }
           });
@@ -131,7 +131,7 @@ function Login() {
                       value={userData.nationCode}
                       placeholder="کدملی/کدشناسایی/کد اقتصاد"
                     />
-                    {nationcodeValiation == true ? (
+                    {nationcodeValiation === true ? (
                       <div></div>
                     ) : (
                       <div style={{ color: "red" }}>کد ملی اشتباه میباشد</div>
@@ -151,7 +151,7 @@ function Login() {
                       value={userData.password}
                       className="form-field"
                     />
-                    {passwordValidation == true ? (
+                    {passwordValidation === true ? (
                       <div></div>
                     ) : (
                       <div style={{ color: "red" }}>
@@ -164,8 +164,8 @@ function Login() {
                   {/* -------------------------   ------------------------- */}
 
                   <div className="form-group" style={{}}>
-                    {nationcodeValiation == false ||
-                    passwordValidation == false ? (
+                    {nationcodeValiation === false ||
+                    passwordValidation === false ? (
                       <Button
                         className="button align-items-center justify-content-center"
                         disabled
@@ -174,7 +174,7 @@ function Login() {
                       </Button>
                     ) : (
                       <>
-                        {waiting == false ? (
+                        {waiting === false ? (
                           <button className="button align-items-center justify-content-center">
                             تایید
                           </button>

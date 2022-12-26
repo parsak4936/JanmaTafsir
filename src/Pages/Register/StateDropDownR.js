@@ -30,18 +30,18 @@ const StateDropDownR = () => {
     axios
       .get(getStateURL)
       .then((response) => {
-        if (response.data.statusCode == 200) {
+        if (response.data.statusCode === 200) {
           setstateData(response.data.data);
         } else {
         }
       })
       .catch((exception) => {
-        if (exception.response.status == 400) {
+        if (exception.response.status === 400) {
           Show400Errors(toastBC);
-        } else if (exception.response.status == 500) {
+        } else if (exception.response.status === 500) {
           Show500Errors(toastBC);
         }
-        else if (exception.code=="ERR_NETWORK") {
+        else if (exception.code==="ERR_NETWORK") {
           ShowNetorkErrors(toastBC)
         }
       });
@@ -74,7 +74,7 @@ const StateDropDownR = () => {
 
     return (
       <span>
-        {selectedState == "" ? <>یک استان انتخاب کنید</> : <> {props.value}</>}
+        {selectedState === "" ? <>یک استان انتخاب کنید</> : <> {props.value}</>}
       </span>
     );
   };

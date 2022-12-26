@@ -82,7 +82,7 @@ function FinalStepNewReq() {
       lng: NewReqData.lng,
     };
     console.log(UserType)
-    if (UserType == 1) {
+    if (UserType === 1) {
       setTimeout(
         () => {
           axios
@@ -99,7 +99,7 @@ function FinalStepNewReq() {
  
             },config)
             .then((response) => {
-              if (response.data.statusCode == 200) {
+              if (response.data.statusCode === 200) {
                 // setWaiting(false);
                 // dispatch(
                 //   allActions.userActions.FourthFormSubmit()
@@ -110,13 +110,13 @@ function FinalStepNewReq() {
             .catch((exception) => {
               // setWaiting(false);
 
-              if (exception.response.status == 400) {
+              if (exception.response.status === 400) {
                 Show400Errors(toastBC);
-              } else if (exception.response.status == 401) {
+              } else if (exception.response.status === 401) {
                 ShowTokenErrors(toastBC);
-              } else if (exception.response.status == 500) {
+              } else if (exception.response.status === 500) {
                 Show500Errors(toastBC);
-              } else if (exception.code == "ERR_NETWORK") {
+              } else if (exception.code === "ERR_NETWORK") {
                 ShowNetorkErrors(toastBC);
               }
             });

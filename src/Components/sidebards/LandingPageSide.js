@@ -16,7 +16,7 @@ import { Menubar } from "primereact/menubar";
       <Sidebar className="" visible={visibleTop} onHide={() => setVisibleTop(false)}>
       <h3 className=" grid col-12 align-items-center justify-content-center">جانما تفسیر</h3>
       <div className="grid col-12 align-items-center justify-content-center ">
-        {SubscribedUser == true ? (
+        {SubscribedUser === true ? (
           <Button
             onClick={() => {
               navigate("/MapView");
