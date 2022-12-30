@@ -1,10 +1,7 @@
 import React, { useState, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import "primeflex/primeflex.scss";
-import { useLocation } from "react-router-dom";
 
-import { useEffect } from "react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
 import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordion";
@@ -107,8 +104,7 @@ function NewReqForm() {
               type="button"
               onClick={() => {
                 dispatch(allActions.NewReqActions.FirstFormSubmit(newReqData));
-                // setmodaltoggle(true);
-                // dispatch(allActions.ToggleActions.ModalToggle(true));
+                 
               }}
             >
               تایید

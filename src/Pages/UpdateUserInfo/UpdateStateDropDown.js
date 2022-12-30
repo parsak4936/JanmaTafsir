@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Dropdown } from "primereact/dropdown";
-import { Skeleton } from "primereact/skeleton";
-import Form from "react-bootstrap/Form";
+
 import "primeflex/primeflex.scss";
-import { useLocation } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
-import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordion";
-import { Button } from "primereact/button";
-// import './DropdownDemo.css';
+
 
 const UpdateStateDropDown = () => {
   const toastBC = useRef(null);

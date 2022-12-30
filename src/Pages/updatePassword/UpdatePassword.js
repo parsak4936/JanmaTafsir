@@ -52,7 +52,7 @@ console.log(usernewPassword)
       () => {
         axios
           .post(UpdatePasswordURL, {
-            Password: usernewPassword.newPassword,
+            password: usernewPassword.newPassword,
             oldPassword: usernewPassword.oldPassword,
             confirmPassword: usernewPassword.confirmnewPassword,
 
@@ -114,13 +114,15 @@ console.log(usernewPassword)
                       // value={formik.values.NationCode}
                       className="form-field"
                       value={usernewPassword.oldPassword}
-                      placeholder="کدملی/کدشناسایی/کد اقتصاد"
+                      placeholder=" رمز قبلی"
                     />
                     
                   </div>
                   {/* -------------------------  newPassword ------------------------- */}
 
                   <div className="form-group">
+                  <label form="email" className="text-black">      رمز جدید</label>
+
                     {/* <label form="email">Confirme sua senha</label> */}
                     <Password
                       toggleMask
@@ -129,6 +131,7 @@ console.log(usernewPassword)
                       type={"password"}
                       onChange={handlechange}
                       style={{ color: "black" }}
+ 
                       value={usernewPassword.newPassword}
                       className="form-field"
                     />
@@ -137,11 +140,13 @@ console.log(usernewPassword)
 
                   {/* ------------------------- confirm new PAssword  ------------------------- */}
                   <div className="form-group">
-                    {/* <label form="email">Confirme sua senha</label> */}
+                    <label form="email" className="text-black">     تکرار رمز جدید</label>
                     <Password
                       toggleMask
                       name="confirmnewPassword"
                       id="cPassword"
+                      placeholder=" تکرار رمز  قبلی"
+
                       type={"password"}
                       onChange={handlechange}
                       style={{ color: "black" }}

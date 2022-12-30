@@ -1,10 +1,11 @@
 const login = (userObj) => {
-  console.log(userObj.token)
-  return {
+   return {
     type: "LOGIN",
     payload: userObj,
   };
 };
+
+//======================================
 const updateUserType = (userObj) => {
   
   return {
@@ -12,6 +13,7 @@ const updateUserType = (userObj) => {
     payload: userObj,
   };
 };
+//==============Register Actions========================
 const Register = (userObj) => {
   return {
     type: "Register",
@@ -19,12 +21,45 @@ const Register = (userObj) => {
   };
 };
 
+const UserTypeChange = (userObj) => {
+  //{name: 'کاربر حقیقی', code: '1'}
+
+  return {
+    type: "UserTypeChange",
+    payload: userObj.code,
+  };
+};
 const SelectState = (userObj) => {
   return {
     type: "SelectState",
     payload: userObj,
   };
 };
+const SelectCity = (userObj) => {
+  return {
+    type: "SelectCity",
+    payload: userObj,
+  };
+};
+const SelectGraduatedState = (userObj) => {
+  return {
+    type: "SelectGraduatedState",
+    payload: userObj,
+  };
+};
+const SelectGraduatedCity = (userObj) => {
+  return {
+    type: "SelectGraduatedCity",
+    payload: userObj,
+  };
+};
+const SelectActivityRange = (userObj) => {
+  return {
+    type: "SelectActivityRange",
+    payload: userObj,
+  };
+};
+//==============New Req Actions========================
 const SelectReason = (userObj) => {
   return {
     type: "SelectReason",
@@ -43,21 +78,15 @@ const selectedExpertSub = (userObj) => {
     payload: userObj,
   };
 };
-const SelectCity = (userObj) => {
+const SelectExpertNewRq = (userObj) => {
   return {
-    type: "SelectCity",
+    type: "SelectExpertNewRq",
     payload: userObj,
   };
 };
 
-const UserTypeChange = (userObj) => {
-  //{name: 'کاربر حقیقی', code: '1'}
 
-  return {
-    type: "UserTypeChange",
-    payload: userObj.code,
-  };
-};
+//==============Update Actions===================
 const UpdateInfo = (userObj) => {
  
   return {
@@ -82,33 +111,33 @@ const UpdateSelectState = (userObj) => {
     payload: userObj,
   };
 };
+//================Get Info==============
 const getInfo = (userObj) => {
   return {
     type: "getInfo",
     payload: userObj,
   };
 };
+//======================================
 const PhoneValidation = (userObj) => {
   return {
     type: "ValidationLogin",
     payload: userObj,
   };
 };
-
+//================================
 const LogOut = () => {
   return {
     type: "LogOut",
   };
 };
-// const logOut = () => {
-//     return {
-//         type: "LOG_OUT"
-//     }
-// }
-
+ 
 export default {
   getInfo,
   login,
+  SelectExpertNewRq,
+  SelectActivityRange,
+  SelectGraduatedCity,
   PhoneValidation,
   Register,
   selectedExpertSub,
@@ -117,6 +146,7 @@ export default {
   UpdateSelectState,
   UpdateSelectCity,
   SelectState,
+  SelectGraduatedState,
   LogOut,
   SelectReason,
   SelectSubstantialTopics,

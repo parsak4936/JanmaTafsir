@@ -20,6 +20,9 @@ import {
   Show404Errors,
   ShowNetorkErrors,
 } from "../../Components/ShowErrors/ShowErrors";
+import StateGraduated from "./StateGraduated";
+import CityGraduated from "./CityGraduated";
+import ActivityRange from "./ActivityRange";
 
 function Signup() {
   const toastBC = useRef(null);
@@ -33,8 +36,11 @@ function Signup() {
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/ExpertRegister";
   const selectedStateID = useSelector((state) => state.SignupReducer.stateID);
   const selectedcityID = useSelector((state) => state.SignupReducer.cityID);
-  const userType = useSelector((state) => state.SignupReducer.userType);
-
+  const selectstateGraduationId = useSelector((state) => state.SignupReducer.stateGraduationId);
+  const selectcityGraduationId = useSelector((state) => state.SignupReducer.cityGraduationId);
+  const selectActivityID = useSelector((state) => state.SignupReducer.activityRangeID);
+   const userType = useSelector((state) => state.SignupReducer.userType);
+  
   const [errors, setErrors] = useState({});
   const [waiting, setWaiting] = useState(false);
   const [userData, setUserData] = useState({
@@ -47,18 +53,6 @@ function Signup() {
     Token: "",
   });
   const [ExpertData, setExpertData] = useState({
-    //   "firstName": "string",
-    //   "lastName": "string",
-    //   "phoneNumber": "string",
-    //   "nationalCode": "string",
-    //   "password": "stringst",
-    //   "confirmPassword": "stringst",
-    //   "cityId": 0,
-    //   "stateId": 0,
-    //   "cityGraduationId": 0,
-    //   "stateGraduationId": 0,
-    //   "bio": "string",
-    //   "activityRange": 0
     nationCode: "",
     phoneNumber: "",
     password: "",
@@ -66,12 +60,10 @@ function Signup() {
     firstname: "",
     lastname: "",
     Token: "",
-    cityGraduationId: 1,
-    stateGraduationId: 1,
+    
     bio: "",
-    activityRange: 1,
+    
   }); //---------------------password popUp Header And Footer------------------//
-  console.log(ExpertData);
 
   const header = <h6> یک رمز برای ورود انتخاب کنید </h6>;
   const footer = (
@@ -98,55 +90,55 @@ function Signup() {
   const nationCodeRegExp = /^[0-9]{10}$/;
   const phoneRegExp = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/;
   var natsioncodeValiation = false;
-  
-  if(userType==0){
+
+  if (userType == 0) {
     if (nationCodeRegExp.test(ExpertData.nationCode)) {
       natsioncodeValiation = true;
     }
-  }else{
+  } else {
     if (nationCodeRegExp.test(userData.nationCode)) {
       natsioncodeValiation = true;
     }
   }
   //==================================
   var phonenumberValidation = false;
-  if(userType==0){
+  if (userType == 0) {
     if (phoneRegExp.test(ExpertData.phoneNumber)) {
       phonenumberValidation = true;
     }
-  }else{
+  } else {
     if (phoneRegExp.test(userData.phoneNumber)) {
       phonenumberValidation = true;
     }
   }
- //=================================
+  //=================================
   var passwordValidation = false;
-  if(userType==0){
+  if (userType == 0) {
     if (ExpertData.password.length >= 8) {
       passwordValidation = true;
     }
-  }else{
+  } else {
     if (userData.password.length >= 8) {
       passwordValidation = true;
     }
   }
- //================================
- 
+  //================================
+
   var confirmpasswordValidation = false;
-  if(userType==0){
-    if (ExpertData.confirmPassword.length >= 8) {
+  if (userType == 0) {
+    if (ExpertData.confirmPassword == ExpertData.password) {
       confirmpasswordValidation = true;
     }
-  }else{
-    if (userData.confirmPassword.length >= 8) {
+  } else {
+    if (userData.confirmPassword == userData.password) {
       confirmpasswordValidation = true;
     }
   }
-  
 
   //-------------------Handle Register Request--------------------//
   const handleRegister = () => {
     setWaiting(true);
+      //User Handle
 
     if (userType === 1) {
       const user = {
@@ -160,16 +152,6 @@ function Signup() {
         stateID: selectedStateID,
         cityID: selectedcityID,
       };
-      // {
-      //   "firstName": "string",
-      //   "lastName": "string",
-      //   "phoneNumber": "string",
-      //   "nationalCode": "string",
-      //   "password": "stringst",
-      //   "confirmPassword": "stringst",
-      //   "cityId": 0,
-      //   "stateId": 0
-      // }
       setTimeout(
         () => {
           axios
@@ -210,6 +192,7 @@ function Signup() {
         2000
       );
     } else {
+      //Exper Handle
       const Expert = {
         nationalCode: ExpertData.nationCode,
         phoneNumber: ExpertData.phoneNumber,
@@ -220,27 +203,12 @@ function Signup() {
         lastname: ExpertData.lastname,
         stateID: selectedStateID,
         cityID: selectedcityID,
-        cityGraduationId: ExpertData.cityGraduationId,
-        stateGraduationId: ExpertData.stateGraduationId,
+        cityGraduationId: selectcityGraduationId,
+        stateGraduationId: selectstateGraduationId,
         bio: ExpertData.bio,
-        activityRange: ExpertData.activityRange,
+        activityRange: selectActivityID,
       };
-      // EpertSignp
-      // {
-      //   "firstName": "string",
-      //   "lastName": "string",
-      //   "phoneNumber": "string",
-      //   "nationalCode": "string",
-      //   "password": "stringst",
-      //   "confirmPassword": "stringst",
-      //   "cityId": 0,
-      //   "stateId": 0,
-      //   "cityGraduationId": 0,
-      //   "stateGraduationId": 0,
-      //   "bio": "string",
-      //   "activityRange": 0
-      // }
-
+console.log(Expert)
       setTimeout(
         () => {
           axios
@@ -294,23 +262,13 @@ function Signup() {
     <div className="grid c-12 a">
       <Toast ref={toastBC} position="bottom-center" />
 
-      <div className="right-signup grid ">
-        <div className="card-signup">
-          <div className="user-links">
-            <div className="user-link-home">
-              <Link to="/Login">ورود به حساب </Link>
-            </div>
-            <div className="user-link-cad">
-              <Link to="/signup">ثبت نام</Link>
-            </div>
-          </div>
-          <h1>ثبت نام</h1>
+      <div className="right-signup grid m-5 ">
+        <div className="card-signup shadow-8 bg-white  ">
+          <h1 className="text-blue-500">ثبت نام</h1>
           <Formik initialValues={{}} onSubmit={handleRegister}>
             <Form className="login-form">
               {/* -------------------------  Phone number------------------------- */}
               <div className="form-group grid col-12">
-                <h5 style={{ color: "white" }}> شماره تماس </h5>
-
                 <Field
                   name="phoneNumber"
                   style={{ color: "black" }}
@@ -328,7 +286,7 @@ function Signup() {
               {/* -------------------------  userType ------------------------- */}
 
               <div className="form-group">
-                <h5 style={{ color: "white" }}> نوع کاربری </h5>
+                <h5 className="text-blue-500"> نوع کاربری </h5>
                 <UserTypeDropDown />
               </div>
               {/* -------------------------  state and city  ------------------------- */}
@@ -336,13 +294,13 @@ function Signup() {
               <div className="grid col-12">
                 <div className="col-6">
                   <div className="form-group ">
-                    <h5 style={{ color: "white" }}> استان </h5>
+                    <h5 className="text-blue-500"> استان تولد </h5>
                     <StateDropDownR name="statename" onChange={handlechange} />
                   </div>
                 </div>
                 <div className="col-6  ">
                   <div className="form-group  ">
-                    <h5 style={{ color: "white" }}> شهر </h5>
+                    <h5 className="text-blue-500"> شهر تولد </h5>
 
                     <CityDropdownR />
                   </div>
@@ -352,7 +310,7 @@ function Signup() {
               {/* -------------------------  nationCode ------------------------- */}
 
               <div className="form-group">
-                <h5 style={{ color: "white" }}> کد ملی </h5>
+                <h5 className="text-blue-500"> کد ملی </h5>
 
                 <Field
                   style={{ color: "black" }}
@@ -373,7 +331,7 @@ function Signup() {
               <div className="grid col-12">
                 <div className="col-6">
                   <div className="form-group ">
-                    <h5 style={{ color: "white" }}> نام </h5>
+                    <h5 className="text-blue-500"> نام </h5>
 
                     <Field
                       style={{ color: "black" }}
@@ -386,7 +344,7 @@ function Signup() {
                 </div>
                 <div className="col-6  ">
                   <div className="form-group  ">
-                    <h5 style={{ color: "white" }}> نام خانوادگی </h5>
+                    <h5 className="text-blue-500"> نام خانوادگی </h5>
                     <Field
                       style={{ color: "black" }}
                       name="lastname"
@@ -397,13 +355,57 @@ function Signup() {
                   </div>
                 </div>
               </div>
+              {/* -------------------------  make expert list different from normal user ------------------------- */}
+              {userType == 0 && (
+                <>
+                  <div className="grid col-12">
+                    <div className="col-6">
+                      <div className="form-group ">
+                        <h5 className="text-blue-500"> استان اخذ کارشناسی </h5>
+                        <StateGraduated
+                          name="StateGraduated"
+                          onChange={handlechange}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-6  ">
+                      <div className="form-group  ">
+                        <h5 className="text-blue-500"> شهر اخذ کارشناسی </h5>
+
+                        <CityGraduated
+                          name="CityGraduated"
+                          onChange={handlechange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group p-2">
+                    <h5 className="text-blue-500">محدوده کارشناسی </h5>
+                    <ActivityRange
+                      name="activityRange"
+                      onChange={handlechange}
+                    />
+                  </div>
+
+                  <div className="form-group p-2">
+                    <h5 className="text-blue-500">بیوگرافی -اختیاری </h5>
+                    <Field
+                      name="bio"
+                      style={{ color: "black" }}
+                      className="form-field     "
+                      onChange={handlechange}
+                      placeholder="    "
+                    />
+                  </div>
+                </>
+              )}
 
               {/* ------------------------- Password ------------------------- */}
               <div className="grid   col-12   ">
                 {/* password */}
                 <div className="col-12  md:col-6 lg:col-6">
                   <div className="form-group ">
-                    <h5 style={{ color: "white" }}> رمز عبور </h5>
+                    <h5 className="text-blue-500"> رمز عبور </h5>
 
                     <Password
                       style={{ color: "black" }}
@@ -429,7 +431,7 @@ function Signup() {
 
                 <div className="col-12  md:col-6 lg:col-6">
                   <div className="form-group ">
-                    <h5 style={{ color: "white" }}>تکرار رمز عبور </h5>
+                    <h5 className="text-blue-500">تکرار رمز عبور </h5>
                     <Password
                       name="confirmPassword"
                       toggleMask
@@ -450,65 +452,15 @@ function Signup() {
                 </div>
               </div>
 
-              {/* -------------------------  make expert list different from normal user ------------------------- */}
-              {userType == 0 && (
-                <div className="form-group">
-                  <h5 style={{ color: "white" }}>مخصوص cityGraduationId </h5>
-                  <Field
-                    name="cityGraduationId"
-                    style={{ color: "black" }}
-                    className="form-field   "
-                    onChange={handlechange}
-                    placeholder="    "
-                  />
-                </div>
-              )}
-              {userType == 0 && (
-                <div className="form-group">
-                  <h5 style={{ color: "white" }}>stateGraduationId </h5>
-                  <Field
-                    name="stateGraduationId"
-                    style={{ color: "black" }}
-                    className="form-field   "
-                    onChange={handlechange}
-                    placeholder="    "
-                  />
-                </div>
-              )}
-              {userType == 0 && (
-                <div className="form-group">
-                  <h5 style={{ color: "white" }}>activityRange </h5>
-                  <Field
-                    name="activityRange"
-                    style={{ color: "black" }}
-                    className="form-field   "
-                    onChange={handlechange}
-                    placeholder="    "
-                  />
-                </div>
-              )}
-              {userType == 0 && (
-                <div className="form-group">
-                  <h5 style={{ color: "white" }}>bio </h5>
-                  <Field
-                    name="bio"
-                    style={{ color: "black" }}
-                    className="form-field   "
-                    onChange={handlechange}
-                    placeholder="    "
-                  />
-                </div>
-              )}
-
               {/* ------------------------- submit Buttons ------------------------- */}
 
-              <div className="form-group" style={{}}>
+              <div className="form-group  text-100" style={{}}>
                 {natsioncodeValiation === false ||
                 passwordValidation === false ||
                 phonenumberValidation === false ||
                 natsioncodeValiation === false ? (
                   <Button
-                    className="button button align-items-center justify-content-center"
+                    className="button button align-items-center   bg-blue-500 opacity-70 justify-content-center"
                     disabled
                   >
                     تایید
@@ -516,17 +468,26 @@ function Signup() {
                 ) : (
                   <>
                     {waiting === false ? (
-                      <button className="button button align-items-center justify-content-center">
+                      <button className="button button  bg-blue-500  opacity-100  align-items-center justify-content-center">
                         تایید
                       </button>
                     ) : (
-                      <Button className="button button align-items-center justify-content-center">
+                      <Button className="button button   opacity-100  bg-blue-500 align-items-center justify-content-center">
                         <Spiner />
                       </Button>
                     )}
                   </>
                 )}
                 {/* -------------------------------------------------- */}
+              </div>
+              <div className="form-group align-items-center  no-underline  justify-content-center">
+                <Link
+                  className="text-blue-900   "
+                  to="/Login"
+                  onClick={() => {}}
+                >
+                  حساب دارید؟ وارد شوید.
+                </Link>
               </div>
             </Form>
           </Formik>

@@ -1,16 +1,13 @@
-import React, { Component, useState } from "react";
+import React from "react";
 
 import "./Header.css";
 
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Features from "../../Pages/DashboardPages/dashboardFeatures";
 import "primeflex/primeflex.scss";
-
-import { InputText } from "primereact/inputtext";
-
-import LandingPageSide from "../sidebards/LandingPageSide";
+ 
 import { Button } from "primereact/button";
 
 function Header() {

@@ -14,10 +14,15 @@ const InitialState = {
   cityname: "",
   Token: "",
   SubscribedUser: false,
-  cityGraduationId :1,
-  bio :"",
-  stateGraduationId :1,
-  activityRange :1,
+
+  bio: "",
+  cityGraduationId: 0,
+  cityGraduationName: "",
+
+  stateGraduationId: 0,
+  stateGraduationName: "",
+  activityRangeID: 0,
+  activityRangeName: "",
 };
 const SignupReducer = (state = InitialState, action) => {
   switch (action.type) {
@@ -36,8 +41,8 @@ const SignupReducer = (state = InitialState, action) => {
         // stateGraduationId: action.payload.stateGraduationId,
         bio: action.payload.bio,
         //activityRange: action.payload.activityRange,
-      //-------------------------------
-      //UserDatas:
+        //-------------------------------
+        //UserDatas:
         // nationalCode: action.payload.nationCode,
         // password: action.payload.password,
         // userType: action.payload.userType,
@@ -53,6 +58,7 @@ const SignupReducer = (state = InitialState, action) => {
         statename: action.payload.statename,
         stateID: action.payload.stateID,
       };
+
     case "SelectCity":
       return {
         ...state,
@@ -64,11 +70,29 @@ const SignupReducer = (state = InitialState, action) => {
     case "UserTypeChange":
       return {
         ...state,
-
-        ...state,
         userType: action.payload,
       };
+    //===========================
+    case "SelectGraduatedState":
+      return {
+        ...state,
 
+        stateGraduationId: action.payload.stateGraduationId,
+        stateGraduationName: action.payload.stateGraduationName,
+      };
+    case "SelectGraduatedCity":
+      return {
+        ...state,
+        cityGraduationId: action.payload.cityGraduationId,
+        cityGraduationName: action.payload.cityGraduationName,
+      };
+    case "SelectActivityRange":
+      return {
+        ...state,
+        activityRangeID: action.payload.code,
+        activityRangeName: action.payload.name,
+      };
+    //=========================================
     default:
       return state;
   }

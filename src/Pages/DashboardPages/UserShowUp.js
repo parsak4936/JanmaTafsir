@@ -1,7 +1,6 @@
 import React from "react";
 import "../../Styles/dashboard.css";
-import UsersBg from "../../Assets/DashboardAsset/UserShowup.svg";
-
+ 
 import Image from "react-bootstrap/Image";
 import userImage from "../../Assets/DashboardAsset/experts.jpg";
 function UserShowUp() {

@@ -17,10 +17,7 @@ function FeaturesCarousel() {
           src={RightSign}
           alt="First slide"
         />
-        {/* <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption> */}
+        
       </Carousel.Item>
       <Carousel.Item>
         <img
@@ -28,11 +25,7 @@ function FeaturesCarousel() {
           src={RightSign}
           alt="Second slide"
         />
-
-        {/* <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption> */}
+ 
       </Carousel.Item>
      
     </Carousel>
@@ -40,3 +33,58 @@ function FeaturesCarousel() {
 }
 
 export default FeaturesCarousel;
+
+// import React from "react";
+//  import './carousel.css'
+// import SlideImage from '../../Assets/slideimage.png'
+// import { Carousel } from 'primereact/carousel';
+// import { useState } from "react";
+
+ 
+// function FeaturesCarousel() {
+//   const [products, setProducts] = useState([
+    
+//   ]);
+//     const responsiveOptions = [
+//         {
+//             breakpoint: '1024px',
+//             numVisible: 1,
+//             numScroll: 1
+//         },
+//         {
+//             breakpoint: '600px',
+//             numVisible: 1,
+//             numScroll: 1
+//         },
+//         {
+//             breakpoint: '480px',
+//             numVisible: 1,
+//             numScroll: 1
+//         }
+//     ];
+//   const productTemplate = (product) => {
+//     return (
+//         <div className="product-item">
+//             <div className="product-item-content">
+                
+//                 <span>sadas</span>
+//             </div>
+//         </div>
+//     );
+// }
+
+
+
+//   return (
+//     <div className="card" style={{
+//        marginTop:'30px',
+//       position: 'relative',
+//       width: '100%',
+//       overflow: 'hidden',}} >
+//     <Carousel value={products} numVisible={2} numScroll={2} responsiveOptions={responsiveOptions}
+//         itemTemplate={productTemplate}  />
+// </div>
+//   );
+// }
+
+// export default FeaturesCarousel;

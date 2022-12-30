@@ -1,21 +1,17 @@
 import React, { useRef, useState } from "react";
-import Form from "react-bootstrap/Form";
-import "primeflex/primeflex.scss";
-import { useLocation } from "react-router-dom";
-
-import { useEffect } from "react";
+ import "primeflex/primeflex.scss";
+ import { Dialog } from "primereact/dialog";
+ 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
-import SelectLocationAcc from "../../Components/Accordion/SelectLocationAccordion";
-import { Button } from "primereact/button";
-import { Modal } from "react-bootstrap";
-import { Field } from "formik";
-import Show400Errors, { Show500Errors, ShowNetorkErrors, ShowTokenErrors } from "../../Components/ShowErrors/ShowErrors";
+ import { Button } from "primereact/button";
+ import Show400Errors, { Show500Errors, ShowNetorkErrors, ShowTokenErrors } from "../../Components/ShowErrors/ShowErrors";
 import { Toast } from "primereact/toast";
+import { Divider } from "primereact/divider";
 function FinalStepNewReq() {
   const dispatch = useDispatch();
-  const ReqDetails = useSelector((state) => state.NewReqReducer);
+  // const ReqDetails = useSelector((state) => state.NewReqReducer);
   // ReqDetail Body :
   //   Address :  ""
   // SelectReason :  " ارائه گزارش به سازمانهای دولتی"
@@ -30,25 +26,36 @@ function FinalStepNewReq() {
   // uploadedFile: null
   const UserType = useSelector(
     (state) => state.persistedReducer.LoginReducers.userType
-  );   
+  );  
+ 
   const [NewReqData, setNewReqData] = useState({
     cityId: useSelector((state) => state.NewReqReducer.cityID),
-    expertId: 1,
+    city: useSelector((state) => state.NewReqReducer.city),
+
+    stateID: useSelector((state) => state.NewReqReducer.stateID),
+    state: useSelector((state) => state.NewReqReducer.state),
+
+    expertId: useSelector((state) => state.NewReqReducer.expertId),
+    expertName: useSelector((state) => state.NewReqReducer.expertName),
+
     reasonRequestId: useSelector((state) => state.NewReqReducer.SelectReasonID),
-    substantiaTopicsId: useSelector(
-      (state) => state.NewReqReducer.SubstantialTopicsID
-    ),
-    stateID:useSelector((state) => state.NewReqReducer.stateID),
+    SelectReason: useSelector((state) => state.NewReqReducer.SelectReason),
+
+    substantiaTopicsId: useSelector((state) => state.NewReqReducer.SubstantialTopicsID),
+    SubstantialTopics: useSelector((state) => state.NewReqReducer.SubstantialTopics),
+
     address: useSelector((state) => state.NewReqReducer.Address),
-    lat: useSelector((state) => state.NewReqReducer.len),
-    lng: useSelector((state) => state.NewReqReducer.lon),
+
+    lat: useSelector((state) => state.NewReqReducer.lat),
+
+    lng: useSelector((state) => state.NewReqReducer.lng),
+
     moreDetails: useSelector((state) => state.NewReqReducer.moreDetails),
   });
   const Token = useSelector(
     (state) => state.persistedReducer.LoginReducers.Token
   );
-  
-  const config = {
+   const config = {
     headers: {
       Authorization: `Bearer ${Token}`,
     },
@@ -65,10 +72,22 @@ function FinalStepNewReq() {
   // }
   // NewReqURL
   // "https://elated-swanson-mrhungrj5.iran.liara.run/api/UserRequest/AddNewUserRequest"
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  const [displayBasic, setDisplayBasic] = useState(false);
+  const onClick = (name) => {
+    dialogFuncMap[`${name}`](true);
+  };
+
+  const onHide = (name) => {
+    dialogFuncMap[`${name}`](false);
+  };
+
+  const dialogFuncMap = {
+    displayBasic: setDisplayBasic,
+  };
+ 
+
   const toastBC = useRef(null);
+  //Accept processes:
   const handleNewReq = () => {
     
     const user = {
@@ -128,57 +147,60 @@ function FinalStepNewReq() {
       // setWaiting(false);
     }
   };
+
+  const AcceptOptions = (name) => {
+    return (
+      <div>
+        <Button
+          label="            منصرف شدم
+"
+          icon="pi pi-times"
+          onClick={() => onHide(name)}
+          className="p-button-text"
+        />
+        <Button
+          label="             از انتخابم مطمئنم
+"
+          icon="pi pi-check"
+          onClick={handleNewReq}
+          autoFocus
+        />
+      </div>
+    );
+  };
   return (
     <>
      <Toast ref={toastBC} position="bottom-center" />
-      <Modal
-        className="align-items-center justify-content-center "
-        show={show}
-        onHide={handleClose}
+
+     <Dialog
+        header=" آیا از اطلاعات درخواست  مطمئن هستید "
+        className="text-center"
+        visible={displayBasic}
+        style={{ width: "50vw" }}
+        onHide={() => onHide("displayBasic")}
+        footer={AcceptOptions("displayBasic")}
       >
-        <Modal.Header closeButton>
-          <Modal.Title
-            className="align-items-center justify-content-center text-lg"
-            style={{ direction: "rtl" }}
-          >
-            {" "}
-            آیا از درست بودن اطلاعات مطمئن هستید؟
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ direction: "rtl" }}>
-          اگر از درست بودن اطلاعات درخواست مطمئن هستید،آنها را تایید کنید و
-          منتظر نظر کارشناس بمانید{" "}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="align-items-center justify-content-center m-2"
-            variant="secondary"
-            onClick={handleClose}
-          >
-            مطمئن نیستم
-          </Button>
-          <Button
-            className="align-items-center justify-content-center m-2"
-            variant="primary"
-            onClick={handleNewReq}
-          >
-            مطمئن هستم{" "}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Divider />
+        <span> 
+در صورت تایید ، درخواست شما به کارشناس ارجاع داده خواهد شد          
+</span>
+      </Dialog>
+
+
+      
       <div className="grid card col-12 m-4">
         <div className="grid ">
-          <div className="col-6">نام استان :{NewReqData.stateId}</div>{" "}
-          <div className="col-6">نام شهر :{NewReqData.cityId}</div>
+          <div className="col-6">نام استان :{NewReqData.state}</div>{" "}
+          <div className="col-6">نام شهر :{NewReqData.city}</div>
         </div>
 
         <div className="grid ">
           <div className="col-6">
             دلیل اولیه درخواست:
-            {NewReqData.reasonRequestId}
+            {NewReqData.SelectReason}
           </div>{" "}
           <div className="col-6">
-            دلیل ثانویه درخواست :{NewReqData.substantiaTopicsId}
+            دلیل ثانویه درخواست :{NewReqData.SubstantialTopics}
           </div>
         </div>
 
@@ -191,15 +213,26 @@ function FinalStepNewReq() {
             شماره پرونده دادگاه (درصورت وجود):{NewReqData.moreDetails}
           </div>
         </div>
+
         <div className="grid ">
-          <div className="col-12">اطلاعات کارشناس :{NewReqData.expertId}</div>{" "}
+          <div className="col-6">
+          {" "}   مختصات  {" "}
+             {NewReqData.lng}--
+             {NewReqData.lat}
+             
+          </div>
+
+        </div>
+
+        <div className="grid ">
+          <div className="col-12">اطلاعات کارشناس :{NewReqData.expertId}--{NewReqData.expertName}</div>{" "}
         </div>
       </div>
       <div className="grid col-12  ">
         <div className="m-2">
           <Button
             onClick={() => {
-              handleShow(true);
+              onClick("displayBasic");
               
             }}
           >

@@ -1,12 +1,9 @@
 import React from "react";
   import "../../Styles/dashboardFeatures.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import FeaturesCarousel from "../../Components/Carousel/FeaturesCarousel";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+ import { useNavigate } from "react-router-dom";
+ import { Button } from "primereact/button";
+
 import { useSelector } from "react-redux";
 function Features() {
   const navigate = useNavigate();

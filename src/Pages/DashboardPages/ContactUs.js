@@ -3,18 +3,8 @@ import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { InputTextarea } from "primereact/inputtextarea";
-
-import { Dropdown } from "primereact/dropdown";
-import { Calendar } from "primereact/calendar";
-import { Password } from "primereact/password";
-import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
-import { Divider } from "primereact/divider";
-import userImage from "../../Assets/DashboardAsset/experts.jpg";
 
-import { classNames } from "primereact/utils";
-import { Avatar } from "primereact/avatar";
-import { Image } from "primereact/image";
 const ContactUs = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [formData, setFormData] = useState({});
@@ -135,15 +125,15 @@ const ContactUs = () => {
                     name="name"
                     value={formik.values.name}
                     onChange={formik.handleChange}
-                    className={classNames({
-                      "p-invalid": isFormFieldValid("name"),
-                    })}
+                    // className={classNames({
+                    //   "p-invalid": isFormFieldValid("name"),
+                    // })}
                   />
                   <label
                     htmlFor="name"
-                    className={classNames({
-                      "p-error": isFormFieldValid("name"),
-                    })}
+                    // className={classNames({
+                    //   "p-error": isFormFieldValid("name"),
+                    // })}
                   >
                     Name*
                   </label>
@@ -158,15 +148,15 @@ const ContactUs = () => {
                     name="email"
                     value={formik.values.email}
                     onChange={formik.handleChange}
-                    className={classNames({
-                      "p-invalid": isFormFieldValid("email"),
-                    })}
+                    // className={classNames({
+                    //   "p-invalid": isFormFieldValid("email"),
+                    // })}
                   />
                   <label
                     htmlFor="email"
-                    className={classNames({
-                      "p-error": isFormFieldValid("email"),
-                    })}
+                    // className={classNames({
+                    //   "p-error": isFormFieldValid("email"),
+                    // })}
                   >
                     Email*
                   </label>

@@ -1,8 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
-import React, { useEffect } from "react";
+ 
  
 const InitialState = {
-    id: 0,
+    
     firstName: "",
     lastName: "",
     phoneNumber: "",
@@ -24,7 +23,7 @@ const InitialState = {
 // expertProfileInformationDto => ?
 
 const UpdateUserDataReducer = (state = InitialState, action) => {
-   console.log(action)
+ 
   switch (action.type) {
     case "UpdateInfo":
       return {

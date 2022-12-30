@@ -102,17 +102,18 @@ function Login() {
         <Toast ref={toastBC} position="bottom-center" />
 
         <div className=" grid col-6 right-login ">
-          <div className="card-login">
-            <div className="user-links">
-              <div className="user-link-home">
+          <div className="card-login shadow-8">
+            
+            {/* <div className="user-links  " style={{backgroundColor:'#113059'}}>
+              <div className="user-link-home" >
                 <Link to="/Login">ورود به حساب</Link>
               </div>
 
               <div className="user-link-cad">
                 <Link to="/signup">ثبت نام</Link>
               </div>
-            </div>
-            <h1>ورود </h1>
+            </div> */}
+            <h1  className="text-blue-500 m-3"> جانما تفسیر  </h1>
 
             <Formik initialValues="" onSubmit={onSubmit}>
               {({ errors, touched }) => (
@@ -140,7 +141,7 @@ function Login() {
                   {/* -------------------------  Password ------------------------- */}
 
                   <div className="form-group">
-                    {/* <label form="email">Confirme sua senha</label> */}
+                   
                     <Password
                       toggleMask
                       name="password"
@@ -167,19 +168,19 @@ function Login() {
                     {nationcodeValiation === false ||
                     passwordValidation === false ? (
                       <Button
-                        className="button align-items-center justify-content-center"
+                        className="button  bg-blue-300 opacity-70 align-items-center  justify-content-center"
                         disabled
                       >
-                        تایید
+                        ورود
                       </Button>
                     ) : (
                       <>
                         {waiting === false ? (
-                          <button className="button align-items-center justify-content-center">
-                            تایید
+                          <button className="button align-items-center text-100  opacity-100 bg-blue-500 justify-content-center">
+                            ورود
                           </button>
                         ) : (
-                          <Button className="button align-items-center justify-content-center">
+                          <Button className="button align-items-center justify-content-center  bg-blue-500 ">
                             <Spiner />
                           </Button>
                         )}
@@ -187,9 +188,9 @@ function Login() {
                     )}
                   </div>
 
-                  <div className="form-group" style={{ color: "white" }}>
+                  <div className="form-group align-items-center  no-underline  justify-content-center" >
                     {/* <span style={{color:'red'}}>کلیک کنید</span>   */}
-                    <Link
+                    <Link  className="text-blue-900 no-underline"   to="/ForgetPassword"
                       onClick={() => {
                         //TODO : navigation to ForgetPassword
                         //URL :
@@ -206,8 +207,25 @@ function Login() {
                         // }
                       }}
                     >
-                      فراموشی رمز ورود
-                    </Link>
+رمز عبورتان را فراموش کرده‌اید؟                    </Link>
+                    <Link className="text-blue-900   " to="/Signup" 
+                      onClick={() => {
+                        //TODO : navigation to ForgetPassword
+                        //URL :
+                        //https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/ForgetPassword
+                        //inputs : unknown
+                        //output : {
+                        //   "isSuccess": true,
+                        //   "statusCode": 200,
+                        //   "message": "string",
+                        //   "data": {
+                        //     "token": "string",
+                        //     "userType": 1
+                        //   }
+                        // }
+                      }}
+                    >
+حساب ندارید؟ عضو شوید.                    </Link>
                   </div>
                 </Form>
               )}

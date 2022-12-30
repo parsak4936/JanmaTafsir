@@ -5,6 +5,13 @@ const FirstFormSubmit = (userObj) => {
     payload: userObj,
   };
 };
+const SelectPosition = (userObj) => {
+   
+  return {
+    type: "SelectPosition",
+    payload: userObj,
+  };
+};
 const SecondFormSubmit = (userObj) => {
   return {
     type: "SecondFormSubmit",
@@ -64,4 +71,5 @@ export default {
   ThirdFormSubmit,
   FourthFormBack,
   FourthFormSubmit,
+  SelectPosition
 };

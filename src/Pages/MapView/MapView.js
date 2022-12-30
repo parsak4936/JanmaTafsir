@@ -63,16 +63,14 @@ function MapView() {
       });
   };
   const iconPerson = new L.Icon({
-    iconUrl: require("../../Assets/DashboardAsset/experts.jpg"),
-    //iconRetinaUrl: require('../img/marker-pin-person.svg'),
+    iconUrl: require("../../Assets/PersonLocationIcon.png"),
     iconAnchor: null,
-    // popupAnchor: null,
     shadowUrl: null,
     shadowSize: null,
     shadowAnchor: null,
     iconSize: new L.Point(60, 75),
-    className: "leaflet-div-icon",
   });
+
   const [position, setPosition] = useState([36.2945, 50.0192]);
 
   useEffect(() => {
@@ -106,31 +104,71 @@ function MapView() {
   }
 
   function MultipleMarkers() {
+    const DoneReqIcon = new L.Icon({
+      iconUrl: require("../../Assets/DoneReqIcon.png"),
+
+      iconAnchor: null,
+
+      shadowUrl: null,
+      shadowSize: null,
+      shadowAnchor: null,
+      iconSize: new L.Point(60, 75),
+    });
+    const PendingReqIcon = new L.Icon({
+      iconUrl: require("../../Assets/PendingReqIcon.png"),
+
+      iconAnchor: null,
+
+      shadowUrl: null,
+      shadowSize: null,
+      shadowAnchor: null,
+      iconSize: new L.Point(60, 75),
+    });
+    const handleIcon = (arrStatus) => {
+      if (arrStatus == 200) {
+        return DoneReqIcon;
+      } else if (arrStatus == 201) {
+        return PendingReqIcon;
+      } else {
+        return iconPerson;
+      }
+    };
+
     // const [userposition, setuserPosition] = useState(null);
     var arrCoordinates = [
       {
-        title: " a  ",
+        title: " کار انجام شده  ",
         location: [38.2945, 50.0192],
+        status: 200,
       },
       {
-        title: "d  ",
+        title: " کار در حال انجام است  ",
         location: [37.2945, 50.0192],
+        status: 201,
       },
       {
-        title: "c  ",
+        title: "s",
         location: [32.2945, 50.0192],
+        status: 200,
       },
       {
         title: "b ",
         location: [31.2945, 50.0192],
+        status: 201,
       },
     ];
     return arrCoordinates.map((items, index) => {
       return (
-        <Marker key={index} position={items.location} icon={iconPerson}>
+        <Marker
+          key={index}
+          position={items.location}
+          icon={handleIcon(items.status)}
+        >
           <Popup>
-            {items.title} <br />
-            در حال حاضر شما اینجا میباشد. <br />
+            {items.title}
+            <br />
+            {items.location}
+            . <br />
           </Popup>
         </Marker>
       );

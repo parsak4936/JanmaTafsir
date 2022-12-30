@@ -33,7 +33,8 @@ function Navbar() {
 const UserType = useSelector(
   (state) => state.persistedReducer.LoginReducers.userType
 );
- console.log(UserType)
+//TODO: usertype will change into 1 and 2 instead of 0 and 1
+//  console.log(UserType)
 const start =()=>{ if (UserType===1){
   return <UserSidebar/> ;
 } else if (UserType==2){

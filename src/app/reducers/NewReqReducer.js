@@ -1,6 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
-import React, { useEffect } from "react";
-
+ 
 const InitialState = {
   activeIndex: 0,
   //FirstForm datas--> NewReqForm.js :
@@ -8,26 +6,32 @@ const InitialState = {
   city: "",
   stateID: "",
   cityID: "",
-  len: null, //latitude
-  lon: null, //Longitude
+  lat: "", 
+  lng: "", 
   Address: "",
   //SecondForm datas --> ExperListForNewReq.js
-  expertId: 1,
+  expertId: 0,
+  expertName: "",
+
   //third Form datas--> Detailed Red :
   uploadedFile: null, //TODO After submission !
+
   SubstantialTopics: "",
   SubstantialTopicsID: "",
+
   SelectReason: "",
   SelectReasonID: "",
+
   selectedExpertSub:"",
+
   moreDetails: "",
   //forth form data-->finalstepnewReq.js
   //it will just send datas from prev forms to the API (after accept in a modal)
 };
 
 const NewReqReducer = (state = InitialState, action) => {
-  
-  switch (action.type) {
+  console.log(action)
+   switch (action.type) {
     //--------------Submit cases----------------
     case "FirstFormstate":
       return {
@@ -35,6 +39,12 @@ const NewReqReducer = (state = InitialState, action) => {
         state: action.payload.name,
         stateID: action.payload.id,
       };
+      case "SelectPosition":
+        return {
+          ...state,
+          lat: action.payload.lat,
+          lng: action.payload.lng,
+        };
     case "FirstFormcity":
       return {
         ...state,
@@ -56,13 +66,14 @@ const NewReqReducer = (state = InitialState, action) => {
         SelectReason: action.payload.caption,
         SelectReasonID: action.payload.id,
       };
-      
-    case "SelectSubstantialTopics":
-      return {
-        ...state,
-        SubstantialTopics: action.payload.caption,
-        SubstantialTopicsID: action.payload.id,
-      };
+   
+
+      case "SelectSubstantialTopics":
+        return {
+          ...state,
+          SubstantialTopics: action.payload.caption,
+          SubstantialTopicsID: action.payload.id,
+        };
       case "selectedExpertSub":
         return {
           ...state,
@@ -72,7 +83,8 @@ const NewReqReducer = (state = InitialState, action) => {
     case "SecondFormSubmit":
       return {
         ...state,
-      
+        expertName: action.payload.bio,
+        expertId: action.payload.userId,
         activeIndex: 2,
       };
     //Back
@@ -83,6 +95,8 @@ const NewReqReducer = (state = InitialState, action) => {
         city: "",
         stateID: "",
         cityID: "",
+        lat: 0,
+        lng:0,
         activeIndex: 0,
       };
     //-----------Third Form--------------

@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { Toast } from "primereact/toast";
-
 import "./updateForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
-import allActions from "../../app/Actions/AllActions";
-import UserTypeDropDown from "../../Components/dropdown/userTypeDropDown";
-import { Divider } from "primereact/divider";
-
 import axios from "axios";
 import { Button } from "primereact/button";
-
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Password } from "primereact/password";
 import Spiner from "../../Components/spiner/spiner";
-import StateDropDownR from "../../Components/dropdown/StatesDropDown";
-import CityDropdownR from "../../Components/dropdown/CityDropDown";
 import {
   Show400Errors,
   Show500Errors,
@@ -25,13 +17,14 @@ import {
 } from "../../Components/ShowErrors/ShowErrors";
 import UpdateStateDropDown from "./UpdateStateDropDown";
 import UpdateCityDropDown from "./UpdateCityDropDown";
-import { InputText } from "primereact/inputtext";
+
 const UpdateForm = () => {
+  const [waiting, setWaiting] = useState(false);
+
   const UpdateUserURL =
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/UpdateUserInformationData";
   //info needed for Update:
   // {
-  //   "id": 0,
   //   "firstName": "string",
   //   "lastName": "string",
   //   "phoneNumber": "string",
@@ -66,7 +59,7 @@ const UpdateForm = () => {
   //   "statusCode": 200,
   //   "message": "string"
   // }
- 
+
   const Token = useSelector(
     (state) => state.persistedReducer.LoginReducers.Token
   );
@@ -79,8 +72,6 @@ const UpdateForm = () => {
   const toastBC = useRef(null);
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
   const [userData, setUserData] = useState({
     firstname: useSelector(
       (state) => state.persistedReducer.getInfoReducer.firstName
@@ -89,7 +80,6 @@ const UpdateForm = () => {
     lastname: useSelector(
       (state) => state.persistedReducer.getInfoReducer.lastName
     ),
-    // "id": 0,
     phoneNumber: useSelector(
       (state) => state.persistedReducer.getInfoReducer.phoneNumber
     ),
@@ -121,7 +111,7 @@ const UpdateForm = () => {
   };
 
   const onSubmit = () => {
-    console.log(userData)
+    setWaiting(true);
     const user = {
       nationalCode: userData.nationalCode,
       phoneNumber: userData.phoneNumber,
@@ -131,6 +121,7 @@ const UpdateForm = () => {
       lastname: userData.lastname,
       stateID: userData.stateId,
       cityID: userData.cityId,
+      shabaNumber: 0,
     };
 
     setTimeout(
@@ -140,7 +131,7 @@ const UpdateForm = () => {
             UpdateUserURL,
             {
               nationalCode: user["nationalCode"],
-
+              shabaNumber: user["shabaNumber"],
               phoneNumber: user["phoneNumber"],
               password: user["password"],
               cityname: user["cityname"],
@@ -155,19 +146,15 @@ const UpdateForm = () => {
           )
           .then((response) => {
             if (response.data.statusCode == 200) {
-              console("GG");
-              // dispatch(
-              //   allActions.userActions.Register(userData)
-              // );
-              //   navigate("/Validation");
+              // Show400Errors(toastBC);
+              setWaiting(false);
+
+              // navigate("/MapView");
             }
           })
           .catch((exception) => {
-            console.log("BG");
-            // dispatch(
-            //   allActions.userActions.Register(userData)
-            // );
-            //   navigate("/Validation");
+            setWaiting(false);
+
             if (exception.response.status == 400) {
               Show400Errors(toastBC);
             } else if (exception.response.status == 500) {
@@ -181,39 +168,42 @@ const UpdateForm = () => {
       2000
     );
   };
-  // const nationCodeRegExp = /^[0-9]{10}$/;
-  // const phoneRegExp = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/;
-  // var natsioncodeValiation = false;
-  // if (nationCodeRegExp.test(userData.nationCode)) {
-  //   natsioncodeValiation = true;
-  // }
-  // var phonenumberValidation = false;
-  // if (phoneRegExp.test(userData.phoneNumber)) {
-  //   phonenumberValidation = true;
-  // }
-  // var passwordValidation = false;
-  // if (userData.password.length >= 6) {
-  //   passwordValidation = true;
-  // }
-  // var confirmpasswordValidation = false;
-  // if (userData.confirmPassword == userData.password) {
-  //   confirmpasswordValidation = true;
-  // }
-
+  //================== Validation ==================
+  const nationCodeRegExp = /^[0-9]{10}$/;
+  const phoneRegExp = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/;
+  var natsioncodeValiation = false;
+  if (nationCodeRegExp.test(userData.nationalCode)) {
+    natsioncodeValiation = true;
+  }
+  var phonenumberValidation = false;
+  if (phoneRegExp.test(userData.phoneNumber)) {
+    phonenumberValidation = true;
+  }
+  var passwordValidation = false;
+  if (userData.password.length >= 6) {
+    passwordValidation = true;
+  }
+  var confirmpasswordValidation = false;
+  if (userData.confirmPassword == userData.password) {
+    confirmpasswordValidation = true;
+  }
+  //=========================================
   return (
-    <div className="grid c-12 m-6">
+    <div className="grid c-12 m-6 ">
       <Toast ref={toastBC} position="bottom-center" />
 
-      <div className="right-signup grid ">
-        <div className="card-signup">
-          <Formik initialValues={{}}
-         onSubmit={onSubmit}
-          >
-            <Form className="login-form">
+      <div className="right-signup grid    ">
+        <div className="card-signup   bg-white">
+          <Formik initialValues={{}} onSubmit={onSubmit}>
+            <Form className="text-center">
+              <div className="">
+                <h1 className="  text-blue-500 m-3"> تغییر اطلاعات </h1>
+              </div>
+
               {/* -------------------------  Phone number------------------------- */}
 
-              <div className="form-group grid col-12">
-                <h5 style={{ color: "white" }}> شماره تماس </h5>
+              <div className="form-group grid  col-12">
+                <h5 className="text-blue-500"> شماره تماس </h5>
 
                 <Field
                   name="phoneNumber"
@@ -224,20 +214,19 @@ const UpdateForm = () => {
                   placeholder="شماره تلفن همراه"
                 />
 
-                {/* {phonenumberValidation == true ? (
+                {phonenumberValidation == true ? (
                   <div></div>
                 ) : (
                   <div style={{ color: "red" }}> شماره تلفن درست نمیباشد </div>
-                )} */}
+                )}
               </div>
-              {/* -------------------------    ------------------------- */}
-
+ 
               {/* -------------------------  state and city  ------------------------- */}
 
               <div className="grid col-12">
                 <div className="col-6">
                   <div className="form-group ">
-                    <h5 style={{ color: "white" }}> استان </h5>
+                    <h5 className="text-blue-500"> استان </h5>
                     <UpdateStateDropDown
                       name="statename"
                       onChange={handlechange}
@@ -246,7 +235,7 @@ const UpdateForm = () => {
                 </div>
                 <div className="col-6  ">
                   <div className="form-group  ">
-                    <h5 style={{ color: "white" }}> شهر </h5>
+                    <h5 className="text-blue-500"> شهر </h5>
 
                     <UpdateCityDropDown />
                   </div>
@@ -256,7 +245,7 @@ const UpdateForm = () => {
               {/* -------------------------  nationCode ------------------------- */}
 
               <div className="form-group">
-                <h5 style={{ color: "white" }}> کد ملی </h5>
+                <h5 className="text-blue-500"> کد ملی </h5>
 
                 <Field
                   style={{ color: "black" }}
@@ -266,7 +255,11 @@ const UpdateForm = () => {
                   className="form-field"
                   placeholder="کدملی/کدشناسایی/کد اقتصاد"
                 />
-                
+                {natsioncodeValiation == true ? (
+                  <div></div>
+                ) : (
+                  <div style={{ color: "red" }}> کدملی درست نمی باشد </div>
+                )}
               </div>
 
               {/* ------------------------- firstname and lastname ------------------------- */}
@@ -274,7 +267,7 @@ const UpdateForm = () => {
               <div className="grid col-12">
                 <div className="col-6">
                   <div className="form-group ">
-                    <h5 style={{ color: "white" }}> نام </h5>
+                    <h5 className="text-blue-500"> نام </h5>
 
                     <Field
                       style={{ color: "black" }}
@@ -288,7 +281,7 @@ const UpdateForm = () => {
                 </div>
                 <div className="col-6  ">
                   <div className="form-group  ">
-                    <h5 style={{ color: "white" }}> نام خانوادگی </h5>
+                    <h5 className="text-blue-500"> نام خانوادگی </h5>
                     <Field
                       style={{ color: "black" }}
                       name="lastname"
@@ -306,48 +299,55 @@ const UpdateForm = () => {
                 {/* password */}
                 <div className="col-12  md:col-6 lg:col-6">
                   <div className="form-group ">
-                    <h5 style={{ color: "white" }}> رمز عبور </h5>
+                    <h5 className="text-blue-500"> رمز عبور </h5>
 
                     <Password
                       style={{ color: "black" }}
                       name="password"
                       toggleMask
-                      className="form-field   "
+                     
                       onChange={handlechange}
                       placeholder="رمز ورود"
                     />
-                    {/* {passwordValidation == true ? (
+                    {passwordValidation == true ? (
                       <div></div>
                     ) : (
                       <div style={{ color: "red" }}>
                         {" "}
                         رمز نباید کمتر از 8 کاراکتر باشد{" "}
                       </div>
-                    )} */}
+                    )}
                   </div>
                 </div>
                 {/* Confirm password */}
 
                 <div className="col-12  md:col-6 lg:col-6">
                   <div className="form-group ">
-                    <h5 style={{ color: "white" }}>تکرار رمز عبور </h5>
+                    <h5  className="text-blue-500">تکرار رمز عبور </h5>
                     <Password
                       name="confirmPassword"
                       toggleMask
                       style={{ color: "black" }}
-                      className="form-field   "
+                      
                       onChange={handlechange}
                       placeholder=" تکرار رمز ورود"
                     />
-                    
+                    {confirmpasswordValidation == true ? (
+                      <div></div>
+                    ) : (
+                      <div style={{ color: "red" }}>
+                        {" "}
+                        باید با رمز قبلی برابر باشد{" "}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* ------------------------- submit Buttons ------------------------- */}
 
-              <div className="form-group" style={{}}>
-                {/* {natsioncodeValiation == false ||
+              <div className="form-group text-100" style={{}}>
+                {natsioncodeValiation == false ||
                 passwordValidation == false ||
                 phonenumberValidation == false ||
                 natsioncodeValiation == false ? (
@@ -357,19 +357,19 @@ const UpdateForm = () => {
                   >
                     تایید
                   </Button>
-                ) : ( */}
+                ) : (
                   <>
-                    {/* {waiting == false ? ( */}
-                    <button className="button button align-items-center justify-content-center">
-                      تایید
-                    </button>
-                    {/* ) : ( */}
-                    {/* <Button className="button button align-items-center justify-content-center">
+                    {waiting == false ? (
+                      <button className="button button text-100  bg-blue-500 align-items-center justify-content-center">
+                        تایید
+                      </button>
+                    ) : (
+                      <Button className="button button   bg-blue-500 align-items-center justify-content-center">
                         <Spiner />
                       </Button>
-                    )} */}
+                    )}
                   </>
-                {/* )} */}
+                )}
                 {/* -------------------------------------------------- */}
               </div>
             </Form>

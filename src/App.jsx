@@ -25,8 +25,7 @@ function App() {
     (state) => state.persistedReducer.LoginReducers.SubscribedUser
   );
 
-  console.log(SubscribedUser);
-  // console.log(SubscribedUser)
+   // console.log(SubscribedUser)
   // const [SubscribedUser,setSubscribedUser] =  useState();
   // useEffect(() => {
   //   const items = JSON.parse(localStorage.getItem('@userData'));
