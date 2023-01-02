@@ -26,13 +26,13 @@ const InitialState = {
 };
 const SignupReducer = (state = InitialState, action) => {
   switch (action.type) {
-    case "Register":
+    case "ExpertRegister":
       return {
         ...state,
         //ExperDatas :
         nationalCode: action.payload.nationCode,
         password: action.payload.password,
-        userType: action.payload.userType,
+        userType: 2,
         confirmPassword: action.payload.confirmPassword,
         phoneNumber: action.payload.phoneNumber,
         firstname: action.payload.firstname,
@@ -41,16 +41,20 @@ const SignupReducer = (state = InitialState, action) => {
         // stateGraduationId: action.payload.stateGraduationId,
         bio: action.payload.bio,
         //activityRange: action.payload.activityRange,
-        //-------------------------------
-        //UserDatas:
-        // nationalCode: action.payload.nationCode,
-        // password: action.payload.password,
-        // userType: action.payload.userType,
-        // confirmPassword: action.payload.confirmPassword,
-        // phoneNumber: action.payload.phoneNumber,
-        // firstname: action.payload.firstname,
-        // lastname: action.payload.lastname,
+        
       };
+      case "UserRegister":
+        return {
+          ...state,
+ 
+          nationalCode: action.payload.nationCode,
+          password: action.payload.password,
+          userType: 1,
+          confirmPassword: action.payload.confirmPassword,
+          phoneNumber: action.payload.phoneNumber,
+          firstname: action.payload.firstname,
+          lastname: action.payload.lastname,
+        };
     case "SelectState":
       return {
         ...state,

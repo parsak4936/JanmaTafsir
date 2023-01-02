@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
  import { Button } from "primereact/button";
 import { Toast } from 'primereact/toast';
-import Show400Errors, { Show500Errors, ShowNetorkErrors, ShowTokenErrors } from '../ShowErrors/ShowErrors';
+import Show400Errors, { Show500Errors, ShowNetorkErrors, ShowSucessMsg, ShowTokenErrors } from '../ShowErrors/ShowErrors';
  // import './DropdownDemo.css';
 
 const CityDropDown = () => {
@@ -38,12 +38,12 @@ const CityDropDown = () => {
               if (response.data.statusCode === 200) {
                
                 setCityData(response.data.data);
+                ShowSucessMsg(toastBC);
               } else {
               }
             })
             .catch((exception) => {
-              console.log(exception);
-             
+              
               if (exception.response.status === 400) {
                 Show400Errors(toastBC);
               } else if (exception.response.status === 500) {

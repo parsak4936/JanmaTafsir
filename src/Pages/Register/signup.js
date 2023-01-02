@@ -36,11 +36,17 @@ function Signup() {
     "https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/ExpertRegister";
   const selectedStateID = useSelector((state) => state.SignupReducer.stateID);
   const selectedcityID = useSelector((state) => state.SignupReducer.cityID);
-  const selectstateGraduationId = useSelector((state) => state.SignupReducer.stateGraduationId);
-  const selectcityGraduationId = useSelector((state) => state.SignupReducer.cityGraduationId);
-  const selectActivityID = useSelector((state) => state.SignupReducer.activityRangeID);
-   const userType = useSelector((state) => state.SignupReducer.userType);
-  
+  const selectstateGraduationId = useSelector(
+    (state) => state.SignupReducer.stateGraduationId
+  );
+  const selectcityGraduationId = useSelector(
+    (state) => state.SignupReducer.cityGraduationId
+  );
+  const selectActivityID = useSelector(
+    (state) => state.SignupReducer.activityRangeID
+  );
+  const userType = useSelector((state) => state.SignupReducer.userType);
+console.log(userType)
   const [errors, setErrors] = useState({});
   const [waiting, setWaiting] = useState(false);
   const [userData, setUserData] = useState({
@@ -60,9 +66,8 @@ function Signup() {
     firstname: "",
     lastname: "",
     Token: "",
-    
+
     bio: "",
-    
   }); //---------------------password popUp Header And Footer------------------//
 
   const header = <h6> یک رمز برای ورود انتخاب کنید </h6>;
@@ -91,7 +96,7 @@ function Signup() {
   const phoneRegExp = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/;
   var natsioncodeValiation = false;
 
-  if (userType == 0) {
+  if (userType == 2) {
     if (nationCodeRegExp.test(ExpertData.nationCode)) {
       natsioncodeValiation = true;
     }
@@ -102,7 +107,7 @@ function Signup() {
   }
   //==================================
   var phonenumberValidation = false;
-  if (userType == 0) {
+  if (userType == 2) {
     if (phoneRegExp.test(ExpertData.phoneNumber)) {
       phonenumberValidation = true;
     }
@@ -113,7 +118,7 @@ function Signup() {
   }
   //=================================
   var passwordValidation = false;
-  if (userType == 0) {
+  if (userType == 2) {
     if (ExpertData.password.length >= 8) {
       passwordValidation = true;
     }
@@ -125,7 +130,7 @@ function Signup() {
   //================================
 
   var confirmpasswordValidation = false;
-  if (userType == 0) {
+  if (userType == 2) {
     if (ExpertData.confirmPassword == ExpertData.password) {
       confirmpasswordValidation = true;
     }
@@ -137,21 +142,37 @@ function Signup() {
 
   //-------------------Handle Register Request--------------------//
   const handleRegister = () => {
-    setWaiting(true);
-      //User Handle
+    console.log(userData);
+    const Expert = {
+      nationalCode: ExpertData.nationCode,
+      phoneNumber: ExpertData.phoneNumber,
+      userType: userType,
+      password: ExpertData.password,
+      confirmPassword: ExpertData.confirmPassword,
+      firstname: ExpertData.firstname,
+      lastname: ExpertData.lastname,
+      stateID: selectedStateID,
+      cityID: selectedcityID,
+      cityGraduationId: selectcityGraduationId,
+      stateGraduationId: selectstateGraduationId,
+      bio: ExpertData.bio,
+      activityRange: selectActivityID,
+    };
+    const user = {
+      nationalCode: userData.nationCode,
+      phoneNumber: userData.phoneNumber,
+      userType: userType,
+      password: userData.password,
+      confirmPassword: userData.confirmPassword,
+      firstname: userData.firstname,
+      lastname: userData.lastname,
+      stateID: selectedStateID,
+      cityID: selectedcityID,
+    };
 
-    if (userType === 1) {
-      const user = {
-        nationalCode: userData.nationCode,
-        phoneNumber: userData.phoneNumber,
-        userType: userType,
-        password: userData.password,
-        confirmPassword: userData.confirmPassword,
-        firstname: userData.firstname,
-        lastname: userData.lastname,
-        stateID: selectedStateID,
-        cityID: selectedcityID,
-      };
+    //User Handle
+    if (userType == 1) {
+      setWaiting(true);
       setTimeout(
         () => {
           axios
@@ -171,13 +192,13 @@ function Signup() {
             .then((response) => {
               if (response.data.statusCode === 200) {
                 setWaiting(false);
-                dispatch(allActions.userActions.Register(userData));
+                dispatch(allActions.userActions.UserRegister(userData));
                 navigate("/Validation");
               }
             })
             .catch((exception) => {
               setWaiting(false);
-              dispatch(allActions.userActions.Register(userData));
+              dispatch(allActions.userActions.UserRegister(userData));
               navigate("/Validation");
               if (exception.response.status === 400) {
                 Show400Errors(toastBC);
@@ -191,24 +212,8 @@ function Signup() {
 
         2000
       );
-    } else {
-      //Exper Handle
-      const Expert = {
-        nationalCode: ExpertData.nationCode,
-        phoneNumber: ExpertData.phoneNumber,
-        userType: userType,
-        password: ExpertData.password,
-        confirmPassword: ExpertData.confirmPassword,
-        firstname: ExpertData.firstname,
-        lastname: ExpertData.lastname,
-        stateID: selectedStateID,
-        cityID: selectedcityID,
-        cityGraduationId: selectcityGraduationId,
-        stateGraduationId: selectstateGraduationId,
-        bio: ExpertData.bio,
-        activityRange: selectActivityID,
-      };
-console.log(Expert)
+    } else if (userType == 2) {
+      setWaiting(true);
       setTimeout(
         () => {
           axios
@@ -234,13 +239,13 @@ console.log(Expert)
             .then((response) => {
               if (response.data.statusCode === 200) {
                 setWaiting(false);
-                dispatch(allActions.userActions.Register(ExpertData));
+                dispatch(allActions.userActions.ExpertRegister(ExpertData));
                 navigate("/Validation");
               }
             })
             .catch((exception) => {
               setWaiting(false);
-              dispatch(allActions.userActions.Register(ExpertData));
+              dispatch(allActions.userActions.ExpertRegister(ExpertData));
               // navigate("/Validation");
               if (exception.response.status === 400) {
                 Show400Errors(toastBC);
@@ -256,6 +261,7 @@ console.log(Expert)
       );
     }
   };
+
   //-------------------Render--------------------//
 
   return (
@@ -356,7 +362,7 @@ console.log(Expert)
                 </div>
               </div>
               {/* -------------------------  make expert list different from normal user ------------------------- */}
-              {userType == 0 && (
+              {userType == 2 && (
                 <>
                   <div className="grid col-12">
                     <div className="col-6">

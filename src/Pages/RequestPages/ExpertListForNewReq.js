@@ -8,7 +8,7 @@ import BachlorsTable from "../../Components/Tables/BachlorsListTable";
 function ExpertList() {
  
     const dispatch = useDispatch();
-
+   
   return (
     <>
     <BachlorsTable/>

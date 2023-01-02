@@ -48,7 +48,7 @@ function MapView() {
         }
       })
       .catch((exception) => {
-        console.log(exception);
+        
         if (exception.response.status === 400) {
           Show400Errors(toastBC);
         } else if (exception.response.status === 404) {
@@ -202,7 +202,7 @@ function MapView() {
               retainZoomLevel={false}
               animateZoom={true}
               autoClose={false}
-              searchLabel={"Enter address, please"}
+              searchLabel={"آدرست مورد نظر را وارد نمایید"}
               keepResult={true}
             />
             <MultipleMarkers />

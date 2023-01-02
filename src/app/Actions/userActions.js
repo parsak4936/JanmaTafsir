@@ -14,9 +14,15 @@ const updateUserType = (userObj) => {
   };
 };
 //==============Register Actions========================
-const Register = (userObj) => {
+const ExpertRegister = (userObj) => {
   return {
-    type: "Register",
+    type: "ExpertRegister",
+    payload: userObj,
+  };
+};
+const UserRegister = (userObj) => {
+  return {
+    type: "UserRegister",
     payload: userObj,
   };
 };
@@ -139,7 +145,8 @@ export default {
   SelectActivityRange,
   SelectGraduatedCity,
   PhoneValidation,
-  Register,
+  ExpertRegister,
+  UserRegister,
   selectedExpertSub,
   UserTypeChange,
   SelectCity,

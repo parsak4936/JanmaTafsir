@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
 import { useMap } from "react-leaflet";
-import { GeoSearchControl } from "leaflet-geosearch";
- import './SearchControl.css'
- 
+  import './SearchControl.css'
+ import {
+  GeoSearchControl,
+  MapBoxProvider,
+  AlgoliaProvider,
+  OpenStreetMapProvider
+} from "leaflet-geosearch";
 const SearchControl = (props) => {
   const map = useMap();
- 
+  const provider = new OpenStreetMapProvider();
+
    useEffect(() => {
     const searchControl = new GeoSearchControl({
-      provider: props.provider,
-       
+      provider: provider,
+ 
       ...props
-    });
+    }).addTo(map);
 
     map.addControl(searchControl);
     return () => map.removeControl(searchControl);
-  }, [map, props]);
+  }, [map]);
 
   return null;
 };

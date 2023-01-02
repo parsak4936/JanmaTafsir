@@ -17,7 +17,7 @@ function DropdownComponent() {
   });
 
   const UserKinds = [
-    { name: "کاربر حقوقی", code: "0" },
+    { name: "کاربر حقوقی", code: "2" },
     { name: "کاربر حقیقی", code: "1" },
   ];
   // const selectedUserType = useSelector(

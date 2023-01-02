@@ -29,6 +29,7 @@ import allActions from "../../app/Actions/AllActions";
 import { Divider } from "primereact/divider";
 import Spiner from "../../Components/spiner/spiner";
 import { Toast } from "primereact/toast";
+import Show400Errors, { Show500Errors, ShowNetorkErrors } from "../../Components/ShowErrors/ShowErrors";
 
 function SmsValidation() {
   const signupToken = useSelector((state) => state.SignupReducer.Token);
@@ -81,8 +82,12 @@ function SmsValidation() {
             phoneNumber:user["phoneNumber"],
           })
           .then((response) => {
+            
             if (response.data.statusCode == 200) {
               setWaiting(false);
+              console.log("عسثق،غحث هس :")
+
+              console.log(response.data.data.userType)
               dispatch(
                 allActions.userActions.PhoneValidation(response.data.data.token)
               );
@@ -95,7 +100,13 @@ function SmsValidation() {
           })
           .catch((exception) => {
             setWaiting(false);
-
+            if (exception.response.status === 400) {
+              Show400Errors(toastBC);
+            } else if (exception.response.status === 500) {
+              Show500Errors(toastBC);
+            } else if (exception.code === "ERR_NETWORK") {
+              ShowNetorkErrors(toastBC);
+            }
             // if (exception.response.status == 400) {
             //   Show400Errors();
             // } else if (exception.response.status == 401) {
@@ -112,7 +123,7 @@ function SmsValidation() {
   };
    
 
-  return (
+  return ( 
     <div className="grid c-12 "  style={{
       backgroundImage: `url(${SmsValidationBG})`,
       width:"100%",
@@ -146,10 +157,15 @@ function SmsValidation() {
                   placeholder="کد ارسال شده  "
                 />
               </div>
-
-              <button className="button button align-items-center justify-content-center">
+{waiting==false ?  <button className="button button align-items-center justify-content-center">
                 تایید
               </button>
+:
+<button className="button button align-items-center justify-content-center">
+                <Spiner />
+              </button>
+}
+              
             </Form>
           </Formik>
         </div>

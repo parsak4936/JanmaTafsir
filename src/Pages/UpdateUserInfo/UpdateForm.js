@@ -14,6 +14,8 @@ import {
   Show500Errors,
   Show404Errors,
   ShowNetorkErrors,
+  ShowSucessMsg,
+  ShowTokenErrors,
 } from "../../Components/ShowErrors/ShowErrors";
 import UpdateStateDropDown from "./UpdateStateDropDown";
 import UpdateCityDropDown from "./UpdateCityDropDown";
@@ -148,19 +150,23 @@ const UpdateForm = () => {
             if (response.data.statusCode == 200) {
               // Show400Errors(toastBC);
               setWaiting(false);
-
+              ShowSucessMsg(toastBC);
               // navigate("/MapView");
             }
           })
           .catch((exception) => {
             setWaiting(false);
 
-            if (exception.response.status == 400) {
+            if (exception.response.status === 400) {
               Show400Errors(toastBC);
-            } else if (exception.response.status == 500) {
+            } else if (exception.response.status === 500) {
               Show500Errors(toastBC);
-            } else if (exception.code == "ERR_NETWORK") {
-              ShowNetorkErrors(toastBC);
+            }
+            else if (exception.response.status === 401) {
+              ShowTokenErrors(toastBC);
+            }
+            else if (exception.code==="ERR_NETWORK") {
+              ShowNetorkErrors(toastBC)
             }
           });
       },

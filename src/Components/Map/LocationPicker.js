@@ -15,10 +15,10 @@ const UserLocationPicker = () => {
       values: pointVals,
       onClick: (point) => {
         const position ={
-          lat:point[0],
-          lng:point[1]
+          lat:point[0].toString(),
+          lng:point[1].toString()
         }
-         
+         console.log(position)
         setCustomers([point])
         dispatch(allActions.NewReqActions.SelectPosition(position));
 

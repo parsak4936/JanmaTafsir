@@ -14,6 +14,8 @@ import {
   Show400Errors,
   Show500Errors,
   Show404Errors,
+  ShowNetorkErrors,
+  ShowTokenErrors,
 } from "../../Components/ShowErrors/ShowErrors";
 
 import { Toast } from "primereact/toast";
@@ -30,8 +32,7 @@ function Login() {
     token: "",
   });
   const Token = useSelector((state) => state.persistedReducer.LoginReducers);
-  console.log(Token);
-  var nationcodeValiation = false;
+   var nationcodeValiation = false;
   if (nationCodeRegExp.test(userData.nationCode)) {
     nationcodeValiation = true;
   }
@@ -51,9 +52,7 @@ function Login() {
     (state) => state.persistedReducer.LoginReducers.SubscribedUser
   );
 
-  //password : string
-  //code : 4311211945
-  //number : 09195436287
+ 
   const onSubmit = () => {
     setWaiting(true);
 
@@ -84,10 +83,14 @@ function Login() {
 
             if (exception.response.status === 400) {
               Show400Errors(toastBC);
-            } else if (exception.response.status === 404) {
-              Show404Errors(toastBC);
             } else if (exception.response.status === 500) {
               Show500Errors(toastBC);
+            }
+            else if (exception.response.status === 401) {
+              ShowTokenErrors(toastBC);
+            }
+            else if (exception.code==="ERR_NETWORK") {
+              ShowNetorkErrors(toastBC)
             }
           });
       },
@@ -209,21 +212,7 @@ function Login() {
                     >
 رمز عبورتان را فراموش کرده‌اید؟                    </Link>
                     <Link className="text-blue-900   " to="/Signup" 
-                      onClick={() => {
-                        //TODO : navigation to ForgetPassword
-                        //URL :
-                        //https://elated-swanson-mrhungrj5.iran.liara.run/api/Authentication/ForgetPassword
-                        //inputs : unknown
-                        //output : {
-                        //   "isSuccess": true,
-                        //   "statusCode": 200,
-                        //   "message": "string",
-                        //   "data": {
-                        //     "token": "string",
-                        //     "userType": 1
-                        //   }
-                        // }
-                      }}
+                     
                     >
 حساب ندارید؟ عضو شوید.                    </Link>
                   </div>

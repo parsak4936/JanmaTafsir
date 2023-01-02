@@ -95,8 +95,8 @@ const NewReqReducer = (state = InitialState, action) => {
         city: "",
         stateID: "",
         cityID: "",
-        lat: 0,
-        lng:0,
+        lat: "0",
+        lng:"0",
         activeIndex: 0,
       };
     //-----------Third Form--------------
