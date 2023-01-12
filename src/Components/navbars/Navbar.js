@@ -44,7 +44,7 @@ const start =()=>{ if (UserType===1){
     const end = <div className="  col-0  md:col-12 lg:col-12  "> <DateAndTime/></div>;
   
   return (
-    <div  >
+    <div style={{fontFamily:'IRANSansWeb'}} >
       <Menubar   model={items} start={start}   end={end} />
     </div>
   );

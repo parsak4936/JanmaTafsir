@@ -127,7 +127,7 @@ function BachlorsTable() {
 
   const ExpertState = (rowData) => {
     return (
-      <React.Fragment>
+      <React.Fragment  style={{fontFamily:'IRANSansWeb'}}>
         <span className="image-text">{rowData.state} </span>
       </React.Fragment>
     );
@@ -135,7 +135,7 @@ function BachlorsTable() {
 
   const ExpertImage = (rowData) => {
     return (
-      <React.Fragment>
+      <div  style={{fontFamily:'IRANSansWeb'}}>
         <img
           src=""
           onError={(e) =>
@@ -145,25 +145,25 @@ function BachlorsTable() {
           width={32}
           style={{ verticalAlign: "middle" }}
         />
-      </React.Fragment>
+      </div>
     );
   };
   const moreDetail = (rowData) => {
     return (
-      <React.Fragment>
+      <div  style={{fontFamily:'IRANSansWeb'}}>
         <Button
-          label="جزییات بیشتر"
+          label="جزییات "
           className=""
           icon="pi pi-external-link"
           onClick={() => onClick("displayBasic", rowData)}
         />
-      </React.Fragment>
+      </div>
     );
   };
 
   const RenderChooseExpertOptions = (name) => {
     return (
-      <div>
+      <div  style={{fontFamily:'IRANSansWeb'}}>
         <Button
           label="            منصرف شدم
 "
@@ -199,9 +199,9 @@ function BachlorsTable() {
   };
   const ActivityRange = (rowData) => {
     return (
-      <React.Fragment>
+      <div  style={{fontFamily:'IRANSansWeb'}}   >
         {rowData.activityRange === 0 ? (
-          <span className="image-text ">کشوری</span>
+          <span   className="image-text ">کشوری</span>
         ) : rowData.activityRange == 1 ? (
           <span className="image-text text-blue-500">استانی</span>
         ) : rowData.activityRange == 2 ? (
@@ -209,19 +209,19 @@ function BachlorsTable() {
         ) : (
           <>موجود نمیباشد</>
         )}
-      </React.Fragment>
+      </div>
     );
   };
 
   const ExpertName = (rowData) => {
     return (
-      <React.Fragment>
+      <div  style={{fontFamily:'IRANSansWeb'}}>
         <span className="image-text">نام کارشناس؟</span>
-      </React.Fragment>
+      </div>
     );
   };
   return (
-    <div>
+    <div  style={{fontFamily:'IRANSansWeb'}}>
       <div className="card">
         <DataTable
           value={customers}
@@ -285,21 +285,23 @@ function BachlorsTable() {
             filterPlaceholder="Search by company"
           />
           <Column
+           style={{fontFamily:'IRANSansWeb'}}
             field="representative.name"
-            header="جزئیات بیشتر"
+            header="جزئیات بیشتر "
             body={moreDetail}
             filter
             filterPlaceholder="Search by representative"
           />
           <Column
             field="representative.name"
-            header="تعداد درخواست های انجام شده  "
+            header="تعداد درخواست ها    "
             body={ExpertState}
             filter
             filterPlaceholder="Search by representative"
           />
           <Column
             field=""
+            style={{fontFamily:'IRANSansWeb'}}
             header="انتخاب"
             filterPlaceholder="Search by company"
             body={ChooseExpert}

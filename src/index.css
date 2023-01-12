@@ -5,15 +5,20 @@ body {
   
   overflow-x: hidden;
   text-decoration: none;
-  font-family: irs,-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: 'IRANSansWebFaNum_Medium';
+  src: local('IRANSansWebFaNum_Medium'), url(./fonts/iransans/ttf/IRANSansWebFaNum_Medium.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'IRANSansWebLight';
+  src: local('IRANSansWebLight'), url(./fonts/iransans/ttf/IRANSansWebLight.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'IRANSansWeb';
+  src: local('IRANSansWeb'), url(./fonts/iransans/ttf/IRANSansWeb.ttf) format('truetype');
 }
  

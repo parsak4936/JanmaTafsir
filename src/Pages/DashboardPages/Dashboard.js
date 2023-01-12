@@ -20,7 +20,7 @@ import DescriptionImage from "../../Assets/DashboardAsset/DetailInfoBG.svg";
 
 function Dashboard() {
   return (
-    <div className="grid  ">
+    <div className="grid "  >
       <GoTopScroll />
       {/* navbar Row */}
 
@@ -76,7 +76,7 @@ function Dashboard() {
         <UserShowUp />
       </div>
 
-      <div
+      {/* <div
         className="grid col-12 w-full
         
         h-auto p-2
@@ -90,7 +90,7 @@ function Dashboard() {
         }}
       >
         <Aboutus />
-      </div>
+      </div> */}
       <div
         className="grid col-12 w-full
         

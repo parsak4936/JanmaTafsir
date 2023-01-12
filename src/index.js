@@ -7,6 +7,11 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import './fonts/iransans/ttf/IRANSansWebFaNum_Medium.ttf';
+import './fonts/iransans/ttf/IRANSansWebLight.ttf'
+;
+import './fonts/iransans/ttf/IRANSansWeb.ttf'
+
 
 const container = document.getElementById('root');
 const root = createRoot(container);

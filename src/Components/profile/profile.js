@@ -74,7 +74,7 @@ function Profile() {
     {
       template: (item, options) => {
         return (
-          <div className="  mb-0  px-4 as  " style={{}}>
+          <div className="  mb-0  px-4 as  " style={{fontFamily:'IRANSansWeb'}}>
             <Toast ref={toastBC} position="bottom-center" />
             <div
               id="circle-avatar"

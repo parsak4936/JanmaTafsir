@@ -17,7 +17,7 @@ const UserSidebar = () => {
     }}>
       <Sidebar
       className="surface-400  w-auto "
-       
+      style={{fontFamily:'IRANSansWeb'}}
         visible={visibleRight}
         position="right"
          

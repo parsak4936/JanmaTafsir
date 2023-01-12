@@ -1,6 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import "primeflex/primeflex.scss";
+import L, { Icon, latLng } from "leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../app/Actions/AllActions";
@@ -10,12 +12,42 @@ import StatesDropDown from "../../Components/dropdown/StatesDropDown";
 import CityDropDown from "../../Components/dropdown/CityDropDown";
 import { Toast } from "primereact/toast";
 import { ShowEmptyState } from "../../Components/ShowErrors/ShowErrors";
-function NewReqForm() {
+ function NewReqForm() {
   const toastTL = useRef(null);
 
   const selectedStateID = useSelector((state) => state.NewReqReducer.stateID);
   const selectedCityID = useSelector((state) => state.NewReqReducer.cityID);
+  const iconPerson = new L.Icon({
+    iconUrl: require("../../Assets/PersonLocationIcon.png"),
+    iconAnchor: null,
+    shadowUrl: null,
+    shadowSize: null,
+    shadowAnchor: null,
+    iconSize: new L.Point(60, 75),
+  });
+  function LocationMarker() {
+    const [userposition, setuserPosition] = useState(null);
 
+    const map = useMap();
+
+    useEffect(() => {
+      map.locate().on("locationfound", function (e) {
+        setuserPosition(e.latlng);
+        //setPosition(e.latlng);
+        map.flyTo(e.latlng, map.getZoom());
+        const radius = e.accuracy;
+      });
+    }, [map]);
+
+    return userposition === null ? null : (
+      <Marker position={userposition} icon={iconPerson}>
+        <Popup>
+          موقعیت شما <br />
+          در حال حاضر شما اینجا میباشد. <br />
+        </Popup>
+      </Marker>
+    );
+  }
   const [newReqData, setnewReqData] = useState({
     
     selectedState: { id: "", name: "" },
@@ -34,7 +66,7 @@ function NewReqForm() {
   return (
     <Form style={{ margin: "40px" }}>
       <Toast ref={toastTL} position="bottom-center" />
-      <div className="grid">
+      <div className="grid"  style={{fontFamily:'IRANSansWeb'}}>
         <div className="col-6">
           <Form.Group>
             <Form.Label>

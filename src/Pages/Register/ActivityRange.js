@@ -27,7 +27,7 @@ function ActivityRange() {
   };
 
   return (
-    <div className="dropdown-demo">
+    <div className="dropdown-demo"  style={{fontFamily:'IRANSansWeb'}}>
       <div className="card">
         <Dropdown
           value={selectedRole}

@@ -9,34 +9,14 @@ function DateAndTime() {
   var dateNumber = moment(date, "YYYY/MM/DD").locale("fa").format("YYYY/MM/DD");
   var dateMonth = moment(date, "YYYY/MM/DD").locale("fa").format("MMMM");
   var dateDayCounter = moment(date).day();
-  function dateDay (dateDay) {
-    switch (dateDay) {
-      case 0:
-        return "شنبه";
-      case 1:
-        return "یکشنبه";
-      case 2:
-        return "دو شنبه";
-      case 3:
-        return "سه شنبه";
-      case 4:
-        return "چهارشنبه";
-      case 5:
-        return "پنجشنبه";
-      case 6:
-        return "جمعه";
-      
-      default:
-        return "نامعلوم";
-    }
-  };
+  
 
    
 
   useEffect(() => {}, []);
 //-fot showing the Date :  {dateDay(dateDayCounter)}
-  return (
-    <div   style={{ direction: "ltr"  }}>
+  return (  
+    <div   style={{ direction: "ltr" ,fontFamily:'IRANSansWeb' }}>
       {dateNumber} - {dateMonth} 
     </div>
   );

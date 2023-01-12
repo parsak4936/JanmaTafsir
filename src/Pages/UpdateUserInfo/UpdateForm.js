@@ -195,7 +195,7 @@ const UpdateForm = () => {
   }
   //=========================================
   return (
-    <div className="grid c-12 m-6 ">
+    <div className="grid c-12 m-6 "  style={{fontFamily:'IRANSansWeb'}}>
       <Toast ref={toastBC} position="bottom-center" />
 
       <div className="right-signup grid    ">

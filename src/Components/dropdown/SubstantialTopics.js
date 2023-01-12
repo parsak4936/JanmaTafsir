@@ -73,14 +73,14 @@ const SubstantialTopics = () => {
 
   const countryOptionTemplate = (option) => {
     return (
-      <div className="country-item">
+      <div className="country-item"  style={{fontFamily:'IRANSansWeb'}}>
         <div>{option.caption}</div>
       </div>
     );
   };
 
   return (
-    <div className="dropdown-demo">
+    <div className="dropdown-demo"  style={{fontFamily:'IRANSansWeb'}}>
      
       <div className="card">
         <Dropdown

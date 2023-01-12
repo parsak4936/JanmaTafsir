@@ -273,8 +273,15 @@ console.log(userType)
           <h1 className="text-blue-500">ثبت نام</h1>
           <Formik initialValues={{}} onSubmit={handleRegister}>
             <Form className="login-form">
-              {/* -------------------------  Phone number------------------------- */}
-              <div className="form-group grid col-12">
+             
+              {/* -------------------------  userType ------------------------- */}
+
+              <div className="form-group p-2">
+                <h5 className="text-blue-500"> نوع کاربری </h5>
+                <UserTypeDropDown />
+              </div>
+               {/* -------------------------  Phone number------------------------- */}
+               <div className="form-group grid col-12">
                 <Field
                   name="phoneNumber"
                   style={{ color: "black" }}
@@ -288,12 +295,6 @@ console.log(userType)
                 ) : (
                   <div style={{ color: "red" }}> شماره تلفن درست نمیباشد </div>
                 )}
-              </div>
-              {/* -------------------------  userType ------------------------- */}
-
-              <div className="form-group">
-                <h5 className="text-blue-500"> نوع کاربری </h5>
-                <UserTypeDropDown />
               </div>
               {/* -------------------------  state and city  ------------------------- */}
 
@@ -460,12 +461,12 @@ console.log(userType)
 
               {/* ------------------------- submit Buttons ------------------------- */}
 
-              <div className="form-group  text-100" style={{}}>
+              <div className="form-group  text-100"  style={{fontFamily:'IRANSansWeb'}}>
                 {natsioncodeValiation === false ||
                 passwordValidation === false ||
                 phonenumberValidation === false ||
                 natsioncodeValiation === false ? (
-                  <Button
+                  <Button  style={{fontFamily:'IRANSansWeb'}}
                     className="button button align-items-center   bg-blue-500 opacity-70 justify-content-center"
                     disabled
                   >
@@ -474,11 +475,11 @@ console.log(userType)
                 ) : (
                   <>
                     {waiting === false ? (
-                      <button className="button button  bg-blue-500  opacity-100  align-items-center justify-content-center">
+                      <button   style={{fontFamily:'IRANSansWeb'}} className="button button  bg-blue-500  opacity-100  align-items-center justify-content-center">
                         تایید
                       </button>
                     ) : (
-                      <Button className="button button   opacity-100  bg-blue-500 align-items-center justify-content-center">
+                      <Button  className="button button   opacity-100  bg-blue-500 align-items-center justify-content-center">
                         <Spiner />
                       </Button>
                     )}

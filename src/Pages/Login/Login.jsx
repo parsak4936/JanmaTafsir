@@ -124,6 +124,8 @@ function Login() {
                   {/* -------------------------  NationCode------------------------- */}
 
                   <div className="form-group">
+                  <h5 className="text-blue-500"> کد ملی </h5>
+
                     <Field
                       style={{ color: "black" }}
                       name="nationCode"
@@ -144,7 +146,9 @@ function Login() {
                   {/* -------------------------  Password ------------------------- */}
 
                   <div className="form-group">
-                   
+                  <h5 className="text-blue-500"> رمز عبور </h5>
+
+
                     <Password
                       toggleMask
                       name="password"
@@ -179,11 +183,11 @@ function Login() {
                     ) : (
                       <>
                         {waiting === false ? (
-                          <button className="button align-items-center text-100  opacity-100 bg-blue-500 justify-content-center">
+                          <button style={{fontFamily:'IRANSansWeb'}} className="button align-items-center text-100  opacity-100 bg-blue-500 justify-content-center">
                             ورود
                           </button>
                         ) : (
-                          <Button className="button align-items-center justify-content-center  bg-blue-500 ">
+                          <Button style={{fontFamily:'IRANSansWeb'}}  className="button align-items-center justify-content-center  bg-blue-500 ">
                             <Spiner />
                           </Button>
                         )}
@@ -191,8 +195,7 @@ function Login() {
                     )}
                   </div>
 
-                  <div className="form-group align-items-center  no-underline  justify-content-center" >
-                    {/* <span style={{color:'red'}}>کلیک کنید</span>   */}
+                  <div className="form-group align-items-center  no-underline  justify-content-center"   >
                     <Link  className="text-blue-900 no-underline"   to="/ForgetPassword"
                       onClick={() => {
                         //TODO : navigation to ForgetPassword

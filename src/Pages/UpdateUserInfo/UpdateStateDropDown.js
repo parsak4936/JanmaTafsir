@@ -76,14 +76,14 @@ const UpdateStateDropDown = () => {
 
   const countryOptionTemplate = (option) => {
     return (
-      <div className="country-item">
+      <div className="country-item"  style={{fontFamily:'IRANSansWeb'}}>
         <div>{option.name}</div>
       </div>
     );
   };
 
   return (
-    <div className="dropdown-demo">
+    <div className="dropdown-demo"  style={{fontFamily:'IRANSansWeb'}}>
       <Toast ref={toastBC} position="bottom-center" />
       <div className="card">
         <Dropdown

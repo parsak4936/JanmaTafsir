@@ -58,7 +58,7 @@ const CityDropdownR = () => {
     const selectedCountryTemplate = (option, props) => {
         if (option) {
             return (
-                <div className="country-item country-item-value">
+                <div className="country-item country-item-value"  style={{fontFamily:'IRANSansWeb'}}>
                     <img alt={option.name} src="images/flag/flag_placeholder.png" onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} className={`flag flag-${option.code.toLowerCase()}`} />
                     <div>{option.name}</div>
                 </div>
@@ -83,7 +83,7 @@ const CityDropdownR = () => {
         }
     const countryOptionTemplate = (option) => {
         return (
-            <div className="country-item">
+            <div className="country-item"  style={{fontFamily:'IRANSansWeb'}}>
                  
                 <div>{option.name}</div>
             </div>
@@ -93,7 +93,7 @@ const CityDropdownR = () => {
     
 
     return (
-        <div className="dropdown-demo">
+        <div className="dropdown-demo"  style={{fontFamily:'IRANSansWeb'}}>
             <div className="card">
             <Toast ref={toastBC} position="bottom-center" />
                 <Dropdown value={selectedCity} options={cityData} onChange={oncityChange} optionLabel="name" filter  filterBy="name" placeholder="Select a Country"

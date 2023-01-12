@@ -66,14 +66,14 @@ const ExpertSubjectServicesDropDown = () => {
     
     if (option) {
       return (
-        <div className="country-item country-item-value">
+        <div className="country-item country-item-value"  style={{fontFamily:'IRANSansWeb' ,direction:'rtl'}}>
           <div>{option.value}</div>
         </div>
       );
     }
 
     return (
-      <span>
+      <span  style={{fontFamily:'IRANSansWeb' ,direction:'rtl'}}>
         {selectedExpertSub === "" ? <>در چه زمینه ایی کارشناسی میخواهید</> : <> {props.value}</>}
       </span>
     );
@@ -81,16 +81,16 @@ const ExpertSubjectServicesDropDown = () => {
 
   const countryOptionTemplate = (option) => {
     return (
-      <div className="country-item">
+      <div className="country-item"  style={{fontFamily:'IRANSansWeb' ,direction:'rtl'}}>
         <div>{option.caption}</div>
       </div>
     );
   };
 
   return (
-    <div className="dropdown-demo">
+    <div className="dropdown-demo"  style={{fontFamily:'IRANSansWeb' ,direction:'rtl'}}>
      
-      <div className="card">
+      <div className="card" >
         <Dropdown
           value={selectedExpertSub}
           options={ExpertSubjectsOtions}

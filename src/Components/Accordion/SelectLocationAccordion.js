@@ -26,10 +26,10 @@ const SelectLocationAcc = () => {
 
   return (
     <>
-      <div className="accordion-demo">
-        <div className="card">
+      <div className="accordion-demo"   >
+        <div className="card"   >
            <Accordion activeIndex={0}>
-            <AccordionTab header=" مختصات زمین">
+            <AccordionTab header=" مختصات زمین"  style={{fontFamily:'IRANSansWeb'}}>
               <UserLocationPicker/>
             </AccordionTab>
           </Accordion>

@@ -92,7 +92,7 @@ const CityDropDown = () => {
         }
     const countryOptionTemplate = (option) => {
         return (
-            <div className="country-item">
+            <div className="country-item  "  style={{fontFamily:'IRANSansWeb'  }}  >
                  
                 <div>{option.name}</div>
             </div>
@@ -102,7 +102,7 @@ const CityDropDown = () => {
     
 
     return (
-        <div className="dropdown-demo">
+        <div className="dropdown-demo "  style={{fontFamily:'IRANSansWeb' ,direction:'rtl'}}>
             <div className="card">
             <Toast ref={toastBC} position="bottom-center" />
                 <Dropdown value={selectedCity} options={cityData} onChange={oncityChange} optionLabel="name" filter  filterBy="name" placeholder="Select a Country"

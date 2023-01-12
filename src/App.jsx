@@ -34,7 +34,7 @@ function App() {
   // }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{fontFamily:'IRANSansWeb'}}>
       <BrowserRouter>
         <Routes>
           <Route path="/home" exact element={<Dashboard />} />

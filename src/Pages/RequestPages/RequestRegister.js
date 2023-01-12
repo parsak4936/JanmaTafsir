@@ -31,15 +31,15 @@ function RequestRegister() {
     },
   ];
   return (
-    <div style={{direction:"rtl"}}  >
-      <Navbar />
-      <div style={{
+    <div  style={{
       direction:"rtl",
       backgroundImage: `url(${RRImage})`,
      height:"auto",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
-    }}>
+    }}  >
+      <Navbar />
+      <div >
 <Steps model={items} activeIndex={GlobalactiveIndex} />
       {GlobalactiveIndex == 0 ? (
         <NewReqForm />

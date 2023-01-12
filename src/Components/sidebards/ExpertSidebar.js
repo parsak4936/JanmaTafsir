@@ -14,7 +14,7 @@ const ExpertSidebar = () => {
       className="bg-blue-400 w-3"
         visible={visibleRight}
         position="right"
-         
+        style={{fontFamily:'IRANSansWeb'}}
         onHide={() => setVisibleRight(false)}
       >
         
@@ -29,6 +29,7 @@ const ExpertSidebar = () => {
                   <Link to={item.path} className="align-items-center w-full justify-content-center">
                    
                     <span className="align-items-center w-full justify-content-center">{item.title}</span>
+                    <span className="">{item.icon}</span>
                   </Link>
                 </li>
               );

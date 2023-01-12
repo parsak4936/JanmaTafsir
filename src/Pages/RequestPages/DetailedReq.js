@@ -17,7 +17,7 @@ function DetailedReq() {
   const dispatch = useDispatch();
   const [moreDetails, setmoreDetails] = useState("");
   return (
-    <div className="grid col-12 p-6 ">
+    <div className="grid col-12 p-6 "  style={{fontFamily:'IRANSansWeb'}}>
       <div className="col-6">
         {" دلیل درخواست(برای ارائه به کدام ارگان)"}
         <ReasonRequest />

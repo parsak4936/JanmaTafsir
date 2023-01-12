@@ -144,7 +144,7 @@ const countryBodyTemplate = (rowData) => {
     
    
       
-      <div>
+      <div  style={{fontFamily:'IRANSansWeb'}}>
       <div className="card">
           <DataTable value={customers} scrollable scrollHeight="400px" lazy filterDisplay="row" responsiveLayout="scroll" dataKey="id"
               paginator first={lazyParams.first} rows={10} totalRecords={totalRecords} onPage={onPage}

@@ -5,7 +5,7 @@ import allActions from "../../app/Actions/AllActions";
 
 const UserLocationPicker = () => {
   const [pointVals, setCustomers] = useState([
-    [0, 0]
+    [35.7219, 51.3347]
   ]);
   const dispatch = useDispatch();
 
