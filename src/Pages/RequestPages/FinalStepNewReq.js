@@ -195,7 +195,8 @@ function FinalStepNewReq() {
   return (
     <>
       <Toast ref={toastBC} position="bottom-center" />
-
+<h5  className="text-red-900" style={{margin:'30px' }}>اطلاعات درخواست شما در لیست پایین نمایش داده شده است</h5>
+<h6 className="text-red-400" style={{margin:'20px'}}>در صورت درست بودن اطلاعات وارد شده ، تایید درخواست را وارد نمایید</h6>
       <Dialog
         header=" آیا از اطلاعات درخواست  مطمئن هستید "
         className="text-center"
@@ -255,7 +256,7 @@ function FinalStepNewReq() {
               onClick("displayBasic");
             }}
           >
-            تایید
+            تایید درخواست
           </Button>
         </div>
         <div className="m-2">
